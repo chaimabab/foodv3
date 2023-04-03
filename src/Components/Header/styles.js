@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         display: "flex",
         width: "100%",
-        height: "12%",
+        height: "10%",
         justifyContent: "space-around",
         alignItems: "center",
         flexDirection: "row",
@@ -15,21 +15,21 @@ const styles = StyleSheet.create({
 
 
     inputContainer: {
-        flex: 1,
+        width: 500,
         height: 50,
         borderRadius: 10,
         flexDirection: 'row',
         backgroundColor: COLORS.light,
         alignItems: 'center',
         paddingHorizontal: 20,
-      },
-
-
-    input:{
-        justifyContent:"space-between"
     },
 
-    
+
+    input: {
+        justifyContent: "space-between"
+    },
+
+
     text: {
         fontSize: 15,
     },

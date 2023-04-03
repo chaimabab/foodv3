@@ -3,8 +3,8 @@ const styles = StyleSheet.create({
     Commands: {
         paddingVertical: 10,
         display: "flex",
-        width: "27.5%",
-        height: "86.3%",
+        width: "27.8%",
+        height: "88.3%",
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "column",
