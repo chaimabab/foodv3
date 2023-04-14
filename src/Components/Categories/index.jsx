@@ -193,11 +193,18 @@ const cardWidth = width/2 -20;
 };
 
   const Card = ({food, update, setUpdate}) => {
-
-    const HandleAddProd2Ticket = () =>{
-      ticket.push(food)
-      setUpdate(!update)
-    }
+    const [price, setPrice] = useState(0);
+    const HandleSetPrice = (priceSupp) => {
+      ticket.map((t) => {
+        if (t.id === food.id) {
+          t.price = food.price + priceSupp;
+        }
+      });
+    };
+    const HandleAddProd2Ticket = () => {
+      ticket.push(food);
+      setUpdate(!update);
+    };
 
     const [showModal, setShowModal] = useState(false);
     const handleOpenModal = () => {
@@ -206,24 +213,28 @@ const cardWidth = width/2 -20;
     const handleCloseModal = () => {
       setShowModal(false);
     };
-   
-    const [sizes, setSizes] = useState([]); 
-    const [selectedSize, setSelectedSize] = useState(''); 
+
+    const [sizes, setSizes] = useState([]);
+    const [selectedSize, setSelectedSize] = useState("");
     useEffect(() => {
-      axios 
-        .get(`http://192.168.1.15/admin/api/products/variants/${food.id}`) 
-        .then(response => {
-            setSizes(response.data); 
-            setSelectedSize(response.data[0]); 
-          })
-        .catch(error => {
-            console.error('Erreur lors de la récupération des tailles du produit :', error);
-          });
-      }, []); 
+      axios
+        .get(`http://192.168.1.15/admin/api/products/variants/${food.id}`)
+        .then((response) => {
+          setSizes(response.data);
+          setSelectedSize(response.data[0]);
+        })
+        .catch((error) => {
+          console.error(
+            "Erreur lors de la récupération des tailles du produit :",
+            error
+          );
+        });
+    }, []);
 
     const handleSizePress = (size) => {
       setSelectedSize(size);
-      };
+      HandleSetPrice(size.price);
+    };
   
   
     // const ingredientsList = ['Tomate', 'Sauce', 'Fromage','Pepperoni']; 
