@@ -192,15 +192,22 @@ const cardWidth = width/2 -20;
   )
 };
 
-  const Card = ({food, update, setUpdate}) => {
-    const [price, setPrice] = useState(0);
-    const HandleSetPrice = (priceSupp) => {
-      ticket.map((t) => {
-        if (t.id === food.id) {
-          t.price = food.price + priceSupp;
-        }
-      });
-    };
+  const Card = ({ food, update, setUpdate }) => {
+    const [price, setPrice] = useState(food.price);
+    const [priceSize, setPriceSize] = useState(0);
+    const [priceSupplement, setPriceSupplement] = useState(0);
+
+    useEffect(() => {
+      setPrice(food.price+priceSize+priceSupplement)
+    },[priceSize, priceSupplement]);
+
+    // const HandleSetPrice = (priceSupp) => {
+    //   ticket.map((t) => {
+    //     if (t.id === food.id) {
+    //       t.price = food.price + priceSupp;
+    //     }
+    //   });
+    // };
     const HandleAddProd2Ticket = () => {
       ticket.push(food);
       setUpdate(!update);
@@ -233,19 +240,18 @@ const cardWidth = width/2 -20;
 
     const handleSizePress = (size) => {
       setSelectedSize(size);
-      HandleSetPrice(size.price);
+      setPriceSize(size.price);
     };
-  
-  
-    // const ingredientsList = ['Tomate', 'Sauce', 'Fromage','Pepperoni']; 
+
+    // const ingredientsList = ['Tomate', 'Sauce', 'Fromage','Pepperoni'];
     // useEffect(() => {
     //   setSelectedIngredients(ingredientsList);
-    // }, []); 
-    
+    // }, []);
+
     // const [selectedIngredients, setSelectedIngredients] = useState([]);
     // const handleIngredientToggle = (ingredient) => {
     //   const isSelected = selectedIngredients.includes(ingredient);
-  
+
     //   if (isSelected) {
     //     setSelectedIngredients(selectedIngredients.filter((item) => item !== ingredient));
     //   } else {
@@ -262,28 +268,30 @@ const cardWidth = width/2 -20;
           setIngredients(response.data);
         })
         .catch((error) => {
-          console.error('Erreur lors du chargement des ingrédients:', error);
+          console.error("Erreur lors du chargement des ingrédients:", error);
         });
     }, []);
-      const handleIngredientToggle = (ingredient) => {
+    const handleIngredientToggle = (ingredient) => {
       const isSelected = selectedIngredients.includes(ingredient);
-       if (isSelected) {
-         setSelectedIngredients(selectedIngredients.filter((item) => item !== ingredient));
+      if (isSelected) {
+        setSelectedIngredients(
+          selectedIngredients.filter((item) => item !== ingredient)
+        );
       } else {
-         setSelectedIngredients([...selectedIngredients, ingredient]);
+        setSelectedIngredients([...selectedIngredients, ingredient]);
       }
-     };
-  
+    };
 
-  
-    // const supplementList = ['Tomate', 'Sauce', 'Fromage','Pepperoni']; 
+
+
+    // const supplementList = ['Tomate', 'Sauce', 'Fromage','Pepperoni'];
     // useEffect(() => {
-    // }, []); 
-    
+    // }, []);
+
     // const [selectedSupplement, setSelectedSupplement] = useState([]);
     // const handleSupplementToggle = (supplement) => {
     //   const isSelected = selectedSupplement.includes(supplement);
-  
+
     //   if (isSelected) {
     //     setSelectedSupplement(selectedSupplement.filter((item) => item !== supplement));
     //   } else {
@@ -299,98 +307,157 @@ const cardWidth = width/2 -20;
           setSupplement(response.data);
         })
         .catch((error) => {
-          console.error('Erreur lors du chargement des ingrédients:', error);
+          console.error("Erreur lors du chargement des ingrédients:", error);
         });
     }, []);
-     const handleSupplementToggle = (supplement) => {
-    const isSelected = selectedSupplement.includes(supplement);
-    if (isSelected) {
-      setSelectedSupplement(selectedSupplement.filter((item) => item !== supplement));
-       } else {
-         setSelectedSupplement([...selectedSupplement, supplement]);
-       }
-   };
+    const handleSupplementToggle = (supplement) => {
+      const isSelected = selectedSupplement.includes(supplement);
+      if (isSelected) {
+        setSelectedSupplement(
+          selectedSupplement.filter((item) => item !== supplement)
+        );
+      } else {
+        setSelectedSupplement([...selectedSupplement, supplement]);
+      }
+    };
 
+    useEffect(() => {
+      selectedSupplement.map((si) => {
+        supplement.map((i) => {
+          if (i.id === si.id) {
+            setPriceSupplement(priceSupplement + si.price);
+          }
+        });
+      });
+    }, [selectedSupplement]);
 
+    return (
+      <View style={style.card}>
+        <TouchableOpacity onPress={HandleAddProd2Ticket}>
+          <Image
+            source={{
+              uri: `http://192.168.1.15/admin/public/images/${food.name}.png`,
+            }}
+            style={{ height: 120, width: 120, marginLeft: 15 }}
+          />
+        </TouchableOpacity>
+        <View style={{ marginHorizontal: 5 }}>
+          <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}>
+            {" "}
+            {food.name}{" "}
+          </Text>
+        </View>
+        <View
+          style={{
+            marginTop: 10,
+            marginHorizontal: 20,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>
+            {" "}
+            {food.price} TND
+          </Text>
 
-
-   return (
-     <View style ={style.card}>
-      <TouchableOpacity onPress={HandleAddProd2Ticket}>
-        <Image source={{uri: `http://192.168.1.15/admin/public/images/${food.name}.png`}} style={{height:120, width:120, marginLeft:15,}} />
-      </TouchableOpacity> 
-      <View style={{marginHorizontal:5}}>
-        <Text style={{fontSize:18, fontWeight: 'bold',marginLeft:20}}> {food.name} </Text> 
-      </View>
-      <View style={{marginTop:10,marginHorizontal:20,flexDirection:"row",justifyContent:"space-between"}}>
-        <Text style={{fontSize:14, fontWeight: 'bold', marginLeft:7}}> {food.price} TND</Text>
-
-        <TouchableOpacity  style={styles.addToCartBTn} >
-          <Icon name="add" size={20} color="white" onPress={handleOpenModal} />
-          <Modal visible={showModal} animationType="slide" transparent={true}>
+          <TouchableOpacity style={styles.addToCartBTn}>
+            <Icon
+              name="add"
+              size={20}
+              color="white"
+              onPress={handleOpenModal}
+            />
+            <Modal visible={showModal} animationType="slide" transparent={true}>
               <View style={styles.modalContainer}>
-                <View style={styles.modalContent}> 
-                  <Image source={{uri: `http://192.168.1.15/admin/public/images/${food.name}.png`}} style={{height:120, width:120, marginLeft:15,}}     />
-                  <Text style={{fontSize:18, fontWeight: 'bold',marginLeft:20}}> {food.name}</Text> 
+                <View style={styles.modalContent}>
+                  <Image
+                    source={{
+                      uri: `http://192.168.1.15/admin/public/images/${food.name}.png`,
+                    }}
+                    style={{ height: 120, width: 120, marginLeft: 15 }}
+                  />
+                  <Text
+                    style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}
+                  >
+                    {" "}
+                    {food.name}
+                  </Text>
 
                   <View style={styles.containerSize}>
-					          {sizes?.map((size) => (
-					            <TouchableOpacity 
-                        key={size.price} 
+                    {sizes?.map((size) => (
+                      <TouchableOpacity
+                        key={size.price}
                         style={[
-					              styles.sizeButton2,
-					              selectedSize === size && styles.selectedSizeButton2]}
-					              onPress={() => handleSizePress(size)}>
-					              <Text style={styles.sizeButtonText2}>{size.name}</Text> 
-					              <Text style={styles.sizeButtonText2}>{size.price} TND </Text> 
-					            </TouchableOpacity> ))}
+                          styles.sizeButton2,
+                          selectedSize === size && styles.selectedSizeButton2,
+                        ]}
+                        onPress={() => handleSizePress(size)}
+                      >
+                        <Text style={styles.sizeButtonText2}>{size.name}</Text>
+                        <Text style={styles.sizeButtonText2}>
+                          {size.price} TND{" "}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
                   </View>
-                  <View> 
+                  <View>
                     {selectedSize && (
                       <Text style={styles.selectedSizeText2}>
-                      Size: {selectedSize.name}
-                      </Text> 
+                        Size: {selectedSize.name}
+                      </Text>
                     )}
-                  </View>  
+                  </View>
 
-                 <View style={styles.containerIng}>
+                  <View style={styles.containerIng}>
                     <View style={styles.ingredientsContainer}>
                       {ingredients.map((ingredient) => (
                         <TouchableOpacity
                           key={ingredient.name}
                           onPress={() => handleIngredientToggle(ingredient)}
                           style={[
-                          styles.ingredientButton,
-                          selectedIngredients.includes(ingredient) && styles.selectedIngredientButton,
-                          ]}>
-                          <Text style={styles.ingredientText}>{ingredient.name}</Text>
-                        </TouchableOpacity>))}
-                      </View>
-                        <Text style={styles.selectedIngredientsText}>
-                        Ingrédients: {selectedIngredients.join(', ').name}
-                        </Text>
-                  </View> 
+                            styles.ingredientButton,
+                            selectedIngredients.includes(ingredient) &&
+                              styles.selectedIngredientButton,
+                          ]}
+                        >
+                          <Text style={styles.ingredientText}>
+                            {ingredient.name}
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                    <Text style={styles.selectedIngredientsText}>
+                      Ingrédients: {selectedIngredients.join(", ").name}
+                    </Text>
+                  </View>
 
-                   <View style={styles.containerSupp}>
+                  <View style={styles.containerSupp}>
                     <View style={styles.SupplementContainer}>
                       {supplement.map((supplement) => (
                         <TouchableOpacity
                           key={supplement.name}
                           onPress={() => handleSupplementToggle(supplement)}
                           style={[
-                          styles.supplementButton,
-                          selectedSupplement.includes(supplement) && styles.selectedSupplementButton,
-                          ]}>
-                          <Text style={styles.SupplementText}>{supplement.name}</Text>
-                          <Text style={styles.SupplementText}>{supplement.price} TND</Text>
-                        </TouchableOpacity>))}
-                      </View>
-                        <Text style={styles.selectedSupplementText}>
-                        Supplément: {selectedSupplement.join(', ').name}
-                        </Text>
-                  </View> 
+                            styles.supplementButton,
+                            selectedSupplement.includes(supplement) &&
+                              styles.selectedSupplementButton,
+                          ]}
+                        >
+                          <Text style={styles.SupplementText}>
+                            {supplement.name}
+                          </Text>
+                          <Text style={styles.SupplementText}>
+                            {supplement.price} TND
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                    <Text style={styles.selectedSupplementText}>
+                      Supplément: {selectedSupplement.join(", ").name}
+                    </Text>
+                  </View>
 
-
+                  <Text>{price}</Text>
                   <TouchableOpacity onPress={handleCloseModal}>
                     <Text style={styles.btnclose}>Valider</Text>
                   </TouchableOpacity>
@@ -398,200 +465,196 @@ const cardWidth = width/2 -20;
               </View>
             </Modal>
           </TouchableOpacity>
+        </View>
       </View>
-     </View>
-   );
- };
-
- //http://192.168.1.15/admin/api/categories/products/%7Bid_category%7D
-const Categories = () => {
-  const [modalState ,setModalState] = React.useState(0)
-  const [category, setCategory]=React.useState();
-  const [update, setUpdate] = React.useState(false);
-  const [categoryProds, setCategoryProds] = React.useState([
-    {
-      id: "1",
-      category: "Pizza",
-      name: "Meat Pizza",
-      ingredients: "Mixed Pizza",
-      price: "12.00",
-      image: require("../../assets/meatPizza.png"),
-    },
-    {
-      category: "Pizza",
-      id: "2",
-      name: "Cheese Pizza",
-      ingredients: "Cheese Pizza",
-      price: "16.00",
-      image: require("../../assets/cheesePizza.png"),
-    },
-    {
-      category: "Pizza",
-      id: "3",
-      name: "Pepperoni Pizza",
-      ingredients: "Fried Chicken",
-      price: "18.00",
-      image: require("../../assets/pepperoniPizza.png"),
-    },
-  ]);
-
-  const [sizes, setSizes] = useState([]); 
-  const [selectedSize, setSelectedSize] = useState(''); 
-  const [open, setOpen] = React.useState(false);
-  //const [data, setData]=React.useState([...foods, ...Burgers, ...Sandwichs]);
-  const [cats, setCats] = React.useState();
-
-  useEffect(() => {
-    handleData();
-    handleProdsByCat(category);
-    console.log(cats);
-  }, [cats]);
-
-  const handleData = () => {
-    axios
-      .get("http://192.168.1.15/admin/api/categories")
-      .then((response) => {
-        setCats(response.data);
-        setCategory(response.data[0].id);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    );
   };
 
-  useEffect(() => {
-    handleProdsByCat(category);
-    console.log(category);
-  }, [, category]);
+  //http://192.168.1.15/admin/api/categories/products/%7Bid_category%7D
+  const Categories = () => {
+    const [modalState, setModalState] = React.useState(0);
+    const [category, setCategory] = React.useState();
+    const [update, setUpdate] = React.useState(false);
+    const [categoryProds, setCategoryProds] = React.useState([
+      {
+        id: "1",
+        category: "Pizza",
+        name: "Meat Pizza",
+        ingredients: "Mixed Pizza",
+        price: "12.00",
+        image: require("../../assets/meatPizza.png"),
+      },
+      {
+        category: "Pizza",
+        id: "2",
+        name: "Cheese Pizza",
+        ingredients: "Cheese Pizza",
+        price: "16.00",
+        image: require("../../assets/cheesePizza.png"),
+      },
+      {
+        category: "Pizza",
+        id: "3",
+        name: "Pepperoni Pizza",
+        ingredients: "Fried Chicken",
+        price: "18.00",
+        image: require("../../assets/pepperoniPizza.png"),
+      },
+    ]);
 
-  const handleProdsByCat = (id) => {
-    axios
-      .get(`http://192.168.1.15/admin/api/categories/products/${id}`)
-      .then((response) => {
-        setCategoryProds(response.data);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    const [open, setOpen] = React.useState(false);
+    //const [data, setData]=React.useState([...foods, ...Burgers, ...Sandwichs]);
+    const [cats, setCats] = React.useState();
 
+    useEffect(() => {
+      handleData();
+      handleProdsByCat(category);
+      console.log(cats);
+    }, [cats]);
 
+    const handleData = () => {
+      axios
+        .get("http://192.168.1.15/admin/api/categories")
+        .then((response) => {
+          setCats(response.data);
+          setCategory(response.data[0].id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
-  const [stateModalTicket, setStateModalTicket] = React.useState(false);
-  const [stateModalTable, setStateModalTable] = React.useState(false);
-  const [stateModalRevenus, setStateModalRevenus] = React.useState(false);
-  const [stateModalClotureZ, setStateModalClotureZ] = React.useState(false);
-  const [stateModalIndex, setStateModalIndex] = React.useState(0);
+    useEffect(() => {
+      handleProdsByCat(category);
+      console.log(category);
+    }, [, category]);
 
-  useEffect(() => {
-    console.log(stateModalIndex);
-    if (stateModalIndex == 1) {
-      console.log("Ticket");
-      setStateModalTicket(true);
-    }
-    if (stateModalIndex == 2) {
-      console.log("Table");
-      setStateModalTable(true);
-    }
-    if (stateModalIndex == 3) {
-      console.log("Revenus");
+    const handleProdsByCat = (id) => {
+      axios
+        .get(`http://192.168.1.15/admin/api/categories/products/${id}`)
+        .then((response) => {
+          setCategoryProds(response.data);
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
-      setStateModalRevenus(true);
-    }
-    if (stateModalIndex == 4) {
-      console.log("ClotureZ");
+    const [stateModalTicket, setStateModalTicket] = React.useState(false);
+    const [stateModalTable, setStateModalTable] = React.useState(false);
+    const [stateModalRevenus, setStateModalRevenus] = React.useState(false);
+    const [stateModalClotureZ, setStateModalClotureZ] = React.useState(false);
+    const [stateModalIndex, setStateModalIndex] = React.useState(0);
 
-      setStateModalClotureZ(true);
-    }
-  }, [stateModalIndex]);
+    useEffect(() => {
+      console.log(stateModalIndex);
+      if (stateModalIndex == 1) {
+        console.log("Ticket");
+        setStateModalTicket(true);
+      }
+      if (stateModalIndex == 2) {
+        console.log("Table");
+        setStateModalTable(true);
+      }
+      if (stateModalIndex == 3) {
+        console.log("Revenus");
 
-  return (
-    <View style={styles.Categories}>
-      {open ? (
-        <Animatable.View
-          animation="bounceInLeft"
-          duration={600}
-          style={styles.drawer}
-        >
+        setStateModalRevenus(true);
+      }
+      if (stateModalIndex == 4) {
+        console.log("ClotureZ");
+
+        setStateModalClotureZ(true);
+      }
+    }, [stateModalIndex]);
+
+    return (
+      <View style={styles.Categories}>
+        {open ? (
+          <Animatable.View
+            animation="bounceInLeft"
+            duration={600}
+            style={styles.drawer}
+          >
+            <AntDesign
+              onPress={() => setOpen(false)}
+              name="menu-unfold"
+              size={40}
+              color="#DF0F0F"
+              style={{ margin: 10 }}
+            />
+            <ListCategoriesVertical setStateModalIndex={setStateModalIndex} />
+          </Animatable.View>
+        ) : (
+          ""
+        )}
+        <View style={styles.cat}>
           <AntDesign
-            onPress={() => setOpen(false)}
-            name="menu-unfold"
+            onPress={() => setOpen(true)}
+            name="menu-fold"
             size={40}
             color="#DF0F0F"
-            style={{ margin: 10 }}
+            style={{ marginLeft: 25 }}
           />
-          <ListCategoriesVertical setStateModalIndex={setStateModalIndex} />
-        </Animatable.View>
-      ) : (
-        ""
-      )}
-      <View style={styles.cat}>
-        <AntDesign
-          onPress={() => setOpen(true)}
-          name="menu-fold"
-          size={40}
-          color="#DF0F0F"
-          style={{ marginLeft: 25 }}
-        />
-        {cats ? <ListCategories setCategory={setCategory} cats={cats} /> : ""}
+          {cats ? <ListCategories setCategory={setCategory} cats={cats} /> : ""}
+        </View>
+
+        <View style={styles.souscat}>
+          <FlatList
+            contentContainerStyle={{
+              width: "80%",
+              height: "auto",
+              alignSelf: "center",
+            }}
+            style={styles.souscatList}
+            showsVerticalScrollIndicator={false}
+            numColumns={4}
+            data={categoryProds && category ? categoryProds : categoryProds}
+            renderItem={({ item }) => (
+              <Card food={item} update={update} setUpdate={setUpdate} />
+            )}
+          />
+        </View>
+
+        {stateModalIndex == 1 ? (
+          <TicketModal
+            stateModalTicket={stateModalTicket}
+            setStateModalTicket={setStateModalTicket}
+          />
+        ) : (
+          ""
+        )}
+
+        {stateModalIndex == 2 ? (
+          <TableModal
+            stateModalTable={stateModalTable}
+            setStateModalTable={setStateModalTable}
+          />
+        ) : (
+          ""
+        )}
+
+        {stateModalIndex == 3 ? (
+          <RevenusModal
+            stateModalRevenus={stateModalRevenus}
+            setStateModalRevenus={setStateModalRevenus}
+          />
+        ) : (
+          ""
+        )}
+
+        {stateModalIndex == 4 ? (
+          <ClotureZModal
+            stateModalClotureZ={stateModalClotureZ}
+            setStateModalClotureZ={setStateModalClotureZ}
+          />
+        ) : (
+          ""
+        )}
       </View>
-
-      <View style={styles.souscat}>
-        <FlatList
-          contentContainerStyle={{
-            width: "80%",
-            height: "auto",
-            alignSelf: "center",
-          }}
-          style={styles.souscatList}
-          showsVerticalScrollIndicator={false}
-          numColumns={4}
-          data={categoryProds && category ? categoryProds : categoryProds}
-          renderItem={({ item }) => (
-            <Card food={item} update={update} setUpdate={setUpdate}  />
-          )}
-        />
-      </View>
-
-      {stateModalIndex == 1 ? (
-        <TicketModal
-          stateModalTicket={stateModalTicket}
-          setStateModalTicket={setStateModalTicket}
-        />
-      ) : (
-        ""
-      )}
-
-      {stateModalIndex == 2 ? (
-        <TableModal
-          stateModalTable={stateModalTable}
-          setStateModalTable={setStateModalTable}
-        />
-      ) : (
-        ""
-      )}
-
-      {stateModalIndex == 3 ? (
-        <RevenusModal
-          stateModalRevenus={stateModalRevenus}
-          setStateModalRevenus={setStateModalRevenus}
-        />
-      ) : (
-        ""
-      )}
-
-      {stateModalIndex == 4 ? (
-        <ClotureZModal
-          stateModalClotureZ={stateModalClotureZ}
-          setStateModalClotureZ={setStateModalClotureZ}
-        />
-      ) : (
-        ""
-      )}
-    </View>
-  );
-};
+    );
+  };
 const style = StyleSheet.create({
 categoryBtn: {
   height: 55,
