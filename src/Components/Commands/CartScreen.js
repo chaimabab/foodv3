@@ -12,12 +12,44 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../../consts/colors";
 import ticket from "../../consts/ticket";
 // import {PrimaryButton} from '../../consts/button';
-import { styles } from "./styles";
-const CartScreen = ({ update }) => {
+import { styles} from "./styles";
+
+const CartScreen = ({food, update, setUpdate }) => {
   useEffect(() => {
     console.log(ticket);
   }, [update]);
+
   const CartCard = ({ item }) => {
+  const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(item.price);
+
+  const handleAdd = () => 
+    { 
+      setQuantity(quantity + 1); 
+    }
+  const handleRemove = () => {
+    if (quantity > 1) {  
+      setQuantity(quantity - 1); 
+    }
+    // else {
+    //   ticket.pop(food)
+    //   setUpdate(!update) 
+    // }
+  }
+  
+  const calculateTotalPriceProduct = () => {
+    return quantity * price; 
+  }
+
+  //   const HandleRemoveFromTicket = () =>{
+  //     ticket.pop(food)
+  //     setUpdate(!update)  
+  // } 
+
+  // const calculateTotalPriceTicket = () => {
+  //   return price=+price; 
+  // }
+
     return (
       <View style={styles.cartCard}>
         <View
@@ -30,15 +62,23 @@ const CartScreen = ({ update }) => {
           <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}>
             {item.name}
           </Text>
-          <Text style={{ fontSize: 17, fontWeight: "bold", marginLeft: -180 }}>
-            TND {item.price}
+          <Text style={{ fontSize: "17", fontWeight: "bold", marginLeft: -180 }}>
+            {/*item.price} TND */ }
+            {calculateTotalPriceProduct()} TND 
           </Text>
-        </View>
-        <View style={{ marginRight: 20, alignItems: "center" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 18 }}>3</Text>
-          <View style={styles.actionBtn}>
-            <Icon name="remove" size={25} color={COLORS.white} />
-            <Icon name="add" size={25} color={COLORS.white} />
+          </View>
+          <View style={{ marginRight: 20, alignItems: "center" }}>
+          <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
+          <View> 
+          <TouchableOpacity>
+            <Icon name="close" size={25} color={COLORS.white} style={styles.closeicon} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleRemove} style={styles.removeicon} >
+            <Icon name="remove" size={25} color={COLORS.white}   />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleAdd} style={styles.addicon} >
+            <Icon name="add" size={25} color={COLORS.white}  />
+          </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -48,16 +88,16 @@ const CartScreen = ({ update }) => {
   return (
     <SafeAreaView>
       <View style={styles.header}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 120 }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold",marginLeft: 130}}>
           Ticket
         </Text>
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 80 }}
+        contentContainerStyle={{ paddingBottom: 60 }}
         data={ticket ? ticket : ""}
         renderItem={({ item }) => <CartCard item={item} />}
-        ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
+        ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20, marginLeft:220}}
         ListFooterComponent={() => (
           <View>
             <View
@@ -67,12 +107,12 @@ const CartScreen = ({ update }) => {
                 marginVertical: 15,
               }}
             >
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                Total Price
+              <Text style={{ fontSize: 18, fontWeight: "bold" ,marginLeft:-220}}>
+                Prix Total
               </Text>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}> TND 50</Text>
+              <Text style={{ fontSize: 18, fontWeight: "bold" ,marginLeft:-50}}> TND </Text>
             </View>
-            <View style={{ marginHorizontal: 30 }}>
+            <View style={{ marginHorizontal: 30}}>
               <TouchableOpacity activeOpacity={0.8}>
                 <View
                   style={{
@@ -81,6 +121,9 @@ const CartScreen = ({ update }) => {
                     borderRadius: 30,
                     justifyContent: 30,
                     alignItem: "center",
+                    justifyContent:'center',
+                    marginLeft:-160,
+                    marginRight:45,
                   }}
                 >
                   <Text
@@ -88,6 +131,7 @@ const CartScreen = ({ update }) => {
                       color: COLORS.white,
                       fontWeight: "blod",
                       fontSize: 18,
+                      marginLeft:10
                     }}
                   >
                     CHECKOUT
@@ -101,7 +145,4 @@ const CartScreen = ({ update }) => {
     </SafeAreaView>
   );
 };
-
-
- 
 export default CartScreen;

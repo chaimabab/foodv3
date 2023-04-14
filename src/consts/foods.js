@@ -1,11 +1,11 @@
 const foods = [{
         id: '1',
         category: "Pizza",
-
         name: 'Meat Pizza',
         ingredients: 'Mixed Pizza',
         price: '12.00',
         image: require('../assets/meatPizza.png'),
+        size: 'S'
     },
     {
         category: "Pizza",
@@ -14,6 +14,7 @@ const foods = [{
         ingredients: 'Cheese Pizza',
         price: '16.00',
         image: require('../assets/cheesePizza.png'),
+        size: 'S'
     },
     {
         category: "Pizza",
@@ -22,6 +23,7 @@ const foods = [{
         ingredients: 'Fried Chicken',
         price: '18.00',
         image: require('../assets/pepperoniPizza2.png'),
+        size: 'M'
     },
     {
         category: "Pizza",
@@ -30,6 +32,7 @@ const foods = [{
         ingredients: 'Salmon Meat',
         price: '14.00',
         image: require('../assets/napolitainePizza.png'),
+        size: 'M'
     },
     {
         category: "Pizza",
@@ -38,6 +41,7 @@ const foods = [{
         ingredients: 'Mixed Pizza',
         price: '12.00',
         image: require('../assets/meatPizza.png'),
+        size: 'M'
     },
     {
         category: "Pizza",
@@ -46,6 +50,7 @@ const foods = [{
         ingredients: 'Cheese Pizza',
         price: '16.00',
         image: require('../assets/cheesePizza.png'),
+        size: 'L'
     },
     {
         category: "Pizza",
@@ -54,6 +59,7 @@ const foods = [{
         ingredients: 'Fried Chicken',
         price: '18.00',
         image: require('../assets/pepperoniPizza2.png'),
+        size: 'L'
     },
     {
         category: "Pizza",
@@ -62,6 +68,7 @@ const foods = [{
         ingredients: 'Salmon Meat',
         price: '14.00',
         image: require('../assets/napolitainePizza.png'),
+        size: 'L'
     }, {
         category: "Pizza",
         id: '9',
@@ -69,6 +76,7 @@ const foods = [{
         ingredients: 'Mixed Pizza',
         price: '12.00',
         image: require('../assets/meatPizza.png'),
+        size: 'M'
     },
     {
         category: "Pizza",
@@ -77,6 +85,7 @@ const foods = [{
         ingredients: 'Cheese Pizza',
         price: '16.00',
         image: require('../assets/cheesePizza.png'),
+        size: 'M'
     },
     {
         category: "Pizza",
@@ -85,6 +94,7 @@ const foods = [{
         ingredients: 'Fried Chicken',
         price: '18.00',
         image: require('../assets/pepperoniPizza2.png'),
+        size: 'M'
     },
     {
         category: "Pizza",
@@ -93,6 +103,7 @@ const foods = [{
         ingredients: 'Salmon Meat',
         price: '14.00',
         image: require('../assets/napolitainePizza.png'),
+        size: 'S'
     },
     {
         category: "Pizza",
@@ -101,6 +112,7 @@ const foods = [{
         ingredients: 'Mixed Pizza',
         price: '12.00',
         image: require('../assets/meatPizza.png'),
+        size: 'S'
     },
     {
         category: "Pizza",
@@ -109,6 +121,7 @@ const foods = [{
         ingredients: 'Cheese Pizza',
         price: '16.00',
         image: require('../assets/cheesePizza.png'),
+        size: 'S'
     },
     {
         category: "Pizza",
@@ -117,6 +130,7 @@ const foods = [{
         ingredients: 'Fried Chicken',
         price: '18.00',
         image: require('../assets/pepperoniPizza2.png'),
+        size: 'M'
     },
     {
         category: "Pizza",
@@ -125,6 +139,7 @@ const foods = [{
         ingredients: 'Salmon Meat',
         price: '14.00',
         image: require('../assets/napolitainePizza.png'),
+        size: 'L'
     },
 ];
 

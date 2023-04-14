@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
-import {SafeAreaView, StyleSheet, View, Text, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, View, Text, Image,TouchableOpacity} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from "../../consts/colors";
 import ticket from '../../consts/ticket';
 import {PrimaryButton} from '../../consts/Button';
 import {styles} from './styles'
+
 const CartScreen = ({navigation, update}) => {
      
-
     // useEffect(()=>{
     //     console.log(ticket)
     // },[update])
+
   const CartCard = ({item}) => {
     return (
      <View style={styles.cartCard}>
@@ -26,16 +27,15 @@ const CartScreen = ({navigation, update}) => {
         </View>
         <View style={{marginRight: 20, alignItems: 'center'}}>
           <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text>
-          <View style={styles.actionBtn}>
-            <Icon name="remove" size={25} color={COLORS.white} />
-            <Icon name="add" size={25} color={COLORS.white} />
+          <View style={styles.actionBtn}  >
+            <Icon name="remove"  size={25} color={COLORS.white}  />
+            <Icon name="add" size={25} color={COLORS.white}  />
           </View>
         </View>
       </View>
     );
   };
 
-  
   return (
     <SafeAreaView >
       <View style={styles.header}>

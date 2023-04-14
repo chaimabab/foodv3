@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import COLORS from '../../consts/colors';
 const styles = StyleSheet.create({
     Commands: {
         paddingVertical: 10,
@@ -145,9 +146,74 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         paddingTop: 10,
-   
-        
     },
+
+    header: {
+        flexDirection:'row',
+        marginHorizontal: 20,
+        marginTop:1,
+        },
+    cartCard: {
+        height: 100,
+        elevation: 15,
+        borderRadius: 10,
+        backgroundColor: COLORS.white,
+        marginVertical: 10,
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    
+  //actionBtn: {
+    //   width: 80,
+    //   height: 30,
+    //   backgroundColor: COLORS.primary,
+    //   borderRadius: 30,
+    //   paddingHorizontal: 5,
+    //   flexDirection: 'row',
+    //   justifyContent: 'center',
+    //   alignContent: 'center',
+    //  },
+
+    removeicon:{
+        width: 30,
+        height: 30,
+        backgroundColor: COLORS.primary,
+        borderRadius: 30,
+        paddingHorizontal: 2,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
+
+    addicon:{
+        width: 30,
+        height: 30,
+        backgroundColor: COLORS.primary,
+        borderRadius: 30,
+        paddingHorizontal: 2,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginLeft:35,
+        marginTop:-30
+    },
+
+    closeicon :{
+        width: 25,
+        height: 25,
+        backgroundColor: COLORS.rouge,
+        borderRadius: 30,
+        paddingHorizontal: -2,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginStart:70,
+        marginTop:-40,
+        marginRight:-27
+    
+    }
 });
 
 export { styles }
