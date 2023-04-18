@@ -2,16 +2,10 @@ import React, {useState, useEffect} from "react";
 import { Modal, Text, View, Image, StyleSheet, SafeAreaView, Dimensions,TouchableOpacity, Alert, Pressable} from "react-native";
 import {styles} from './styles'
 import { Button } from 'react-native-elements';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-//import { MaterialIcons, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import { FlatList, ScrollView,TextInput,TouchableHighlight } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import categories from '../../consts/categories';
-import foods from '../../consts/foods';
-import fonctions from '../../consts/fonctions';
-import Burgers from '../../consts/burgers';
-import Sandwichs from '../../consts/sandwichs';
 import ticket from '../../consts/ticket';
 const {width} = Dimensions.get('screen');
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
@@ -22,8 +16,6 @@ import RevenusModal from "../Modals/Revenus";
 import ClotureZModal from "../Modals/ClotureZ";
 import axios from 'axios'; 
 const cardWidth = width/2 -20;
-// import ingredient from './ingredient';
-// import foods from "../../consts/foods";
 
 
  const ListCategories = ({cats, setCategory}) => {
@@ -156,7 +148,6 @@ const cardWidth = width/2 -20;
                 selectedCategoryIndex == 3
                 ? COLORS.white
                 : COLORS.primary,
-                
             }}>
                Revenus
             </Text>
@@ -197,8 +188,9 @@ const cardWidth = width/2 -20;
     const [priceSize, setPriceSize] = useState(0);
     const [priceSupplement, setPriceSupplement] = useState(0);
 
+
     useEffect(() => {
-      setPrice(food.price+priceSize+priceSupplement)
+      setPrice(priceSize+priceSupplement)
     },[priceSize, priceSupplement]);
 
     // const HandleSetPrice = (priceSupp) => {
@@ -208,6 +200,8 @@ const cardWidth = width/2 -20;
     //     }
     //   });
     // };
+
+
     const HandleAddProd2Ticket = () => {
       ticket.push(food);
       setUpdate(!update);
@@ -219,6 +213,8 @@ const cardWidth = width/2 -20;
     };
     const handleCloseModal = () => {
       setShowModal(false);
+       ticket.push(food);
+       setUpdate(!update);
     };
 
     const [sizes, setSizes] = useState([]);
@@ -261,16 +257,19 @@ const cardWidth = width/2 -20;
 
     const [ingredients, setIngredients] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
+    
     useEffect(() => {
       axios
         .get(`http://192.168.1.15/admin/api/products/ingredients/${food.id}`)
         .then((response) => {
           setIngredients(response.data);
+          setSelectedIngredients(response.data);
         })
         .catch((error) => {
           console.error("Erreur lors du chargement des ingrédients:", error);
         });
     }, []);
+
     const handleIngredientToggle = (ingredient) => {
       const isSelected = selectedIngredients.includes(ingredient);
       if (isSelected) {
@@ -331,6 +330,18 @@ const cardWidth = width/2 -20;
       });
     }, [selectedSupplement]);
 
+    useEffect(() => {
+      let totalPrice = 0; 
+        selectedSupplement.forEach((si) => { 
+          const matchingSupplement = supplement.find((i) => i.id === si.id); 
+          if (matchingSupplement) { 
+             totalPrice += si.price; 
+          }
+        });
+      setPriceSupplement(totalPrice);
+    }, [selectedSupplement]);
+
+
     return (
       <View style={style.card}>
         <TouchableOpacity onPress={HandleAddProd2Ticket}>
@@ -342,10 +353,7 @@ const cardWidth = width/2 -20;
           />
         </TouchableOpacity>
         <View style={{ marginHorizontal: 5 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}>
-            {" "}
-            {food.name}{" "}
-          </Text>
+          <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}>{food.name}</Text>
         </View>
         <View
           style={{
@@ -355,11 +363,7 @@ const cardWidth = width/2 -20;
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>
-            {" "}
-            {food.price} TND
-          </Text>
-
+          <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>{food.price} TND </Text>
           <TouchableOpacity style={styles.addToCartBTn}>
             <Icon
               name="add"
@@ -367,6 +371,7 @@ const cardWidth = width/2 -20;
               color="white"
               onPress={handleOpenModal}
             />
+            
             <Modal visible={showModal} animationType="slide" transparent={true}>
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
@@ -426,9 +431,9 @@ const cardWidth = width/2 -20;
                         </TouchableOpacity>
                       ))}
                     </View>
-                    <Text style={styles.selectedIngredientsText}>
-                      Ingrédients: {selectedIngredients.join(", ").name}
-                    </Text>
+                    <Text style={styles.selectedIngredientsText}> 
+                          Sans: {ingredients.filter((ingredient) => !selectedIngredients.includes(ingredient)).map((ingredient) => ingredient.name).join(', ')}
+                    </Text> 
                   </View>
 
                   <View style={styles.containerSupp}>
@@ -452,13 +457,16 @@ const cardWidth = width/2 -20;
                         </TouchableOpacity>
                       ))}
                     </View>
-                    <Text style={styles.selectedSupplementText}>
-                      Supplément: {selectedSupplement.join(", ").name}
-                    </Text>
+
+                    <Text style={styles.selectedSupplementText}> 
+                        Suppléments: {supplement.filter((supplement) => selectedSupplement.includes(supplement)).map((supplement) => supplement.name).join(', ')}
+                    </Text> 
+
                   </View>
 
-                  <Text>{price}</Text>
-                  <TouchableOpacity onPress={handleCloseModal}>
+                  <Text> Prix: {price}</Text>
+
+                  <TouchableOpacity onPress={handleCloseModal} >
                     <Text style={styles.btnclose}>Valider</Text>
                   </TouchableOpacity>
                 </View>
@@ -481,7 +489,7 @@ const cardWidth = width/2 -20;
         category: "Pizza",
         name: "Meat Pizza",
         ingredients: "Mixed Pizza",
-        price: "12.00",
+        //price: "12.00",
         image: require("../../assets/meatPizza.png"),
       },
       {
@@ -489,7 +497,7 @@ const cardWidth = width/2 -20;
         id: "2",
         name: "Cheese Pizza",
         ingredients: "Cheese Pizza",
-        price: "16.00",
+        //price: "16.00",
         image: require("../../assets/cheesePizza.png"),
       },
       {
@@ -497,7 +505,7 @@ const cardWidth = width/2 -20;
         id: "3",
         name: "Pepperoni Pizza",
         ingredients: "Fried Chicken",
-        price: "18.00",
+        //price: "18.00",
         image: require("../../assets/pepperoniPizza.png"),
       },
     ]);

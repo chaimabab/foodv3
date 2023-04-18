@@ -14,7 +14,7 @@ import ticket from "../../consts/ticket";
 // import {PrimaryButton} from '../../consts/button';
 import { styles} from "./styles";
 
-const CartScreen = ({food, update, setUpdate }) => {
+const CartScreen = ({food, update, setUpdate, setTicket }) => {
   useEffect(() => {
     console.log(ticket);
   }, [update]);
@@ -27,16 +27,21 @@ const CartScreen = ({food, update, setUpdate }) => {
     { 
       setQuantity(quantity + 1); 
     }
+
   const handleRemove = () => {
     if (quantity > 1) {  
       setQuantity(quantity - 1); 
     }
-    // else {
-    //   ticket.pop(food)
-    //   setUpdate(!update) 
-    // }
-  }
+  }  
   
+  const HandleRemoveProdFromTicket = () => {
+    // if (ticket && ticket.length > 0 && food) {
+      ticket.pop(food);
+      setUpdate(!update);
+    // }
+  };
+  
+
   const calculateTotalPriceProduct = () => {
     return quantity * price; 
   }
@@ -50,6 +55,13 @@ const CartScreen = ({food, update, setUpdate }) => {
   //   return price=+price; 
   // }
 
+  const [supplement, setSupplement] = useState([]);
+  const [selectedSupplement, setSelectedSupplement] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [selectedSize, setSelectedSize] = useState("");
+
     return (
       <View style={styles.cartCard}>
         <View
@@ -62,6 +74,7 @@ const CartScreen = ({food, update, setUpdate }) => {
           <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}>
             {item.name}
           </Text>
+
           <Text style={{ fontSize: "17", fontWeight: "bold", marginLeft: -180 }}>
             {/*item.price} TND */ }
             {calculateTotalPriceProduct()} TND 
@@ -70,10 +83,10 @@ const CartScreen = ({food, update, setUpdate }) => {
           <View style={{ marginRight: 20, alignItems: "center" }}>
           <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
           <View> 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={HandleRemoveProdFromTicket}>
             <Icon name="close" size={25} color={COLORS.white} style={styles.closeicon} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleRemove} style={styles.removeicon} >
+          <TouchableOpacity onPress={handleRemove}  style={styles.removeicon} >
             <Icon name="remove" size={25} color={COLORS.white}   />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleAdd} style={styles.addicon} >
@@ -145,4 +158,15 @@ const CartScreen = ({food, update, setUpdate }) => {
     </SafeAreaView>
   );
 };
+
+const style = StyleSheet.create({
+  selectedInfoText: {
+    fontSize:8,
+    fontWeight:"bold"
+
+  },
+
+})
+
 export default CartScreen;
+

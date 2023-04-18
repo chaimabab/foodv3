@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         backgroundColor:COLORS.rouge,
         fontWeight: 'bold',
         color:'white',
-        marginTop:120,
+        marginTop:30,
         borderRadius: 5,
     },
 
@@ -181,7 +181,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
        marginLeft:20,
-       justifyContent:"flex-start"
+       justifyContent:"flex-start",
+       marginTop:25
     },
 
     ingredientButton: {

@@ -96,7 +96,8 @@ const Commands = ({ update }) => {
       <View style={styles.Calculations}>
         <View style={styles.Calculation}>
           <Text style={styles.inputtext}>Sous Total</Text>
-          <Text>{priceTot}</Text>
+          <Text>0</Text>
+          {/* <Text>{priceTot}</Text> */}
         </View>
         <View style={styles.Calculation}>
           <Text style={styles.inputtext}>Tax</Text>
