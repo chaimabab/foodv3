@@ -188,10 +188,9 @@ const cardWidth = width/2 -20;
     const [priceSize, setPriceSize] = useState(0);
     const [priceSupplement, setPriceSupplement] = useState(0);
 
-
     useEffect(() => {
-      setPrice(priceSize+priceSupplement)
-    },[priceSize, priceSupplement]);
+      setPrice(priceSize + priceSupplement);
+    }, [priceSize, priceSupplement]);
 
     // const HandleSetPrice = (priceSupp) => {
     //   ticket.map((t) => {
@@ -200,7 +199,6 @@ const cardWidth = width/2 -20;
     //     }
     //   });
     // };
-
 
     const HandleAddProd2Ticket = () => {
       ticket.push(food);
@@ -211,10 +209,16 @@ const cardWidth = width/2 -20;
     const handleOpenModal = () => {
       setShowModal(true);
     };
+
     const handleCloseModal = () => {
       setShowModal(false);
-       ticket.push(food);
-       setUpdate(!update);
+      ticket.push({
+        ...food,
+        size: selectedSize,
+        ingredients: selectedIngredients,
+        supplement: selectedSupplement,
+      });
+      setUpdate(!update);
     };
 
     const [sizes, setSizes] = useState([]);
@@ -257,7 +261,7 @@ const cardWidth = width/2 -20;
 
     const [ingredients, setIngredients] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
-    
+
     useEffect(() => {
       axios
         .get(`http://192.168.1.15/admin/api/products/ingredients/${food.id}`)
@@ -280,8 +284,6 @@ const cardWidth = width/2 -20;
         setSelectedIngredients([...selectedIngredients, ingredient]);
       }
     };
-
-
 
     // const supplementList = ['Tomate', 'Sauce', 'Fromage','Pepperoni'];
     // useEffect(() => {
@@ -331,16 +333,15 @@ const cardWidth = width/2 -20;
     }, [selectedSupplement]);
 
     useEffect(() => {
-      let totalPrice = 0; 
-        selectedSupplement.forEach((si) => { 
-          const matchingSupplement = supplement.find((i) => i.id === si.id); 
-          if (matchingSupplement) { 
-             totalPrice += si.price; 
-          }
-        });
+      let totalPrice = 0;
+      selectedSupplement.forEach((si) => {
+        const matchingSupplement = supplement.find((i) => i.id === si.id);
+        if (matchingSupplement) {
+          totalPrice += si.price;
+        }
+      });
       setPriceSupplement(totalPrice);
     }, [selectedSupplement]);
-
 
     return (
       <View style={style.card}>
@@ -353,7 +354,9 @@ const cardWidth = width/2 -20;
           />
         </TouchableOpacity>
         <View style={{ marginHorizontal: 5 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}>{food.name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}>
+            {food.name}
+          </Text>
         </View>
         <View
           style={{
@@ -363,7 +366,9 @@ const cardWidth = width/2 -20;
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>{food.price} TND </Text>
+          <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>
+            {food.price} TND{" "}
+          </Text>
           <TouchableOpacity style={styles.addToCartBTn}>
             <Icon
               name="add"
@@ -371,7 +376,7 @@ const cardWidth = width/2 -20;
               color="white"
               onPress={handleOpenModal}
             />
-            
+
             <Modal visible={showModal} animationType="slide" transparent={true}>
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
@@ -431,9 +436,16 @@ const cardWidth = width/2 -20;
                         </TouchableOpacity>
                       ))}
                     </View>
-                    <Text style={styles.selectedIngredientsText}> 
-                          Sans: {ingredients.filter((ingredient) => !selectedIngredients.includes(ingredient)).map((ingredient) => ingredient.name).join(', ')}
-                    </Text> 
+                    <Text style={styles.selectedIngredientsText}>
+                      Sans:{" "}
+                      {ingredients
+                        .filter(
+                          (ingredient) =>
+                            !selectedIngredients.includes(ingredient)
+                        )
+                        .map((ingredient) => ingredient.name)
+                        .join(", ")}
+                    </Text>
                   </View>
 
                   <View style={styles.containerSupp}>
@@ -458,15 +470,20 @@ const cardWidth = width/2 -20;
                       ))}
                     </View>
 
-                    <Text style={styles.selectedSupplementText}> 
-                        Suppléments: {supplement.filter((supplement) => selectedSupplement.includes(supplement)).map((supplement) => supplement.name).join(', ')}
-                    </Text> 
-
+                    <Text style={styles.selectedSupplementText}>
+                      Suppléments:{" "}
+                      {supplement
+                        .filter((supplement) =>
+                          selectedSupplement.includes(supplement)
+                        )
+                        .map((supplement) => supplement.name)
+                        .join(", ")}
+                    </Text>
                   </View>
 
                   <Text> Prix: {price}</Text>
 
-                  <TouchableOpacity onPress={handleCloseModal} >
+                  <TouchableOpacity onPress={handleCloseModal}>
                     <Text style={styles.btnclose}>Valider</Text>
                   </TouchableOpacity>
                 </View>

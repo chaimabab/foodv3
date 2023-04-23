@@ -74,24 +74,55 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
           <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}>
             {item.name}
           </Text>
-
-          <Text style={{ fontSize: "17", fontWeight: "bold", marginLeft: -180 }}>
-            {/*item.price} TND */ }
-            {calculateTotalPriceProduct()} TND 
+          <Text style={{ color: "red" }}>
+            sizes :{" "}
+            {item && item.size
+              ? item.size.map((s) => {
+                  return <Text style={{}}>{s}</Text>;
+                })
+              : ""}
+            ,
           </Text>
-          </View>
-          <View style={{ marginRight: 20, alignItems: "center" }}>
+          <Text style={{ color: "red" }}>
+            ingridients :{" "}
+            {item && item.ingredients
+              ? item.ingredients.map((i) => {
+                  return <Text style={{}}>{i}</Text>;
+                })
+              : ""}
+          </Text>
+          <Text style={{ color: "red" }}>
+            supplements :{" "}
+            {item && item.supplement
+              ? item.supplement.map((sp) => {
+                  return <Text style={{}}>{sp}</Text>;
+                })
+              : ""}
+          </Text>
+          <Text
+            style={{ fontSize: "17", fontWeight: "bold", marginLeft: -180 }}
+          >
+            {/*item.price} TND */}
+            {calculateTotalPriceProduct()} TND
+          </Text>
+        </View>
+        <View style={{ marginRight: 20, alignItems: "center" }}>
           <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
-          <View> 
-          <TouchableOpacity onPress={HandleRemoveProdFromTicket}>
-            <Icon name="close" size={25} color={COLORS.white} style={styles.closeicon} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleRemove}  style={styles.removeicon} >
-            <Icon name="remove" size={25} color={COLORS.white}   />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleAdd} style={styles.addicon} >
-            <Icon name="add" size={25} color={COLORS.white}  />
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity onPress={HandleRemoveProdFromTicket}>
+              <Icon
+                name="close"
+                size={25}
+                color={COLORS.white}
+                style={styles.closeicon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleRemove} style={styles.removeicon}>
+              <Icon name="remove" size={25} color={COLORS.white} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleAdd} style={styles.addicon}>
+              <Icon name="add" size={25} color={COLORS.white} />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
