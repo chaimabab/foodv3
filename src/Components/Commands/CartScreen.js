@@ -67,19 +67,23 @@ const CartScreen = ({ food, update, setUpdate }) => {
 
           {item && item.size && item.size.length > 0
             ? item.size.map((s) => {
-                return <Text style={{ color: "red" }}>sizes : {s}</Text>;
+                return <Text style={{ color: "red" }}>sizes : {s.name}</Text>;
               })
             : ""}
 
           {item && item.ingredients && item.ingredients.length > 0
             ? item.ingredients.map((i) => {
-                return <Text style={{ color: "red" }}>ingridients : {i}</Text>;
+                return (
+                  <Text style={{ color: "red" }}>ingridients : {i.name}</Text>
+                );
               })
             : ""}
 
           {item && item.supplement && item.supplement.length > 0
             ? item.supplement.map((sp) => {
-                return <Text style={{ color: "red" }}>supplements : {sp}</Text>;
+                return (
+                  <Text style={{ color: "red" }}>supplements : {sp.name}</Text>
+                );
               })
             : ""}
           <Text
