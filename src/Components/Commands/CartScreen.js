@@ -74,31 +74,24 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
           <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}>
             {item.name}
           </Text>
-          <Text style={{ color: "red" }}>
-            sizes :{" "}
-            {item && item.size
-              ? item.size.map((s) => {
-                  return <Text style={{}}>{s}</Text>;
-                })
-              : ""}
-            ,
-          </Text>
-          <Text style={{ color: "red" }}>
-            ingridients :{" "}
-            {item && item.ingredients
-              ? item.ingredients.map((i) => {
-                  return <Text style={{}}>{i}</Text>;
-                })
-              : ""}
-          </Text>
-          <Text style={{ color: "red" }}>
-            supplements :{" "}
-            {item && item.supplement
-              ? item.supplement.map((sp) => {
-                  return <Text style={{}}>{sp}</Text>;
-                })
-              : ""}
-          </Text>
+
+          {item && item.size && item.size.length > 0
+            ? item.size.map((s) => {
+                return <Text style={{ color: "red" }}>sizes : {s}</Text>;
+              })
+            : ""}
+
+          {item && item.ingredients && item.ingredients.length > 0
+            ? item.ingredients.map((i) => {
+                return <Text style={{ color: "red" }}>ingridients : {i}</Text>;
+              })
+            : ""}
+
+          {item && item.supplement && item.supplement.length > 0
+            ? item.supplement.map((sp) => {
+                return <Text style={{ color: "red" }}>supplements : {sp}</Text>;
+              })
+            : ""}
           <Text
             style={{ fontSize: "17", fontWeight: "bold", marginLeft: -180 }}
           >
