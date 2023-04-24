@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableOpacity,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -12,55 +11,46 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../../consts/colors";
 import ticket from "../../consts/ticket";
 // import {PrimaryButton} from '../../consts/button';
-import { styles} from "./styles";
+import { styles } from "./styles";
 
-const CartScreen = ({food, update, setUpdate, setTicket }) => {
+const CartScreen = ({ food, update, setUpdate }) => {
   useEffect(() => {
     console.log(ticket);
   }, [update]);
 
   const CartCard = ({ item }) => {
-  const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(item.price);
+    const [quantity, setQuantity] = useState(1);
+    const [price, setPrice] = useState(item.price);
 
-  const handleAdd = () => 
-    { 
-      setQuantity(quantity + 1); 
-    }
+    const handleAdd = () => {
+      setQuantity(quantity + 1);
+    };
 
-  const handleRemove = () => {
-    if (quantity > 1) {  
-      setQuantity(quantity - 1); 
-    }
-  }  
-  
-  const HandleRemoveProdFromTicket = () => {
-    // if (ticket && ticket.length > 0 && food) {
+    const handleRemove = () => {
+      if (quantity > 1) {
+        setQuantity(quantity - 1);
+      }
+    };
+
+    const HandleRemoveProdFromTicket = () => {
+      // if (ticket && ticket.length > 0 && food) {
       ticket.pop(food);
       setUpdate(!update);
+      // }
+    };
+
+    const calculateTotalPriceProduct = () => {
+      return quantity * price;
+    };
+
+    //   const HandleRemoveFromTicket = () =>{
+    //     ticket.pop(food)
+    //     setUpdate(!update)
     // }
-  };
-  
 
-  const calculateTotalPriceProduct = () => {
-    return quantity * price; 
-  }
-
-  //   const HandleRemoveFromTicket = () =>{
-  //     ticket.pop(food)
-  //     setUpdate(!update)  
-  // } 
-
-  // const calculateTotalPriceTicket = () => {
-  //   return price=+price; 
-  // }
-
-  const [supplement, setSupplement] = useState([]);
-  const [selectedSupplement, setSelectedSupplement] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
-  const [sizes, setSizes] = useState([]);
-  const [selectedSize, setSelectedSize] = useState("");
+    // const calculateTotalPriceTicket = () => {
+    //   return price=+price;
+    // }
 
     return (
       <View style={styles.cartCard}>
@@ -99,6 +89,7 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
             {calculateTotalPriceProduct()} TND
           </Text>
         </View>
+
         <View style={{ marginRight: 20, alignItems: "center" }}>
           <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
           <View>
@@ -121,11 +112,10 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
       </View>
     );
   };
-
   return (
     <SafeAreaView>
       <View style={styles.header}>
-        <Text style={{ fontSize: 20, fontWeight: "bold",marginLeft: 130}}>
+        <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 130 }}>
           Ticket
         </Text>
       </View>
@@ -134,7 +124,11 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
         contentContainerStyle={{ paddingBottom: 60 }}
         data={ticket ? ticket : ""}
         renderItem={({ item }) => <CartCard item={item} />}
-        ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20, marginLeft:220}}
+        ListFooterComponentStyle={{
+          paddingHorizontal: 20,
+          marginTop: 20,
+          marginLeft: 220,
+        }}
         ListFooterComponent={() => (
           <View>
             <View
@@ -144,12 +138,19 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
                 marginVertical: 15,
               }}
             >
-              <Text style={{ fontSize: 18, fontWeight: "bold" ,marginLeft:-220}}>
+              <Text
+                style={{ fontSize: 18, fontWeight: "bold", marginLeft: -220 }}
+              >
                 Prix Total
               </Text>
-              <Text style={{ fontSize: 18, fontWeight: "bold" ,marginLeft:-50}}> TND </Text>
+              <Text
+                style={{ fontSize: 18, fontWeight: "bold", marginLeft: -50 }}
+              >
+                {" "}
+                TND{" "}
+              </Text>
             </View>
-            <View style={{ marginHorizontal: 30}}>
+            <View style={{ marginHorizontal: 30 }}>
               <TouchableOpacity activeOpacity={0.8}>
                 <View
                   style={{
@@ -158,9 +159,9 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
                     borderRadius: 30,
                     justifyContent: 30,
                     alignItem: "center",
-                    justifyContent:'center',
-                    marginLeft:-160,
-                    marginRight:45,
+                    justifyContent: "center",
+                    marginLeft: -160,
+                    marginRight: 45,
                   }}
                 >
                   <Text
@@ -168,7 +169,7 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
                       color: COLORS.white,
                       fontWeight: "blod",
                       fontSize: 18,
-                      marginLeft:10
+                      marginLeft: 10,
                     }}
                   >
                     CHECKOUT
@@ -182,15 +183,11 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
     </SafeAreaView>
   );
 };
-
 const style = StyleSheet.create({
   selectedInfoText: {
-    fontSize:8,
-    fontWeight:"bold"
-
+    fontSize: 8,
+    fontWeight: "bold",
   },
-
-})
+});
 
 export default CartScreen;
-

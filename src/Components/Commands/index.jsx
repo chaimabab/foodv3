@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View,Image, SafeAreaView } from "react-native";
+import { Text, View,Image, SafeAreaView } from "react-native";
 import {styles} from './styles'
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Button } from '@rneui/themed';
-import categories from '../../consts/categories';
-import services from "../../consts/services";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CartScreen from "./CartScreen";
 import ticket from "../../consts/ticket";
 
 const Commands = ({ update }) => {
   const [priceTot, setPriceTot] = useState(0);
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
-    ticket.map((t) => {
-      setPriceTot(priceTot + t.price);
-    });
+    const interval = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000); 
+    return () => clearInterval(interval);
   }, []);
-
-  function padTo2Digits(num) {
-    return num.toString().padStart(2, "0");
-  }
 
   function formatDate(date) {
     return [
@@ -30,11 +25,19 @@ const Commands = ({ update }) => {
     ].join(" ");
   }
 
+  useEffect(() => {
+    ticket.map((t) => {
+      setPriceTot(priceTot + t.price);
+    });
+  }, []);
+
+
   return (
     <View style={styles.Commands}>
       <View style={styles.CommandsHeader}>
         <Text style={styles.textBold}>Commande</Text>
-        <Text>{formatDate(new Date())}</Text>
+        <Text>{formatDate(currentDate)}</Text>
+        {/* <Text>{formatDate(new Date())}</Text> */}
       </View>
       <View style={styles.devider} />
 

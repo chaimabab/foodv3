@@ -1,22 +1,18 @@
 import React, {useState, useEffect} from "react";
-import { Modal, Text, View, Image, StyleSheet, SafeAreaView, Dimensions,TouchableOpacity, Alert, Pressable} from "react-native";
+import { Modal, Text, View, Image, StyleSheet,TouchableOpacity} from "react-native";
 import {styles} from './styles'
-import { Button } from 'react-native-elements';
-import { FlatList, ScrollView,TextInput,TouchableHighlight } from "react-native-gesture-handler";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import categories from '../../consts/categories';
 import ticket from '../../consts/ticket';
-const {width} = Dimensions.get('screen');
-import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import * as Animatable from 'react-native-animatable';
 import TicketModal from "../Modals/Ticket";
 import TableModal from "../Modals/ClotureZ";
 import RevenusModal from "../Modals/Revenus";
 import ClotureZModal from "../Modals/ClotureZ";
 import axios from 'axios'; 
-const cardWidth = width/2 -20;
-
 
  const ListCategories = ({cats, setCategory}) => {
    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
@@ -376,7 +372,6 @@ const cardWidth = width/2 -20;
               color="white"
               onPress={handleOpenModal}
             />
-
             <Modal visible={showModal} animationType="slide" transparent={true}>
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
@@ -700,7 +695,6 @@ card: {
   backgroundColor: COLORS.secondary,
   //marginLeft:10,
 
-  
 },
 });
 export default Categories; 

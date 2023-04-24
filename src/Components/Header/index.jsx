@@ -6,7 +6,6 @@ import {styles} from './styles';
 import COLORS from "../../consts/colors";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity,TextInput } from "react-native-gesture-handler";
-import SearchBar from "./SearchBar";
 const Header = () => {
   
   return (
