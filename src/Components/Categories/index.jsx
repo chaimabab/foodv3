@@ -211,7 +211,7 @@ import axios from 'axios';
       ticket.push({
         ...food,
         size: selectedSize,
-        ingredients: selectedIngredients,
+        ingredients: notSelectedIngredients,
         supplement: selectedSupplement,
       });
       setUpdate(!update);
@@ -256,13 +256,14 @@ import axios from 'axios';
 
     const [ingredients, setIngredients] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
+    const [notSelectedIngredients, setNotSelectedIngredients] = useState([]);
 
     useEffect(() => {
       axios
         .get(`http://192.168.1.15/admin/api/products/ingredients/${food.id}`)
         .then((response) => {
           setIngredients(response.data);
-          setSelectedIngredients(response.data);
+          // setSelectedIngredients(response.data);
         })
         .catch((error) => {
           console.error("Erreur lors du chargement des ingrédients:", error);
@@ -275,8 +276,12 @@ import axios from 'axios';
         setSelectedIngredients(
           selectedIngredients.filter((item) => item !== ingredient)
         );
+        setNotSelectedIngredients([...notSelectedIngredients, ingredient]);
       } else {
         setSelectedIngredients([...selectedIngredients, ingredient]);
+        setNotSelectedIngredients(
+          notSelectedIngredients.filter((item) => item !== ingredient)
+        );
       }
     };
 
@@ -419,9 +424,9 @@ import axios from 'axios';
                           key={ingredient.name}
                           onPress={() => handleIngredientToggle(ingredient)}
                           style={[
-                            styles.ingredientButton,
+                            styles.selectedIngredientButton,
                             selectedIngredients.includes(ingredient) &&
-                              styles.selectedIngredientButton,
+                              styles.ingredientButton,
                           ]}
                         >
                           <Text style={styles.ingredientText}>

@@ -23,16 +23,22 @@ const CartScreen = ({ food, update, setUpdate }) => {
     const [price, setPrice] = useState(item.price);
 
     const [quantity,setQuantity]= useState(1);
+    const [qt, setQt] = useState(1);
+
+    const handleAdddddddddddddd = () => {
+      setQt(qt + 1);
+    };
 
     const handleAdd = () => {
       setQuantity(quantity + 1);
+      console.log(quantity);
     };
     const handleRemove = () => {
       if (quantity > 1) {
         setQuantity(quantity - 1);
+        // console.log("from  : ",quantity);
       }
     };
-    
 
     const HandleRemoveProdFromTicket = () => {
       // if (ticket && ticket.length > 0 && food) {
@@ -44,7 +50,6 @@ const CartScreen = ({ food, update, setUpdate }) => {
     const calculateTotalPriceProduct = () => {
       return quantity * price;
     };
-
 
     return (
       <View style={styles.cartCard}>
@@ -58,44 +63,56 @@ const CartScreen = ({ food, update, setUpdate }) => {
           <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}>
             {item.name}
           </Text>
-
-          {item && item.size && item.size.length > 0
-            ? item.size.map((sz) => {
-                return (
-                  <Text style={{ color:COLORS.grey, marginLeft: -180 }}>size : {sz.name}</Text>
-                );
-              })
-            : ""} 
-          {item && item.ingredients && item.ingredients.length > 0
-            ? item.ingredients.map((i) => {
-                return (
-                  <Text style={{ color:COLORS.grey, marginLeft: -180 }}>ingredients : {i.name}</Text>
-                );
-              })
-            : ""}
-
-          {item && item.supplement && item.supplement.length > 0
-            ? item.supplement.map((sp) => {
-                return (
-                  <Text style={{ color:COLORS.grey,marginLeft: -180 }}>supp: {sp.name}</Text>
-                );
-              })
-            : ""}
-
-
-          <Text
-            style={{ fontSize: "17", fontWeight: "bold", marginLeft: -180 }}
-          >
+          <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+            size :
+            {item && item.size && item.size.length > 0
+              ? item.size.map((sz, index) => {
+                  return (
+                    <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+                      {sz.name}
+                      {index < item.size.length - 1 ? "," : ""}
+                    </Text>
+                  );
+                })
+              : ""}
+          </Text>
+          <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+            ingredients sans :
+            {item && item.ingredients && item.ingredients.length > 0
+              ? item.ingredients.map((i, index) => {
+                  return (
+                    <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+                      {i.name}
+                      {index < item.ingredients.length - 1 ? "," : ""}
+                    </Text>
+                  );
+                })
+              : ""}
+          </Text>
+          <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+            supp :
+            {item && item.supplement && item.supplement.length > 0
+              ? item.supplement.map((sp, index) => {
+                  return (
+                    <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+                      {sp.name}
+                      {index < item.supplement.length - 1 ? "," : ""}
+                    </Text>
+                  );
+                })
+              : ""}
+          </Text>
+          <Text style={{ fontSize: 17, fontWeight: "bold", marginLeft: -180 }}>
             {/*item.price} TND */}
             {calculateTotalPriceProduct()} TND
           </Text>
         </View>
 
         <View style={{ marginRight: 20, alignItems: "center" }}>
-          <Text style={{fontWeight:"bold",fontSize:18}}>{quantity}</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
           <View>
-            <TouchableOpacity >
-            {/* onPress={HandleRemoveProdFromTicket} */}
+            <TouchableOpacity>
+              {/* onPress={HandleRemoveProdFromTicket} */}
               <Icon
                 name="close"
                 size={25}
@@ -103,16 +120,16 @@ const CartScreen = ({ food, update, setUpdate }) => {
                 style={styles.closeicon}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.removeicon}>
-              <Icon name="remove" size={25} color={COLORS.white} onPress={handleRemove}></Icon>
+            <TouchableOpacity style={styles.removeicon} onPress={handleRemove}>
+              <Icon name="remove" size={25} color={COLORS.white}></Icon>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.addicon}>
-              <Icon name="add" size={25} color={COLORS.white} onPress={handleAdd}></Icon>
+            <TouchableOpacity
+              style={styles.addicon}
+              onPress={() => handleAdd()}
+            >
+              <Icon name="add" size={25} color={COLORS.white}></Icon>
             </TouchableOpacity>
-
-
-
           </View>
         </View>
       </View>
