@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableOpacity,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -14,14 +13,14 @@ import ticket from "../../consts/ticket";
 // import {PrimaryButton} from '../../consts/button';
 import { styles} from "./styles";
 
-const CartScreen = ({food, update, setUpdate, setTicket }) => {
+const CartScreen = ({food, update, setUpdate }) => {
   useEffect(() => {
     console.log(ticket);
   }, [update]);
 
   const CartCard = ({ item }) => {
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(item.price);
+  const [price,setPrice] = useState(item.price);
 
   const handleAdd = () => 
     { 
@@ -54,14 +53,7 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
   // const calculateTotalPriceTicket = () => {
   //   return price=+price; 
   // }
-
-  const [supplement, setSupplement] = useState([]);
-  const [selectedSupplement, setSelectedSupplement] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
-  const [sizes, setSizes] = useState([]);
-  const [selectedSize, setSelectedSize] = useState("");
-
+  
     return (
       <View style={styles.cartCard}>
         <View
@@ -74,31 +66,35 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
           <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}>
             {item.name}
           </Text>
-          <Text style={{ color: "red" }}>
-            sizes :{" "}
-            {item && item.size
+
+           <Text style={{ color:COLORS.grey ,marginLeft:-180,fontSize:11}}>
+            size :{" "}
+            {item && item.size && item.size.length > 0
               ? item.size.map((s) => {
                   return <Text style={{}}>{s}</Text>;
                 })
               : ""}
             ,
-          </Text>
-          <Text style={{ color: "red" }}>
-            ingridients :{" "}
-            {item && item.ingredients
+          </Text> 
+
+           <Text style={{ color:COLORS.grey ,marginLeft:-180,fontSize:11}}>
+            ingredients :{" "}
+            {item && item.ingredients && item.ingredients.length > 0 
               ? item.ingredients.map((i) => {
                   return <Text style={{}}>{i}</Text>;
                 })
               : ""}
           </Text>
-          <Text style={{ color: "red" }}>
-            supplements :{" "}
-            {item && item.supplement
+
+          <Text style={{color:COLORS.grey, marginLeft:-180,fontSize:11 }}>
+            supp :{" "}
+            {item && item.supplement && item.supplement.length > 0
               ? item.supplement.map((sp) => {
                   return <Text style={{}}>{sp}</Text>;
                 })
               : ""}
-          </Text>
+          </Text>  
+
           <Text
             style={{ fontSize: "17", fontWeight: "bold", marginLeft: -180 }}
           >
@@ -106,6 +102,7 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
             {calculateTotalPriceProduct()} TND
           </Text>
         </View>
+
         <View style={{ marginRight: 20, alignItems: "center" }}>
           <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
           <View>
@@ -128,7 +125,6 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
       </View>
     );
   };
-
   return (
     <SafeAreaView>
       <View style={styles.header}>
@@ -189,12 +185,10 @@ const CartScreen = ({food, update, setUpdate, setTicket }) => {
     </SafeAreaView>
   );
 };
-
 const style = StyleSheet.create({
   selectedInfoText: {
     fontSize:8,
     fontWeight:"bold"
-
   },
 
 })
