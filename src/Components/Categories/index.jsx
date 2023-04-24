@@ -216,7 +216,6 @@ import axios from 'axios';
       });
       setUpdate(!update);
     };
-
     const [sizes, setSizes] = useState([]);
     const [selectedSize, setSelectedSize] = useState("");
     useEffect(() => {
@@ -389,7 +388,7 @@ import axios from 'axios';
                   </Text>
 
                   <View style={styles.containerSize}>
-                    {sizes?.map((size) => (
+                    {sizes.map((size) => (
                       <TouchableOpacity
                         key={size.price}
                         style={[

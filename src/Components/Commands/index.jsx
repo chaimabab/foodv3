@@ -52,7 +52,7 @@ const Commands = ({ update }) => {
             style={{ width: 50, height: 50 }}
             source={require("../../assets/services/livraison.png")}
           />
-          <Text style={styles.text}>Livraison</Text>
+          <Text style={styles.text1}>Livraison</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.service}>
@@ -66,7 +66,7 @@ const Commands = ({ update }) => {
             size={40}
             color="#008000"
           /> */}
-          <Text style={styles.text}>Emporter</Text>
+          <Text style={styles.text2}>Emporter</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.service}>
@@ -80,7 +80,7 @@ const Commands = ({ update }) => {
             size={40}
             color="#008000"
           /> */}
-          <Text style={styles.text}>Sur place</Text>
+          <Text style={styles.text3}>Sur place</Text>
         </TouchableOpacity>
       </View>
 

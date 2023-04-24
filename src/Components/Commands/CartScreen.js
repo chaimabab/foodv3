@@ -19,18 +19,20 @@ const CartScreen = ({ food, update, setUpdate }) => {
   }, [update]);
 
   const CartCard = ({ item }) => {
-    const [quantity, setQuantity] = useState(1);
+
     const [price, setPrice] = useState(item.price);
+
+    const [quantity,setQuantity]= useState(1);
 
     const handleAdd = () => {
       setQuantity(quantity + 1);
     };
-
     const handleRemove = () => {
       if (quantity > 1) {
         setQuantity(quantity - 1);
       }
     };
+    
 
     const HandleRemoveProdFromTicket = () => {
       // if (ticket && ticket.length > 0 && food) {
@@ -43,14 +45,6 @@ const CartScreen = ({ food, update, setUpdate }) => {
       return quantity * price;
     };
 
-    //   const HandleRemoveFromTicket = () =>{
-    //     ticket.pop(food)
-    //     setUpdate(!update)
-    // }
-
-    // const calculateTotalPriceTicket = () => {
-    //   return price=+price;
-    // }
 
     return (
       <View style={styles.cartCard}>
@@ -66,15 +60,16 @@ const CartScreen = ({ food, update, setUpdate }) => {
           </Text>
 
           {item && item.size && item.size.length > 0
-            ? item.size.map((s) => {
-                return <Text style={{ color: "red" }}>sizes : {s.name}</Text>;
+            ? item.size.map((sz) => {
+                return (
+                  <Text style={{ color:COLORS.grey, marginLeft: -180 }}>size : {sz.name}</Text>
+                );
               })
-            : ""}
-
+            : ""} 
           {item && item.ingredients && item.ingredients.length > 0
             ? item.ingredients.map((i) => {
                 return (
-                  <Text style={{ color: "red" }}>ingridients : {i.name}</Text>
+                  <Text style={{ color:COLORS.grey, marginLeft: -180 }}>ingredients : {i.name}</Text>
                 );
               })
             : ""}
@@ -82,10 +77,12 @@ const CartScreen = ({ food, update, setUpdate }) => {
           {item && item.supplement && item.supplement.length > 0
             ? item.supplement.map((sp) => {
                 return (
-                  <Text style={{ color: "red" }}>supplements : {sp.name}</Text>
+                  <Text style={{ color:COLORS.grey,marginLeft: -180 }}>supp: {sp.name}</Text>
                 );
               })
             : ""}
+
+
           <Text
             style={{ fontSize: "17", fontWeight: "bold", marginLeft: -180 }}
           >
@@ -95,9 +92,10 @@ const CartScreen = ({ food, update, setUpdate }) => {
         </View>
 
         <View style={{ marginRight: 20, alignItems: "center" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
+          <Text style={{fontWeight:"bold",fontSize:18}}>{quantity}</Text>
           <View>
-            <TouchableOpacity onPress={HandleRemoveProdFromTicket}>
+            <TouchableOpacity >
+            {/* onPress={HandleRemoveProdFromTicket} */}
               <Icon
                 name="close"
                 size={25}
@@ -105,12 +103,16 @@ const CartScreen = ({ food, update, setUpdate }) => {
                 style={styles.closeicon}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleRemove} style={styles.removeicon}>
-              <Icon name="remove" size={25} color={COLORS.white} />
+            <TouchableOpacity style={styles.removeicon}>
+              <Icon name="remove" size={25} color={COLORS.white} onPress={handleRemove}></Icon>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleAdd} style={styles.addicon}>
-              <Icon name="add" size={25} color={COLORS.white} />
+
+            <TouchableOpacity style={styles.addicon}>
+              <Icon name="add" size={25} color={COLORS.white} onPress={handleAdd}></Icon>
             </TouchableOpacity>
+
+
+
           </View>
         </View>
       </View>

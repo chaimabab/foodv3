@@ -62,9 +62,18 @@ const styles = StyleSheet.create({
         
     },
 
-    text: {
+    text1: {
         fontWeight: "bold", 
-        color:"#008000"     
+        color:COLORS.dark    
+    },
+    text2: {
+        fontWeight: "bold", 
+        color:COLORS.dark     
+    },
+    text3: {
+        fontWeight: "bold", 
+        color:COLORS.dark
+        //color:"#008000"     
     },
     
     inputtext :{
