@@ -1,4 +1,4 @@
-import React, { useState }from "react";
+import React, { useEffect, useState } from 'react';
 import { Text, View,SafeAreaView } from "react-native";
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -7,7 +7,23 @@ import COLORS from "../../consts/colors";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity,TextInput } from "react-native-gesture-handler";
 const Header = () => {
-  
+
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentDate(new Date());
+  //   }, 1000); 
+  //   return () => clearInterval(interval);
+  // }, []);
+
+  // function formatDate(date) {
+  //   return [
+  //     date.toLocaleDateString("en-US"),
+  //     date.toLocaleTimeString("en-US"),
+  //   ].join(" ");
+  // }
+
   return (
     <View style={styles.header}>
 
@@ -22,6 +38,12 @@ const Header = () => {
       <View>
           <Text style={styles.text}>numtel</Text>
       </View>
+
+      {/* <View>
+        <Text>{formatDate(currentDate)}</Text>
+      </View>  */}
+
+
 
       {/* <View>
         <SearchBar/>

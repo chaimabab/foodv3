@@ -9,6 +9,13 @@ import ticket from "../../consts/ticket";
 
 const Commands = ({ update }) => {
   const [priceTot, setPriceTot] = useState(0);
+
+  useEffect(() => {
+    ticket.map((t) => {
+      setPriceTot(priceTot + t.price);
+    });
+  }, []);
+
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
@@ -25,19 +32,12 @@ const Commands = ({ update }) => {
     ].join(" ");
   }
 
-  useEffect(() => {
-    ticket.map((t) => {
-      setPriceTot(priceTot + t.price);
-    });
-  }, []);
-
 
   return (
     <View style={styles.Commands}>
       <View style={styles.CommandsHeader}>
         <Text style={styles.textBold}>Commande</Text>
         <Text>{formatDate(currentDate)}</Text>
-        {/* <Text>{formatDate(new Date())}</Text> */}
       </View>
       <View style={styles.devider} />
 
@@ -131,9 +131,9 @@ const Commands = ({ update }) => {
       </View>
 
       <View style={styles.ButtonsFooter}>
-        <Button size="sm" color="success" title="valider" />
-        <Button size="sm" color="warning" title="En attente" />
         <Button size="sm" color="error" title="Annuler" />
+        <Button size="sm" color="warning" title="En attente" />
+        <Button size="sm" color="success" title="Valider" />
       </View>
     </View>
   );

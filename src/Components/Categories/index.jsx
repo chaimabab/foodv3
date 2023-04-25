@@ -213,11 +213,13 @@ import axios from 'axios';
         size: selectedSize,
         ingredients: notSelectedIngredients,
         supplement: selectedSupplement,
+        //price : setPrice, 
       });
       setUpdate(!update);
     };
+
     const [sizes, setSizes] = useState([]);
-    const [selectedSize, setSelectedSize] = useState("");
+    const [selectedSize, setSelectedSize] = useState([]);
     useEffect(() => {
       axios
         .get(`http://192.168.1.15/admin/api/products/variants/${food.id}`)
@@ -263,7 +265,7 @@ import axios from 'axios';
         .get(`http://192.168.1.15/admin/api/products/ingredients/${food.id}`)
         .then((response) => {
           setIngredients(response.data);
-          // setSelectedIngredients(response.data);
+          setSelectedIngredients(response.data);
         })
         .catch((error) => {
           console.error("Erreur lors du chargement des ingrédients:", error);
@@ -281,7 +283,7 @@ import axios from 'axios';
         setSelectedIngredients([...selectedIngredients, ingredient]);
         setNotSelectedIngredients(
           notSelectedIngredients.filter((item) => item !== ingredient)
-        );
+         );
       }
     };
 
@@ -342,6 +344,20 @@ import axios from 'axios';
       });
       setPriceSupplement(totalPrice);
     }, [selectedSupplement]);
+
+    const [quantity,setQuantity]= useState(1);
+    const handleAdd = () => {
+      setQuantity(quantity + 1);;
+    };
+    const handleRemove = () => {
+      if (quantity > 1) {
+        setQuantity(quantity - 1);
+      }
+    };
+        
+    const calculateTotalPriceProduct = () => {
+      return quantity * price;
+     };
 
     return (
       <View style={style.card}>
@@ -424,9 +440,9 @@ import axios from 'axios';
                           key={ingredient.name}
                           onPress={() => handleIngredientToggle(ingredient)}
                           style={[
-                            styles.selectedIngredientButton,
+                            styles.ingredientButton,
                             selectedIngredients.includes(ingredient) &&
-                              styles.ingredientButton,
+                              styles.selectedIngredientButton,
                           ]}
                         >
                           <Text style={styles.ingredientText}>
@@ -480,10 +496,22 @@ import axios from 'axios';
                     </Text>
                   </View>
 
-                  <Text> Prix: {price}</Text>
+                  <View>
+                    <View>
+                      <Text style={{ fontWeight: "bold", fontSize: 14,marginLeft:29, marginTop:10}}>{quantity}</Text> 
+                    </View>
+                    <TouchableOpacity style={styles.removeicon} onPress={handleRemove}>
+                      <Icon name="remove" size={25} color={COLORS.white}></Icon>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.addicon} onPress={handleAdd} >
+                      <Icon name="add" size={25} color={COLORS.white}></Icon>
+                    </TouchableOpacity>
+                  </View>
+
+                  <Text style={styles.pricetext}> Prix: {calculateTotalPriceProduct()} TND</Text>
 
                   <TouchableOpacity onPress={handleCloseModal}>
-                    <Text style={styles.btnclose}>Valider</Text>
+                    <Text style={styles.btnclose}> Valider </Text>
                   </TouchableOpacity>
                 </View>
               </View>

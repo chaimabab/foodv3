@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 
     modalContent: {
         width: '40%',
-        height: '60%',
+        height: '70%',
         backgroundColor: 'white',
         borderRadius: 10,
         justifyContent: 'center',
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         backgroundColor:COLORS.rouge,
         fontWeight: 'bold',
         color:'white',
-        marginTop:30,
+        marginTop:20,
         borderRadius: 5,
     },
 
@@ -266,7 +266,37 @@ const styles = StyleSheet.create({
 		// marginRight:50,
         fontWeight:"bold",
     },
-    
+
+    removeicon:{
+        width: 30,
+        height: 30,
+        backgroundColor: COLORS.primary,
+        borderRadius: 30,
+        paddingHorizontal: 2,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
+
+    addicon:{
+        width: 30,
+        height: 30,
+        backgroundColor: COLORS.primary,
+        borderRadius: 30,
+        paddingHorizontal: 2,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginLeft:35,
+        marginTop:-30
+    },
+
+    pricetext :{
+        marginTop: 25,
+        fontWeight: "bold",
+         fontSize: 14,
+
+    }
 });
 
 export { styles }

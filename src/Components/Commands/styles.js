@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         paddingHorizontal: 10,
+        marginTop:-30
     
     
     },
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     CommandsBoard: {
         display: "flex",
         width: "97%",
-        height: "35%",
+        height: "43%",
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: "auto",
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         backgroundColor: '#fff',
         paddingHorizontal: 10,
+        marginTop:-10
     },
 
     PayMethods: {
@@ -134,6 +136,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         paddingHorizontal: 10,
+        marginTop:-5
         
     },
 
@@ -185,29 +188,29 @@ const styles = StyleSheet.create({
     //   alignContent: 'center',
     //  },
 
-    removeicon:{
-        width: 30,
-        height: 30,
-        backgroundColor: COLORS.primary,
-        borderRadius: 30,
-        paddingHorizontal: 2,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignContent: 'center',
-    },
+    // removeicon:{
+    //     width: 30,
+    //     height: 30,
+    //     backgroundColor: COLORS.primary,
+    //     borderRadius: 30,
+    //     paddingHorizontal: 2,
+    //     flexDirection: 'row',
+    //     justifyContent: 'center',
+    //     alignContent: 'center',
+    // },
 
-    addicon:{
-        width: 30,
-        height: 30,
-        backgroundColor: COLORS.primary,
-        borderRadius: 30,
-        paddingHorizontal: 2,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginLeft:35,
-        marginTop:-30
-    },
+    // addicon:{
+    //     width: 30,
+    //     height: 30,
+    //     backgroundColor: COLORS.primary,
+    //     borderRadius: 30,
+    //     paddingHorizontal: 2,
+    //     flexDirection: 'row',
+    //     justifyContent: 'center',
+    //     alignContent: 'center',
+    //     marginLeft:35,
+    //     marginTop:-30
+    // },
 
     closeicon :{
         width: 25,
