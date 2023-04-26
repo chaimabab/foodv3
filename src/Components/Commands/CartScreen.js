@@ -13,7 +13,7 @@ import ticket from "../../consts/ticket";
 // import {PrimaryButton} from '../../consts/button';
 import { styles } from "./styles";
 
-const CartScreen = ({ food, update, setUpdate }) => {
+const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand }) => {
   useEffect(() => {
     console.log(ticket);
   }, [update]);
