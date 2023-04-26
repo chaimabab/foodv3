@@ -6,31 +6,41 @@ import { Button } from '@rneui/themed';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CartScreen from "./CartScreen";
 import ticket from "../../consts/ticket";
+import Categories from '../Categories';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Commands = ({ update }) => {
-  const [priceTot, setPriceTot] = useState(0);
+const Commands = ({update}) => {
 
-  useEffect(() => {
-    ticket.map((t) => {
-      setPriceTot(priceTot + t.price);
-    });
-  }, []);
+  // const [priceTot, setPriceTot] = useState(0);
+  // useEffect(() => {
+  //   ticket.map((t) => {
+  //     setPriceTot(priceTot + t.price);
+  //   });
+  // }, []);
 
   const [currentDate, setCurrentDate] = useState(new Date());
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDate(new Date());
     }, 1000); 
     return () => clearInterval(interval);
   }, []);
-
   function formatDate(date) {
     return [
       date.toLocaleDateString("en-US"),
       date.toLocaleTimeString("en-US"),
     ].join(" ");
   }
+
+
+  const [totalprice, setTotalprice] = useState(0);
+  useEffect(() => {
+    AsyncStorage.getItem('totalprice')
+      .then((value) => {
+        setTotalprice(value || 0);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
 
   return (
@@ -99,8 +109,8 @@ const Commands = ({ update }) => {
       <View style={styles.Calculations}>
         <View style={styles.Calculation}>
           <Text style={styles.inputtext}>Sous Total</Text>
-          <Text>0</Text>
-          {/* <Text>{priceTot}</Text> */}
+          {/* <Text>0</Text> */}
+          <Text>{totalprice} TND</Text>
         </View>
         <View style={styles.Calculation}>
           <Text style={styles.inputtext}>Tax</Text>

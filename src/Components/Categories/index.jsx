@@ -13,6 +13,8 @@ import TableModal from "../Modals/ClotureZ";
 import RevenusModal from "../Modals/Revenus";
 import ClotureZModal from "../Modals/ClotureZ";
 import axios from 'axios'; 
+import Commands from "../Commands";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
  const ListCategories = ({cats, setCategory}) => {
    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
@@ -354,10 +356,29 @@ import axios from 'axios';
         setQuantity(quantity - 1);
       }
     };
-        
+
+
+    // constructor(props) 
+    //   super(props);
+    //   this.state = {
+    //     totalProductPrice: 0
+    //   }
+
+
     const calculateTotalPriceProduct = () => {
-      return quantity * price;
-     };
+      const totalPrice = quantity * price;
+      AsyncStorage.setItem('totalPrice', totalPrice.toString()); 
+      return totalPrice;
+
+    };
+  
+    useEffect(() => {
+      calculateTotalPriceProduct();
+    }, []);
+
+
+        
+
 
     return (
       <View style={style.card}>
@@ -533,7 +554,7 @@ import axios from 'axios';
         category: "Pizza",
         name: "Meat Pizza",
         ingredients: "Mixed Pizza",
-        //price: "12.00",
+        //price: "12.00"
         image: require("../../assets/meatPizza.png"),
       },
       {
