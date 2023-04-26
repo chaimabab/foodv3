@@ -34,15 +34,11 @@ const Commands = ({update}) => {
 
 
   const [totalprice, setTotalprice] = useState(0);
-  useEffect(() => {
-    AsyncStorage.getItem('totalprice')
-      .then((value) => {
-        setTotalprice(value || 0);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  useEffect(() => {}, []);
 
-
+  const calculateTotPriceCommand = (price) => {
+    setTotalprice(totalprice + price);
+  };
   return (
     <View style={styles.Commands}>
       <View style={styles.CommandsHeader}>
@@ -103,7 +99,10 @@ const Commands = ({update}) => {
     </View> */}
 
       <SafeAreaView style={styles.CommandsBoard}>
-        <CartScreen update={update} />
+        <CartScreen
+          update={update}
+          calculateTotPriceCommand={calculateTotPriceCommand}
+        />
       </SafeAreaView>
 
       <View style={styles.Calculations}>

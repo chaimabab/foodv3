@@ -215,7 +215,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
         size: selectedSize,
         ingredients: notSelectedIngredients,
         supplement: selectedSupplement,
-        //price : setPrice, 
+        totPrice: calculateTotalPriceProduct(),
       });
       setUpdate(!update);
     };
