@@ -3,7 +3,7 @@ import { Text, View, Image, StyleSheet, SafeAreaView, Dimensions,TouchableOpacit
 import {styles} from './styles'
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 
-const TableModal = ({stateModalClotureZ, setStateModalClotureZ}) =>{
+const ClotureModal = ({stateModalClotureZ, setStateModalClotureZ}) =>{
      
     return (
         <Modal
@@ -22,8 +22,7 @@ const TableModal = ({stateModalClotureZ, setStateModalClotureZ}) =>{
               />
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Hello World! RevenusModal</Text>
-                    
+                    <Text style={styles.modalText}>Hello World! ClotureZModal</Text>
                   </View>
                 </View>
  
@@ -31,4 +30,4 @@ const TableModal = ({stateModalClotureZ, setStateModalClotureZ}) =>{
     )
 }
 
-export default TableModal
+export default ClotureModal;

@@ -1,20 +1,22 @@
 import React, {useState, useEffect} from "react";
-import { Modal, Text, View, Image, StyleSheet,TouchableOpacity} from "react-native";
+import { Modal, Text, View, Image, StyleSheet,TouchableOpacity, TextInput} from "react-native";
 import {styles} from './styles'
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import categories from '../../consts/categories';
 import ticket from '../../consts/ticket';
+import ticketProd from "../../consts/ticketProd";
 import { AntDesign } from "@expo/vector-icons";
 import * as Animatable from 'react-native-animatable';
 import TicketModal from "../Modals/Ticket";
 import TableModal from "../Modals/ClotureZ";
 import RevenusModal from "../Modals/Revenus";
 import ClotureZModal from "../Modals/ClotureZ";
-import axios from 'axios'; 
+import axios, { all } from 'axios'; 
 import Commands from "../Commands";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CartScreen from "../Commands/CartScreen";
 
  const ListCategories = ({cats, setCategory}) => {
    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
@@ -42,7 +44,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
              ...style.categoryBtn
            }}>
              <View style={styles.categoryBtnImgCon}>
-               <Image source={{uri: `http://192.168.1.15/admin/public/images/${category.name}.png`}}
+               <Image source={{uri: `http://192.168.1.13/admin/storage/app/public/category/${category.image}`}}
                style ={styles.ImgCat} 
                 />
              </View>
@@ -71,117 +73,145 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
     setStateModalIndex(index)
     //console.log(index)
   }
+  const [modalVisibleTick, setModalVisibleTick] = useState(false);
+  const [modalVisibleRev, setModalVisibleRev] = useState(false);
+  const [modalVisibleClz, setModalVisibleClz] = useState(false);
+
   return (
     <View  style={styles.categoriesListContainerVertical}>
-       <TouchableOpacity onPress={()=>handleModal(1)} key = {1} activeOpacity={0.8}  >
-          <View style={{
-            backgroundColor:selectedCategoryIndex == 1
-            ? COLORS.primary 
-            : COLORS.secondary,
-            ...style.categoryBtn,
-            marginTop: 1 !== categories.length - 1 ? 50 : 0,
-          }}>
-            <View style={styles.categoryBtnImgCon}>
-              <Image source={require('../../assets/catergories/ticket.png')}
-              style ={styles.ImgCat}
-               />
-            </View>
-            <Text style= {{
-                fontSize :17,
-                fontWeight:'bold',
-                marginLeft: 10,
-                color : 
-                selectedCategoryIndex == 1
-                ? COLORS.white
-                : COLORS.primary,
-            }}>
-               Tickets
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleModal(2)} key = {2} activeOpacity={0.8}  >
-          <View style={{
-            backgroundColor:selectedCategoryIndex == 2
-            ? COLORS.primary 
-            : COLORS.secondary,
-            ...style.categoryBtn,
-            marginTop: 2 !== categories.length - 2 ? 50 : 0,
-          }}>
-            <View style={styles.categoryBtnImgCon}>
-              <Image source={require('../../assets/catergories/table.png')}
-              style ={styles.ImgCat}
-               />
-            </View>
-            <Text style= {{
-                fontSize :17,
-                fontWeight:'bold',
-                marginLeft: 10,
-                color : 
-                selectedCategoryIndex == 2
-                ? COLORS.white
-                : COLORS.primary,
-            }}>
-               Tables
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleModal(3)} key = {3} activeOpacity={0.8}  >
-          <View style={{
-            backgroundColor:selectedCategoryIndex == 3
-            ? COLORS.primary 
-            : COLORS.secondary,
+      <TouchableOpacity
+        key={2}
+        activeOpacity={0.8}
+        onPress={() => setModalVisibleTick(true)}>
+        <View
+          style={{
+            backgroundColor:
+              selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
             ...style.categoryBtn,
             marginTop: 3 !== categories.length - 3 ? 50 : 0,
           }}>
-            <View style={styles.categoryBtnImgCon}>
-              <Image source={require('../../assets/catergories/revenu.png')}
-              style ={styles.ImgCat}
-               />
-            </View>
-            <Text style= {{
-                fontSize :17,
-                fontWeight:'bold',
-                marginLeft: 10,
-                color : 
-                selectedCategoryIndex == 3
-                ? COLORS.white
-                : COLORS.primary,
-            }}>
-               Revenus
-            </Text>
+          <View style={styles.categoryBtnImgCon}>
+            <Image
+              source={require('../../assets/catergories/ticket.png')}
+              style={styles.ImgCat}
+            />
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleModal(4)} key = {4} activeOpacity={0.8}  >
-          <View style={{
-            backgroundColor:selectedCategoryIndex == 4
-            ? COLORS.primary 
-            : COLORS.secondary,
+          <Text
+            style={{
+              fontSize: 17,
+              fontWeight: 'bold',
+              marginLeft: 10,
+              color:
+                selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+            }}>
+            Ticket
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <Modal visible={modalVisibleTick}  animationType="slide" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent2}>
+          <TouchableOpacity onPress={() => setModalVisibleTick(false)}>
+            <Text style={styles.btnclose2}>Close</Text>
+          </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      <TouchableOpacity
+        key={3}
+        activeOpacity={0.8}
+        onPress={() => setModalVisibleRev(true)}>
+        <View
+          style={{
+            backgroundColor:
+              selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
             ...style.categoryBtn,
-            marginTop: 4 !== categories.length - 4 ? 50 : 0,
+            marginTop: 3 !== categories.length - 3 ? 50 : 0,
           }}>
-            <View style={styles.categoryBtnImgCon}>
-              <Image source={require('../../assets/catergories/cloture.png')}
-              style ={styles.ImgCat}
-               />
-            </View>
-            <Text style= {{
-                fontSize :17,
-                fontWeight:'bold',
-                marginLeft: 10,
-                color : 
-                selectedCategoryIndex == 4
-                ? COLORS.white
-                : COLORS.primary,     
-            }}>
-               ClotureZ
-            </Text>
+          <View style={styles.categoryBtnImgCon}>
+            <Image
+              source={require('../../assets/catergories/revenu.png')}
+              style={styles.ImgCat}
+            />
           </View>
-        </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 17,
+              fontWeight: 'bold',
+              marginLeft: 10,
+              color:
+                selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+            }}>
+            Revenus
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <Modal visible={modalVisibleRev}  animationType="slide" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent2}>
+          <View >
+            <Image source={require('../../assets/catergories/revenu.png')} style={styles.ImgRev}/>
+            <Text style={styles.NomRev}> Statistiques des commandes </Text>
+          </View>
+          <View style={styles.rectContainer}>
+            <View style={styles.rect}></View>
+            <View style={styles.rect}></View>
+            <View style={styles.rect}></View>
+          </View>
+          {/* <TextInput placeholder="Enter your text here" style={styles.textInput} /> */}
+          <TouchableOpacity onPress={() => setModalVisibleRev(false)}>
+              <Text style={styles.btnclose2}>Fermer</Text>
+          </TouchableOpacity>       
+          </View>
+        </View>
+      </Modal>
+
+      <TouchableOpacity
+        key={4}
+        activeOpacity={0.8}
+        onPress={() => setModalVisibleClz(true)}>
+        <View
+          style={{
+            backgroundColor:
+              selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+            ...style.categoryBtn,
+            marginTop: 3 !== categories.length - 3 ? 50 : 0,
+          }}>
+          <View style={styles.categoryBtnImgCon}>
+            <Image
+              source={require('../../assets/catergories/cloture.png')}
+              style={styles.ImgCat}
+            />
+          </View>
+          <Text
+            style={{
+              fontSize: 17,
+              fontWeight: 'bold',
+              marginLeft: 10,
+              color:
+                selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+            }}>
+            ClotureZ
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <Modal visible={modalVisibleClz} animationType="slide" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent2}>
+            <TouchableOpacity onPress={() => setModalVisibleClz(false)}>
+              <Text style={styles.btnclose2}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+
     </View>
   )
 };
 
-  const Card = ({ food, update, setUpdate }) => {
+  const Card = ({ food, update, setUpdate}) => {
     const [price, setPrice] = useState(food.price);
     const [priceSize, setPriceSize] = useState(0);
     const [priceSupplement, setPriceSupplement] = useState(0);
@@ -199,10 +229,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
     // };
 
     const HandleAddProd2Ticket = () => {
-      ticket.push(food);
+      ticketProd.push({
+        ...food,
+        size: selectedSize,
+      });
       setUpdate(!update);
     };
-
     const [showModal, setShowModal] = useState(false);
     const handleOpenModal = () => {
       setShowModal(true);
@@ -215,19 +247,24 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
         size: selectedSize,
         ingredients: notSelectedIngredients,
         supplement: selectedSupplement,
-        totPrice: calculateTotalPriceProduct(),
+        // prix: calculateTotalPriceProduct(),
+        //prix : selectedPrice, 
       });
       setUpdate(!update);
+      //setSelectedSize();
+      //setNotSelectedIngredients();
+      setSelectedSupplement([]);
     };
 
     const [sizes, setSizes] = useState([]);
     const [selectedSize, setSelectedSize] = useState([]);
     useEffect(() => {
       axios
-        .get(`http://192.168.1.15/admin/api/products/variants/${food.id}`)
+        .get(`http://192.168.1.13/admin/api/products/variants/${food.id}`)
         .then((response) => {
           setSizes(response.data);
           setSelectedSize(response.data[0]);
+          //setPrice(response.data[0].price);
         })
         .catch((error) => {
           console.error(
@@ -241,7 +278,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
       setSelectedSize(size);
       setPriceSize(size.price);
     };
-
     // const ingredientsList = ['Tomate', 'Sauce', 'Fromage','Pepperoni'];
     // useEffect(() => {
     //   setSelectedIngredients(ingredientsList);
@@ -264,7 +300,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
     useEffect(() => {
       axios
-        .get(`http://192.168.1.15/admin/api/products/ingredients/${food.id}`)
+        .get(`http://192.168.1.13/admin/api/products/ingredients/${food.id}`)
         .then((response) => {
           setIngredients(response.data);
           setSelectedIngredients(response.data);
@@ -307,7 +343,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
     const [selectedSupplement, setSelectedSupplement] = useState([]);
     useEffect(() => {
       axios
-        .get(`http://192.168.1.15/admin/api/products/addons/${food.id}`)
+        .get(`http://192.168.1.13/admin/api/products/addons/${food.id}`)
         .then((response) => {
           setSupplement(response.data);
         })
@@ -357,27 +393,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
       }
     };
 
+    // const calculateTotalPriceProduct = () => {
+    //   const totalPrice = quantity * price;
+    //   return totalPrice;
+    // };
+    // const prix =calculateTotalPriceProduct();
 
-    // constructor(props) 
-    //   super(props);
-    //   this.state = {
-    //     totalProductPrice: 0
-    //   }
-
-
+    const [selectedPrice, setSelectedPrice] = useState(0);
     const calculateTotalPriceProduct = () => {
       const totalPrice = quantity * price;
-      AsyncStorage.setItem('totalPrice', totalPrice.toString()); 
-      return totalPrice;
-
+      setSelectedPrice(totalPrice);
     };
-  
     useEffect(() => {
       calculateTotalPriceProduct();
-    }, []);
-
-
-        
+    }, [quantity, price]);
 
 
     return (
@@ -385,7 +414,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
         <TouchableOpacity onPress={HandleAddProd2Ticket}>
           <Image
             source={{
-              uri: `http://192.168.1.15/admin/public/images/${food.name}.png`,
+              // uri: `http://192.168.1.13/admin/public/images/${food.name}.png`,
+              uri: `http://192.168.1.13/admin/storage/app/public/product/${food.image}`,
+
             }}
             style={{ height: 120, width: 120, marginLeft: 15 }}
           />
@@ -418,7 +449,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
                 <View style={styles.modalContent}>
                   <Image
                     source={{
-                      uri: `http://192.168.1.15/admin/public/images/${food.name}.png`,
+                      uri: `http://192.168.1.13/admin/storage/app/public/product/${food.image}`,
+                      //  `http://192.168.1.13/admin/public/images/${food.name}.png`,
                     }}
                     style={{ height: 120, width: 120, marginLeft: 15 }}
                   />
@@ -528,8 +560,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
                       <Icon name="add" size={25} color={COLORS.white}></Icon>
                     </TouchableOpacity>
                   </View>
-
-                  <Text style={styles.pricetext}> Prix: {calculateTotalPriceProduct()} TND</Text>
+                  
+                  <View>
+                    <Text style={styles.pricetext}> Prix: {selectedPrice} TND</Text>
+                    {/* <CartScreen totalPrice={totalPrice} /> */}
+                  </View>
 
                   <TouchableOpacity onPress={handleCloseModal}>
                     <Text style={styles.btnclose}> Valider </Text>
@@ -543,7 +578,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
     );
   };
 
-  //http://192.168.1.15/admin/api/categories/products/%7Bid_category%7D
+  //http://192.168.1.13/admin/api/categories/products/%7Bid_category%7D
   const Categories = () => {
     const [modalState, setModalState] = React.useState(0);
     const [category, setCategory] = React.useState();
@@ -587,7 +622,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
     const handleData = () => {
       axios
-        .get("http://192.168.1.15/admin/api/categories")
+        .get("http://192.168.1.13/admin/api/categories")
         .then((response) => {
           setCats(response.data);
           setCategory(response.data[0].id);
@@ -604,7 +639,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
     const handleProdsByCat = (id) => {
       axios
-        .get(`http://192.168.1.15/admin/api/categories/products/${id}`)
+        .get(`http://192.168.1.13/admin/api/categories/products/${id}`)
         .then((response) => {
           setCategoryProds(response.data);
           console.log(response.data);
@@ -614,33 +649,31 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
         });
     };
 
-    const [stateModalTicket, setStateModalTicket] = React.useState(false);
-    const [stateModalTable, setStateModalTable] = React.useState(false);
-    const [stateModalRevenus, setStateModalRevenus] = React.useState(false);
-    const [stateModalClotureZ, setStateModalClotureZ] = React.useState(false);
+    // const [stateModalTicket, setStateModalTicket] = React.useState(false);
+    // // const [stateModalTable, setStateModalTable] = React.useState(false);
+    // const [stateModalRevenus, setStateModalRevenus] = React.useState(false);
+    // const [stateModalClotureZ, setStateModalClotureZ] = React.useState(false);
     const [stateModalIndex, setStateModalIndex] = React.useState(0);
 
-    useEffect(() => {
-      console.log(stateModalIndex);
-      if (stateModalIndex == 1) {
-        console.log("Ticket");
-        setStateModalTicket(true);
-      }
-      if (stateModalIndex == 2) {
-        console.log("Table");
-        setStateModalTable(true);
-      }
-      if (stateModalIndex == 3) {
-        console.log("Revenus");
-
-        setStateModalRevenus(true);
-      }
-      if (stateModalIndex == 4) {
-        console.log("ClotureZ");
-
-        setStateModalClotureZ(true);
-      }
-    }, [stateModalIndex]);
+    // useEffect(() => {
+    //   console.log(stateModalIndex);
+    //   if (stateModalIndex == 1) {
+    //     console.log("Ticket");
+    //     setStateModalTicket(true);
+    //   }
+    //   // if (stateModalIndex == 2) {
+    //   //   console.log("Table");
+    //   //   setStateModalTable(true);
+    //   // }
+    //   if (stateModalIndex == 3) {
+    //     console.log("Revenus");
+    //     setStateModalRevenus(true);
+    //   }
+    //   if (stateModalIndex == 4) {
+    //     console.log("ClotureZ");
+    //     setStateModalClotureZ(true);
+    //   }
+    // }, [stateModalIndex]);
 
     return (
       <View style={styles.Categories}>
@@ -690,15 +723,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
           />
         </View>
 
-        {stateModalIndex == 1 ? (
+        {/* {stateModalIndex == 1 ? (
           <TicketModal
             stateModalTicket={stateModalTicket}
             setStateModalTicket={setStateModalTicket}
           />
         ) : (
           ""
-        )}
-
+        )} */}
+{/* 
         {stateModalIndex == 2 ? (
           <TableModal
             stateModalTable={stateModalTable}
@@ -706,9 +739,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
           />
         ) : (
           ""
-        )}
+        )} */}
 
-        {stateModalIndex == 3 ? (
+        {/* {stateModalIndex == 3 ? (
           <RevenusModal
             stateModalRevenus={stateModalRevenus}
             setStateModalRevenus={setStateModalRevenus}
@@ -724,7 +757,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
           />
         ) : (
           ""
-        )}
+        )} */}
       </View>
     );
   };
@@ -750,4 +783,4 @@ card: {
 
 },
 });
-export default Categories; 
+export default Categories;

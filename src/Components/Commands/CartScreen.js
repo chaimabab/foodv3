@@ -12,17 +12,20 @@ import COLORS from "../../consts/colors";
 import ticket from "../../consts/ticket";
 // import {PrimaryButton} from '../../consts/button';
 import { styles } from "./styles";
+import Categories from "../Categories";
+import ticketProd from "../../consts/ticketProd";
 
-const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand }) => {
+
+const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand,props}) => {
   useEffect(() => {
     console.log(ticket);
   }, [update]);
+  //calculateTotPriceCommand(food.totPrice);
 
-  calculateTotPriceCommand(food.totPrice);
+/****************************Ajout de produit par image****************************/ 
+  const CartCardProd = ({item}) => {
 
-  const CartCard = ({ item }) => {
-    const [price, setPrice] = useState(item.price);
-
+    // const [price, setPrice] = useState(item.price);
     // const [quantity,setQuantity]= useState(1);
     // const handleAdd = () => {
     //   setQuantity(quantity + 1);;
@@ -32,34 +35,91 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand }) => {
     //     setQuantity(quantity - 1);
     //   }
     // };
+    // const totalPrice = quantity * price; 
+
+    const HandleRemoveProdFromTicket = () => {
+      // if (ticket && ticket.length > 0 && food) {
+      ticketProd.pop(food);
+      //calculateTotPriceCommand(-food.totPrice);
+      setUpdate(!update);
+      // }
+    };
+    return (
+      <View style={styles.cartCardProd}>
+        <View
+          style={{
+            height: 100,
+            //width:100,
+            marginLeft: 190,
+            paddingVertical: 20,
+          }}
+        >
+        <View>
+        <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}> {item.name} </Text>
+
+        <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+          Size : {item && item.size ? item.size.name : ""}
+        </Text>
+
+        <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>
+            {item.price} TND{" "}
+          </Text>
+        {/* <Text style={{marginLeft:-80}}> Prix: {totalPrice}</Text>          */}
+        </View>
+      </View>
+        <View style={{}}>
+          {/* <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text> */}
+          <View style={{marginLeft:20, alignItems: "center"}}>
+            <TouchableOpacity onPress={HandleRemoveProdFromTicket}>
+              <Icon
+                name="close"
+                size={25}
+                color={COLORS.white}
+                style={styles.closeicon}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+/****************************Ajout de produit par popup****************************/ 
+  const CartCard = ({item}) => {
+    const [price, setPrice] = useState(item.price);
 
     const HandleRemoveProdFromTicket = () => {
       // if (ticket && ticket.length > 0 && food) {
       ticket.pop(food);
-      calculateTotPriceCommand(-food.totPrice);
+      //calculateTotPriceCommand(-food.totPrice);
       setUpdate(!update);
       // }
     };
-
-    // const calculateTotalPriceProduct = () => {
-    //   return quantity * price;
-    // };
-
+    const [quantity,setQuantity]= useState(1);
+    const PrixTotal = quantity * price;
     return (
       <View style={styles.cartCard}>
         <View
           style={{
             height: 100,
+            //width:100,
             marginLeft: 190,
             paddingVertical: 20,
           }}
         >
-          <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}>
-            {item.name}
-          </Text>
+        <View>
+            <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}>
+              {item.name}            
+            </Text>
+            {/* <Text style={{marginLeft:-80}}>Total Price : {totalPrice}</Text>          */}
+        </View>
 
-          <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
-            size :
+        <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+          Size : {item && item.size ? item.size.name : ""}
+        </Text>
+
+           {/* <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+            Size :
             {item && item.size && item.size.length > 0
               ? item.size.map((sz, index) => {
                   return (
@@ -70,10 +130,10 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand }) => {
                   );
                 })
               : ""}
-          </Text>
+          </Text> */}
 
-          <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
-            sans :
+           <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+           Sans :
             {item && item.ingredients && item.ingredients.length > 0
               ? item.ingredients.map((i, index) => {
                   return (
@@ -84,10 +144,10 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand }) => {
                   );
                 })
               : ""}
-          </Text>
+          </Text> 
 
           <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
-            supp :
+          Supp : 
             {item && item.supplement && item.supplement.length > 0
               ? item.supplement.map((sp, index) => {
                   return (
@@ -100,29 +160,27 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand }) => {
               : ""}
           </Text>
 
-          <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
-            prix :
-            {item && item.price && item.price.length > 0
-              ? item.price.map((pr, index) => {
+           {/* <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+            Prix :
+            {item && item.prix && item.prix.length > 0
+              ? item.prix.map((pr, index) => {
                   return (
                     <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
                       {pr.name}
-                      {index < item.price.length - 1 ? "," : ""}
+                      {index < item.prix.length - 1 ? "," : ""}
                     </Text>
                   );
                 })
               : ""}
-          </Text>
+          </Text>  */}
 
-          {/* <Text style={{ fontSize: 17, fontWeight: "bold", marginLeft: -180 }}>
+         {/* <Text style={{ fontSize: 17, fontWeight: "bold", marginLeft: -180 }}>
           {item.price} TND 
            {calculateTotalPriceProduct()} TND 
-          </Text> */}
+          </Text>   */}
         </View>
-
-        <View style={{ marginRight: 20, alignItems: "center" }}>
-          {/* <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text> */}
-          <View>
+        <View >
+          <View style={{marginLeft:20, alignItems: "center"}}>
             <TouchableOpacity onPress={HandleRemoveProdFromTicket}>
               <Icon
                 name="close"
@@ -135,7 +193,6 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand }) => {
             {/* <TouchableOpacity style={styles.removeicon} onPress={handleRemove}>
               <Icon name="remove" size={25} color={COLORS.white}></Icon>
             </TouchableOpacity>
-
             <TouchableOpacity
               style={styles.addicon} onPress={handleAdd} >
               <Icon name="add" size={25} color={COLORS.white}></Icon>
@@ -145,6 +202,9 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand }) => {
       </View>
     );
   };
+
+
+
   return (
     <SafeAreaView>
       <View style={styles.header}>
@@ -171,48 +231,32 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand }) => {
                 marginVertical: 15,
               }}
             >
-              {/* <Text
-                style={{ fontSize: 18, fontWeight: "bold", marginLeft: -220 }}
-              >
-                Prix Total
-              </Text> */}
-              {/* <Text
-                style={{ fontSize: 18, fontWeight: "bold", marginLeft: -50 }}
-              >
-                {" "}
-                TND{" "}
-              </Text> */}
             </View>
-            {/* <View style={{ marginHorizontal: 30 }}>
-              <TouchableOpacity activeOpacity={0.8}>
-                <View
-                  style={{
-                    backgroundColor: COLORS.primary,
-                    height: 60,
-                    borderRadius: 30,
-                    justifyContent: 30,
-                    alignItem: "center",
-                    justifyContent: "center",
-                    marginLeft: -160,
-                    marginRight: 45,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: COLORS.white,
-                      fontWeight: "blod",
-                      fontSize: 18,
-                      marginLeft: 10,
-                    }}
-                  >
-                    CHECKOUT
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View> */}
           </View>
         )}
-      />
+      /><FlatList
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 60 }}
+      data={ticketProd ? ticketProd : ""}
+      renderItem={({ item }) => <CartCardProd item={item} />}
+      ListFooterComponentStyle={{
+        paddingHorizontal: 40,
+        marginTop: 20,
+        marginLeft: 260,
+      }}
+      ListFooterComponent={() => (
+        <View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginVertical: 15,
+            }}
+          >
+          </View>
+        </View>
+      )}
+    />
     </SafeAreaView>
   );
 };

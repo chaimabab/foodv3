@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         backgroundColor: '#fff',
+
     },
 
     textBold: {
@@ -30,7 +31,15 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: 'black',
         justifyContent:"space-between",
+        marginTop:-35
     },
+
+    textBolded: {
+        color: 'black',
+        justifyContent:"space-between",
+        marginTop:-35
+    },
+
 
     devider: {
         borderBottomColor: '#7e7e7e',
@@ -47,8 +56,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         paddingHorizontal: 10,
         marginTop:-30
-    
-    
     },
 
     service: {
@@ -60,7 +67,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0F0F2',
         justifyContent: "center",
         alignItems: "center",
-        
+        marginTop:-55,
     },
 
     text1: {
@@ -151,6 +158,18 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 
+    Med2: {
+        display: "flex",
+        width: 80,
+        height: 80,
+        borderRadius: 20,
+        elevation: 8,
+        backgroundColor: '#F0F0F2',
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop:-45,
+    },
+
     ButtonsFooter: {
         display: "flex",
         width: "90%",
@@ -165,6 +184,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop:1,
         },
+
     cartCard: {
         height: 100,
         elevation: 15,
@@ -176,41 +196,55 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+
+    cartCardProd: {
+        height: 100,
+        elevation: 15,
+        borderRadius: 10,
+        backgroundColor: COLORS.white,
+        marginVertical: 10,
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
     
-  //actionBtn: {
-    //   width: 80,
-    //   height: 30,
-    //   backgroundColor: COLORS.primary,
-    //   borderRadius: 30,
-    //   paddingHorizontal: 5,
-    //   flexDirection: 'row',
-    //   justifyContent: 'center',
-    //   alignContent: 'center',
-    //  },
 
-    // removeicon:{
-    //     width: 30,
-    //     height: 30,
-    //     backgroundColor: COLORS.primary,
-    //     borderRadius: 30,
-    //     paddingHorizontal: 2,
-    //     flexDirection: 'row',
-    //     justifyContent: 'center',
-    //     alignContent: 'center',
-    // },
+    },
+    
+//   actionBtn: {
+//       width: 80,
+//       height: 30,
+//       backgroundColor: COLORS.primary,
+//       borderRadius: 30,
+//       paddingHorizontal: 5,
+//       flexDirection: 'row',
+//       justifyContent: 'center',
+//       alignContent: 'center',
+//      },
 
-    // addicon:{
-    //     width: 30,
-    //     height: 30,
-    //     backgroundColor: COLORS.primary,
-    //     borderRadius: 30,
-    //     paddingHorizontal: 2,
-    //     flexDirection: 'row',
-    //     justifyContent: 'center',
-    //     alignContent: 'center',
-    //     marginLeft:35,
-    //     marginTop:-30
-    // },
+//     removeicon:{
+//         width: 30,
+//         height: 30,
+//         backgroundColor: COLORS.primary,
+//         borderRadius: 30,
+//         paddingHorizontal: 2,
+//         flexDirection: 'row',
+//         justifyContent: 'center',
+//         alignContent: 'center',
+//     },
+
+//     addicon:{
+//         width: 30,
+//         height: 30,
+//         backgroundColor: COLORS.primary,
+//         borderRadius: 30,
+//         paddingHorizontal: 2,
+//         flexDirection: 'row',
+//         justifyContent: 'center',
+//         alignContent: 'center',
+//         marginLeft:35,
+//         marginTop:-30
+//     },
 
     closeicon :{
         width: 25,
@@ -221,11 +255,47 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignContent: 'center',
-        marginStart:70,
+        //marginStart:70,
         marginTop:-40,
-        marginRight:-27
+        //marginRight:30,
+        marginLeft:50
     
-    }
+    },
+
+    selected: {
+        backgroundColor: '#fedac5',
+      },
+    unselected: {},
+
+      textliv:{
+      //marginLeft: 10,
+      fontSize: 16,
+      color: '#333',
+      marginTop:100,
+      marginRight:-200
+    },
+
+    selectedOption: {
+        backgroundColor: "#fedac5",
+      },
+      
+    selectedService: {
+        backgroundColor: "#fedac5",
+      },
+
+    commande: {
+        display: "flex",
+        width: "100%",
+        height: "7%",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        backgroundColor: '#fff',
+        paddingHorizontal: 10,
+        marginTop:-58,
+        marginLeft:200
+    } 
+
 });
 
 export { styles }

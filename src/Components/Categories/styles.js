@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.3)',
-
       },
 
     modalContent: {
@@ -125,6 +124,24 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 0,
     },
+
+    modalContent2: {
+        width: '85%',
+        height: '30%',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 0,
+
+    },
     
     btnclose :{
         padding: 10,
@@ -135,6 +152,28 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
+    btnclose2 :{
+        padding: 10,
+        backgroundColor:COLORS.primary,
+        fontWeight: 'bold',
+        color:'white',
+        marginTop:20,
+        borderRadius: 5,
+        marginTop:80,
+    },
+    rectangle: {
+        width: 80,
+        height: 80,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      textInput: {
+        width: '90%',
+        height: '90%',
+        padding: 5,
+        fontSize: 16,
+      },
     containerSize :{
         flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -295,8 +334,40 @@ const styles = StyleSheet.create({
         marginTop: 25,
         fontWeight: "bold",
          fontSize: 14,
+    },
 
-    }
+    rectContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '95%',
+        marginTop: 20,
+      },
+      
+      rect: {
+        width: '30%',
+        height: 100,
+        backgroundColor: COLORS.secondary,
+        borderRadius: 10,
+      },
+
+      ImgRev:{
+        height: 35,
+        width: 35,
+        resizeMode: 'cover',
+        marginRight:1070,
+        marginTop:20
+      },
+
+      NomRev: {
+        fontSize: 18, 
+        fontWeight: "bold", 
+        marginLeft: 20 ,
+        marginTop: -20,
+        marginStart:40,
+    },
+
+      
+
 });
 
 export { styles }
