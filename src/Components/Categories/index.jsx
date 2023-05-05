@@ -255,7 +255,7 @@ import CartScreen from "../Commands/CartScreen";
       //setNotSelectedIngredients();
       setSelectedSupplement([]);
     };
-
+    
     const [sizes, setSizes] = useState([]);
     const [selectedSize, setSelectedSize] = useState([]);
     useEffect(() => {

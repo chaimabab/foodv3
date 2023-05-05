@@ -44,6 +44,8 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand,props}) 
       setUpdate(!update);
       // }
     };
+
+    
     return (
       <View style={styles.cartCardProd}>
         <View
