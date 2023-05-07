@@ -66,517 +66,546 @@ import CartScreen from "../Commands/CartScreen";
    )
  };
 
- const ListCategoriesVertical = ({setStateModalIndex}) => {
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-  const handleModal = (index) => {
-    setSelectedCategoryIndex(index)
-    setStateModalIndex(index)
-    //console.log(index)
-  }
-  const [modalVisibleTick, setModalVisibleTick] = useState(false);
-  const [modalVisibleRev, setModalVisibleRev] = useState(false);
-  const [modalVisibleClz, setModalVisibleClz] = useState(false);
+ const ListCategoriesVertical = ({ setStateModalIndex }) => {
+   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+   const handleModal = (index) => {
+     setSelectedCategoryIndex(index);
+     setStateModalIndex(index);
+     //console.log(index)
+   };
+   const [modalVisibleTick, setModalVisibleTick] = useState(false);
+   const [modalVisibleRev, setModalVisibleRev] = useState(false);
+   const [modalVisibleClz, setModalVisibleClz] = useState(false);
+   return (
+     <View style={styles.categoriesListContainerVertical}>
+       <TouchableOpacity
+         key={2}
+         activeOpacity={0.8}
+         onPress={() => setModalVisibleTick(true)}
+       >
+         <View
+           style={{
+             backgroundColor:
+               selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+             ...style.categoryBtn,
+             marginTop: 3 !== categories.length - 3 ? 50 : 0,
+           }}
+         >
+           <View style={styles.categoryBtnImgCon}>
+             <Image
+               source={require("../../assets/catergories/ticket.png")}
+               style={styles.ImgCat}
+             />
+           </View>
+           <Text
+             style={{
+               fontSize: 17,
+               fontWeight: "bold",
+               marginLeft: 10,
+               color:
+                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+             }}
+           >
+             Ticket
+           </Text>
+         </View>
+       </TouchableOpacity>
+       <Modal
+         visible={modalVisibleTick}
+         animationType="slide"
+         transparent={true}
+       >
+         <View style={styles.modalContainer}>
+           <View style={styles.modalContent2}>
+             <TouchableOpacity onPress={() => setModalVisibleTick(false)}>
+               <Text style={styles.btnclose2}>Close</Text>
+             </TouchableOpacity>
+           </View>
+         </View>
+       </Modal>
 
-  return (
-    <View  style={styles.categoriesListContainerVertical}>
-      <TouchableOpacity
-        key={2}
-        activeOpacity={0.8}
-        onPress={() => setModalVisibleTick(true)}>
-        <View
-          style={{
-            backgroundColor:
-              selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
-            ...style.categoryBtn,
-            marginTop: 3 !== categories.length - 3 ? 50 : 0,
-          }}>
-          <View style={styles.categoryBtnImgCon}>
-            <Image
-              source={require('../../assets/catergories/ticket.png')}
-              style={styles.ImgCat}
-            />
-          </View>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 'bold',
-              marginLeft: 10,
-              color:
-                selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
-            }}>
-            Ticket
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <Modal visible={modalVisibleTick}  animationType="slide" transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent2}>
-          <TouchableOpacity onPress={() => setModalVisibleTick(false)}>
-            <Text style={styles.btnclose2}>Close</Text>
-          </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+       <TouchableOpacity
+         key={3}
+         activeOpacity={0.8}
+         onPress={() => setModalVisibleRev(true)}
+       >
+         <View
+           style={{
+             backgroundColor:
+               selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+             ...style.categoryBtn,
+             marginTop: 3 !== categories.length - 3 ? 50 : 0,
+           }}
+         >
+           <View style={styles.categoryBtnImgCon}>
+             <Image
+               source={require("../../assets/catergories/revenu.png")}
+               style={styles.ImgCat}
+             />
+           </View>
+           <Text
+             style={{
+               fontSize: 17,
+               fontWeight: "bold",
+               marginLeft: 10,
+               color:
+                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+             }}
+           >
+             Revenus
+           </Text>
+         </View>
+       </TouchableOpacity>
+       <Modal
+         visible={modalVisibleRev}
+         animationType="slide"
+         transparent={true}
+       >
+         <View style={styles.modalContainer}>
+           <View style={styles.modalContent2}>
+             <View>
+               <Image
+                 source={require("../../assets/catergories/revenu.png")}
+                 style={styles.ImgRev}
+               />
+               <Text style={styles.NomRev}> Statistiques des commandes </Text>
+             </View>
+             <View style={styles.rectContainer}>
+               <View style={styles.rect}></View>
+               <View style={styles.rect}></View>
+               <View style={styles.rect}></View>
+             </View>
+             {/* <TextInput placeholder="Enter your text here" style={styles.textInput} /> */}
+             <TouchableOpacity onPress={() => setModalVisibleRev(false)}>
+               <Text style={styles.btnclose2}>Fermer</Text>
+             </TouchableOpacity>
+           </View>
+         </View>
+       </Modal>
 
-      <TouchableOpacity
-        key={3}
-        activeOpacity={0.8}
-        onPress={() => setModalVisibleRev(true)}>
-        <View
-          style={{
-            backgroundColor:
-              selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
-            ...style.categoryBtn,
-            marginTop: 3 !== categories.length - 3 ? 50 : 0,
-          }}>
-          <View style={styles.categoryBtnImgCon}>
-            <Image
-              source={require('../../assets/catergories/revenu.png')}
-              style={styles.ImgCat}
-            />
-          </View>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 'bold',
-              marginLeft: 10,
-              color:
-                selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
-            }}>
-            Revenus
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <Modal visible={modalVisibleRev}  animationType="slide" transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent2}>
-          <View >
-            <Image source={require('../../assets/catergories/revenu.png')} style={styles.ImgRev}/>
-            <Text style={styles.NomRev}> Statistiques des commandes </Text>
-          </View>
-          <View style={styles.rectContainer}>
-            <View style={styles.rect}></View>
-            <View style={styles.rect}></View>
-            <View style={styles.rect}></View>
-          </View>
-          {/* <TextInput placeholder="Enter your text here" style={styles.textInput} /> */}
-          <TouchableOpacity onPress={() => setModalVisibleRev(false)}>
-              <Text style={styles.btnclose2}>Fermer</Text>
-          </TouchableOpacity>       
-          </View>
-        </View>
-      </Modal>
+       <TouchableOpacity
+         key={4}
+         activeOpacity={0.8}
+         onPress={() => setModalVisibleClz(true)}
+       >
+         <View
+           style={{
+             backgroundColor:
+               selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+             ...style.categoryBtn,
+             marginTop: 3 !== categories.length - 3 ? 50 : 0,
+           }}
+         >
+           <View style={styles.categoryBtnImgCon}>
+             <Image
+               source={require("../../assets/catergories/cloture.png")}
+               style={styles.ImgCat}
+             />
+           </View>
+           <Text
+             style={{
+               fontSize: 17,
+               fontWeight: "bold",
+               marginLeft: 10,
+               color:
+                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+             }}
+           >
+             ClotureZ
+           </Text>
+         </View>
+       </TouchableOpacity>
+       <Modal
+         visible={modalVisibleClz}
+         animationType="slide"
+         transparent={true}
+       >
+         <View style={styles.modalContainer}>
+           <View style={styles.modalContent2}>
+             <TouchableOpacity onPress={() => setModalVisibleClz(false)}>
+               <Text style={styles.btnclose2}>Close</Text>
+             </TouchableOpacity>
+           </View>
+         </View>
+       </Modal>
+     </View>
+   );
+ };
 
-      <TouchableOpacity
-        key={4}
-        activeOpacity={0.8}
-        onPress={() => setModalVisibleClz(true)}>
-        <View
-          style={{
-            backgroundColor:
-              selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
-            ...style.categoryBtn,
-            marginTop: 3 !== categories.length - 3 ? 50 : 0,
-          }}>
-          <View style={styles.categoryBtnImgCon}>
-            <Image
-              source={require('../../assets/catergories/cloture.png')}
-              style={styles.ImgCat}
-            />
-          </View>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 'bold',
-              marginLeft: 10,
-              color:
-                selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
-            }}>
-            ClotureZ
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <Modal visible={modalVisibleClz} animationType="slide" transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent2}>
-            <TouchableOpacity onPress={() => setModalVisibleClz(false)}>
-              <Text style={styles.btnclose2}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+ const Card = ({ food, update, setUpdate }) => {
+   const [price, setPrice] = useState(food.price);
+   const [priceSize, setPriceSize] = useState(0);
+   const [priceSupplement, setPriceSupplement] = useState(0);
+   const [selectedPrice, setSelectedPrice] = useState(0);
 
+   useEffect(() => {
+     setPrice(priceSize + priceSupplement);
+   }, [priceSize, priceSupplement]);
 
-    </View>
-  )
-};
+   // const HandleSetPrice = (priceSupp) => {
+   //   ticket.map((t) => {
+   //     if (t.id === food.id) {
+   //       t.price = food.price + priceSupp;
+   //     }
+   //   });
+   // };
 
-  const Card = ({ food, update, setUpdate}) => {
-    const [price, setPrice] = useState(food.price);
-    const [priceSize, setPriceSize] = useState(0);
-    const [priceSupplement, setPriceSupplement] = useState(0);
+   const HandleAddProd2Ticket = () => {
+     ticketProd.push({
+       ...food,
+       size: selectedSize,
+     });
+     setUpdate(!update);
+   };
+   const [showModal, setShowModal] = useState(false);
+   const handleOpenModal = () => {
+     setShowModal(true);
+   };
 
-    useEffect(() => {
-      setPrice(priceSize + priceSupplement);
-    }, [priceSize, priceSupplement]);
+   const handleCloseModal = () => {
+     setShowModal(false);
+     ticket.push({
+       ...food,
+       size: selectedSize,
+       ingredients: notSelectedIngredients,
+       supplement: selectedSupplement,
+       // prix: calculateTotalPriceProduct(),
+       prix: selectedPrice,
+     });
+     setUpdate(!update);
+     //setSelectedSize();
+     //setNotSelectedIngredients();
+     setSelectedSupplement([]);
+   };
 
-    // const HandleSetPrice = (priceSupp) => {
-    //   ticket.map((t) => {
-    //     if (t.id === food.id) {
-    //       t.price = food.price + priceSupp;
-    //     }
-    //   });
-    // };
-
-    const HandleAddProd2Ticket = () => {
-      ticketProd.push({
-        ...food,
-        size: selectedSize,
-      });
-      setUpdate(!update);
-    };
-    const [showModal, setShowModal] = useState(false);
-    const handleOpenModal = () => {
-      setShowModal(true);
-    };
-
-    const handleCloseModal = () => {
-      setShowModal(false);
-      ticket.push({
-        ...food,
-        size: selectedSize,
-        ingredients: notSelectedIngredients,
-        supplement: selectedSupplement,
-        // prix: calculateTotalPriceProduct(),
-        //prix : selectedPrice, 
-      });
-      setUpdate(!update);
-      //setSelectedSize();
-      //setNotSelectedIngredients();
-      setSelectedSupplement([]);
-    };
-    
-    const [sizes, setSizes] = useState([]);
-    const [selectedSize, setSelectedSize] = useState([]);
-    useEffect(() => {
-      axios
-        .get(`http://192.168.1.13/admin/api/products/variants/${food.id}`)
-        .then((response) => {
-          setSizes(response.data);
-          setSelectedSize(response.data[0]);
-          //setPrice(response.data[0].price);
-        })
-        .catch((error) => {
-          console.error(
-            "Erreur lors de la récupération des tailles du produit :",
-            error
-          );
-        });
-    }, []);
-
-    const handleSizePress = (size) => {
-      setSelectedSize(size);
-      setPriceSize(size.price);
-    };
-    // const ingredientsList = ['Tomate', 'Sauce', 'Fromage','Pepperoni'];
-    // useEffect(() => {
-    //   setSelectedIngredients(ingredientsList);
-    // }, []);
-
-    // const [selectedIngredients, setSelectedIngredients] = useState([]);
-    // const handleIngredientToggle = (ingredient) => {
-    //   const isSelected = selectedIngredients.includes(ingredient);
-
-    //   if (isSelected) {
-    //     setSelectedIngredients(selectedIngredients.filter((item) => item !== ingredient));
-    //   } else {
-    //     setSelectedIngredients([...selectedIngredients, ingredient]);
-    //   }
-    // };
-
-    const [ingredients, setIngredients] = useState([]);
-    const [selectedIngredients, setSelectedIngredients] = useState([]);
-    const [notSelectedIngredients, setNotSelectedIngredients] = useState([]);
-
-    useEffect(() => {
-      axios
-        .get(`http://192.168.1.13/admin/api/products/ingredients/${food.id}`)
-        .then((response) => {
-          setIngredients(response.data);
-          setSelectedIngredients(response.data);
-        })
-        .catch((error) => {
-          console.error("Erreur lors du chargement des ingrédients:", error);
-        });
-    }, []);
-
-    const handleIngredientToggle = (ingredient) => {
-      const isSelected = selectedIngredients.includes(ingredient);
-      if (isSelected) {
-        setSelectedIngredients(
-          selectedIngredients.filter((item) => item !== ingredient)
-        );
-        setNotSelectedIngredients([...notSelectedIngredients, ingredient]);
-      } else {
-        setSelectedIngredients([...selectedIngredients, ingredient]);
-        setNotSelectedIngredients(
-          notSelectedIngredients.filter((item) => item !== ingredient)
+   const [sizes, setSizes] = useState([]);
+   const [selectedSize, setSelectedSize] = useState([]);
+   useEffect(() => {
+     axios
+       .get(`http://192.168.1.13/admin/api/products/variants/${food.id}`)
+       .then((response) => {
+         setSizes(response.data);
+         setSelectedSize(response.data[0]);
+         //setPrice(response.data[0].price);
+       })
+       .catch((error) => {
+         console.error(
+           "Erreur lors de la récupération des tailles du produit :",
+           error
          );
-      }
-    };
+       });
+   }, []);
 
-    // const supplementList = ['Tomate', 'Sauce', 'Fromage','Pepperoni'];
-    // useEffect(() => {
-    // }, []);
+   const handleSizePress = (size) => {
+     setSelectedSize(size);
+     setPriceSize(size.price);
+   };
+   // const ingredientsList = ['Tomate', 'Sauce', 'Fromage','Pepperoni'];
+   // useEffect(() => {
+   //   setSelectedIngredients(ingredientsList);
+   // }, []);
 
-    // const [selectedSupplement, setSelectedSupplement] = useState([]);
-    // const handleSupplementToggle = (supplement) => {
-    //   const isSelected = selectedSupplement.includes(supplement);
+   // const [selectedIngredients, setSelectedIngredients] = useState([]);
+   // const handleIngredientToggle = (ingredient) => {
+   //   const isSelected = selectedIngredients.includes(ingredient);
 
-    //   if (isSelected) {
-    //     setSelectedSupplement(selectedSupplement.filter((item) => item !== supplement));
-    //   } else {
-    //     setSelectedSupplement([...selectedSupplement, supplement]);
-    //   }
-    // };
-    const [supplement, setSupplement] = useState([]);
-    const [selectedSupplement, setSelectedSupplement] = useState([]);
-    useEffect(() => {
-      axios
-        .get(`http://192.168.1.13/admin/api/products/addons/${food.id}`)
-        .then((response) => {
-          setSupplement(response.data);
-        })
-        .catch((error) => {
-          console.error("Erreur lors du chargement des ingrédients:", error);
-        });
-    }, []);
-    const handleSupplementToggle = (supplement) => {
-      const isSelected = selectedSupplement.includes(supplement);
-      if (isSelected) {
-        setSelectedSupplement(
-          selectedSupplement.filter((item) => item !== supplement)
-        );
-      } else {
-        setSelectedSupplement([...selectedSupplement, supplement]);
-      }
-    };
+   //   if (isSelected) {
+   //     setSelectedIngredients(selectedIngredients.filter((item) => item !== ingredient));
+   //   } else {
+   //     setSelectedIngredients([...selectedIngredients, ingredient]);
+   //   }
+   // };
 
-    useEffect(() => {
-      selectedSupplement.map((si) => {
-        supplement.map((i) => {
-          if (i.id === si.id) {
-            setPriceSupplement(priceSupplement + si.price);
-          }
-        });
-      });
-    }, [selectedSupplement]);
+   const [ingredients, setIngredients] = useState([]);
+   const [selectedIngredients, setSelectedIngredients] = useState([]);
+   const [notSelectedIngredients, setNotSelectedIngredients] = useState([]);
 
-    useEffect(() => {
-      let totalPrice = 0;
-      selectedSupplement.forEach((si) => {
-        const matchingSupplement = supplement.find((i) => i.id === si.id);
-        if (matchingSupplement) {
-          totalPrice += si.price;
-        }
-      });
-      setPriceSupplement(totalPrice);
-    }, [selectedSupplement]);
+   useEffect(() => {
+     axios
+       .get(`http://192.168.1.13/admin/api/products/ingredients/${food.id}`)
+       .then((response) => {
+         setIngredients(response.data);
+         setSelectedIngredients(response.data);
+       })
+       .catch((error) => {
+         console.error("Erreur lors du chargement des ingrédients:", error);
+       });
+   }, []);
 
-    const [quantity,setQuantity]= useState(1);
-    const handleAdd = () => {
-      setQuantity(quantity + 1);;
-    };
-    const handleRemove = () => {
-      if (quantity > 1) {
-        setQuantity(quantity - 1);
-      }
-    };
+   const handleIngredientToggle = (ingredient) => {
+     const isSelected = selectedIngredients.includes(ingredient);
+     if (isSelected) {
+       setSelectedIngredients(
+         selectedIngredients.filter((item) => item !== ingredient)
+       );
+       setNotSelectedIngredients([...notSelectedIngredients, ingredient]);
+     } else {
+       setSelectedIngredients([...selectedIngredients, ingredient]);
+       setNotSelectedIngredients(
+         notSelectedIngredients.filter((item) => item !== ingredient)
+       );
+     }
+   };
 
-    // const calculateTotalPriceProduct = () => {
-    //   const totalPrice = quantity * price;
-    //   return totalPrice;
-    // };
-    // const prix =calculateTotalPriceProduct();
+   // const supplementList = ['Tomate', 'Sauce', 'Fromage','Pepperoni'];
+   // useEffect(() => {
+   // }, []);
 
-    const [selectedPrice, setSelectedPrice] = useState(0);
-    const calculateTotalPriceProduct = () => {
-      const totalPrice = quantity * price;
-      setSelectedPrice(totalPrice);
-    };
-    useEffect(() => {
-      calculateTotalPriceProduct();
-    }, [quantity, price]);
+   // const [selectedSupplement, setSelectedSupplement] = useState([]);
+   // const handleSupplementToggle = (supplement) => {
+   //   const isSelected = selectedSupplement.includes(supplement);
 
+   //   if (isSelected) {
+   //     setSelectedSupplement(selectedSupplement.filter((item) => item !== supplement));
+   //   } else {
+   //     setSelectedSupplement([...selectedSupplement, supplement]);
+   //   }
+   // };
+   const [supplement, setSupplement] = useState([]);
+   const [selectedSupplement, setSelectedSupplement] = useState([]);
+   useEffect(() => {
+     axios
+       .get(`http://192.168.1.13/admin/api/products/addons/${food.id}`)
+       .then((response) => {
+         setSupplement(response.data);
+       })
+       .catch((error) => {
+         console.error("Erreur lors du chargement des ingrédients:", error);
+       });
+   }, []);
+   const handleSupplementToggle = (supplement) => {
+     const isSelected = selectedSupplement.includes(supplement);
+     if (isSelected) {
+       setSelectedSupplement(
+         selectedSupplement.filter((item) => item !== supplement)
+       );
+     } else {
+       setSelectedSupplement([...selectedSupplement, supplement]);
+     }
+   };
 
-    return (
-      <View style={style.card}>
-        <TouchableOpacity onPress={HandleAddProd2Ticket}>
-          <Image
-            source={{
-              // uri: `http://192.168.1.13/admin/public/images/${food.name}.png`,
-              uri: `http://192.168.1.13/admin/storage/app/public/product/${food.image}`,
+   useEffect(() => {
+     selectedSupplement.map((si) => {
+       supplement.map((i) => {
+         if (i.id === si.id) {
+           setPriceSupplement(priceSupplement + si.price);
+         }
+       });
+     });
+   }, [selectedSupplement]);
 
-            }}
-            style={{ height: 120, width: 120, marginLeft: 15 }}
-          />
-        </TouchableOpacity>
-        <View style={{ marginHorizontal: 5 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}>
-            {food.name}
-          </Text>
-        </View>
-        <View
-          style={{
-            marginTop: 10,
-            marginHorizontal: 20,
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>
-            {food.price} TND{" "}
-          </Text>
-          <TouchableOpacity style={styles.addToCartBTn}>
-            <Icon
-              name="add"
-              size={20}
-              color="white"
-              onPress={handleOpenModal}
-            />
-            <Modal visible={showModal} animationType="slide" transparent={true}>
-              <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                  <Image
-                    source={{
-                      uri: `http://192.168.1.13/admin/storage/app/public/product/${food.image}`,
-                      //  `http://192.168.1.13/admin/public/images/${food.name}.png`,
-                    }}
-                    style={{ height: 120, width: 120, marginLeft: 15 }}
-                  />
-                  <Text
-                    style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}
-                  >
-                    {" "}
-                    {food.name}
-                  </Text>
+   useEffect(() => {
+     let totalPrice = 0;
+     selectedSupplement.forEach((si) => {
+       const matchingSupplement = supplement.find((i) => i.id === si.id);
+       if (matchingSupplement) {
+         totalPrice += si.price;
+       }
+     });
+     setPriceSupplement(totalPrice);
+   }, [selectedSupplement]);
 
-                  <View style={styles.containerSize}>
-                    {sizes.map((size) => (
-                      <TouchableOpacity
-                        key={size.price}
-                        style={[
-                          styles.sizeButton2,
-                          selectedSize === size && styles.selectedSizeButton2,
-                        ]}
-                        onPress={() => handleSizePress(size)}
-                      >
-                        <Text style={styles.sizeButtonText2}>{size.name}</Text>
-                        <Text style={styles.sizeButtonText2}>
-                          {size.price} TND{" "}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                  <View>
-                    {selectedSize && (
-                      <Text style={styles.selectedSizeText2}>
-                        Size: {selectedSize.name}
-                      </Text>
-                    )}
-                  </View>
+   const [quantity, setQuantity] = useState(1);
+   const handleAdd = () => {
+     setQuantity(quantity + 1);
+   };
+   const handleRemove = () => {
+     if (quantity > 1) {
+       setQuantity(quantity - 1);
+     }
+   };
 
-                  <View style={styles.containerIng}>
-                    <View style={styles.ingredientsContainer}>
-                      {ingredients.map((ingredient) => (
-                        <TouchableOpacity
-                          key={ingredient.name}
-                          onPress={() => handleIngredientToggle(ingredient)}
-                          style={[
-                            styles.ingredientButton,
-                            selectedIngredients.includes(ingredient) &&
-                              styles.selectedIngredientButton,
-                          ]}
-                        >
-                          <Text style={styles.ingredientText}>
-                            {ingredient.name}
-                          </Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                    <Text style={styles.selectedIngredientsText}>
-                      Sans:{" "}
-                      {ingredients
-                        .filter(
-                          (ingredient) =>
-                            !selectedIngredients.includes(ingredient)
-                        )
-                        .map((ingredient) => ingredient.name)
-                        .join(", ")}
-                    </Text>
-                  </View>
+   // const calculateTotalPriceProduct = () => {
+   //   const totalPrice = quantity * price;
+   //   return totalPrice;
+   // };
+   // const prix =calculateTotalPriceProduct();
 
-                  <View style={styles.containerSupp}>
-                    <View style={styles.SupplementContainer}>
-                      {supplement.map((supplement) => (
-                        <TouchableOpacity
-                          key={supplement.name}
-                          onPress={() => handleSupplementToggle(supplement)}
-                          style={[
-                            styles.supplementButton,
-                            selectedSupplement.includes(supplement) &&
-                              styles.selectedSupplementButton,
-                          ]}
-                        >
-                          <Text style={styles.SupplementText}>
-                            {supplement.name}
-                          </Text>
-                          <Text style={styles.SupplementText}>
-                            {supplement.price} TND
-                          </Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
+   const calculateTotalPriceProduct = () => {
+     const totalPrice = quantity * price;
+     setSelectedPrice(totalPrice);
+   };
+   useEffect(() => {
+     calculateTotalPriceProduct();
+   }, [quantity, price]);
 
-                    <Text style={styles.selectedSupplementText}>
-                      Suppléments:{" "}
-                      {supplement
-                        .filter((supplement) =>
-                          selectedSupplement.includes(supplement)
-                        )
-                        .map((supplement) => supplement.name)
-                        .join(", ")}
-                    </Text>
-                  </View>
+   return (
+     <View style={style.card}>
+       <TouchableOpacity onPress={HandleAddProd2Ticket}>
+         <Image
+           source={{
+             // uri: `http://192.168.1.13/admin/public/images/${food.name}.png`,
+             uri: `http://192.168.1.13/admin/storage/app/public/product/${food.image}`,
+           }}
+           style={{ height: 120, width: 120, marginLeft: 15 }}
+         />
+       </TouchableOpacity>
+       <View style={{ marginHorizontal: 5 }}>
+         <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}>
+           {food.name}
+         </Text>
+       </View>
+       <View
+         style={{
+           marginTop: 10,
+           marginHorizontal: 20,
+           flexDirection: "row",
+           justifyContent: "space-between",
+         }}
+       >
+         <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>
+           {food.price} TND{" "}
+         </Text>
+         <TouchableOpacity style={styles.addToCartBTn}>
+           <Icon name="add" size={20} color="white" onPress={handleOpenModal} />
+           <Modal visible={showModal} animationType="slide" transparent={true}>
+             <View style={styles.modalContainer}>
+               <View style={styles.modalContent}>
+                 <Image
+                   source={{
+                     uri: `http://192.168.1.13/admin/storage/app/public/product/${food.image}`,
+                     //  `http://192.168.1.13/admin/public/images/${food.name}.png`,
+                   }}
+                   style={{ height: 120, width: 120, marginLeft: 15 }}
+                 />
+                 <Text
+                   style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20 }}
+                 >
+                   {" "}
+                   {food.name}
+                 </Text>
 
-                  <View>
-                    <View>
-                      <Text style={{ fontWeight: "bold", fontSize: 14,marginLeft:29, marginTop:10}}>{quantity}</Text> 
-                    </View>
-                    <TouchableOpacity style={styles.removeicon} onPress={handleRemove}>
-                      <Icon name="remove" size={25} color={COLORS.white}></Icon>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.addicon} onPress={handleAdd} >
-                      <Icon name="add" size={25} color={COLORS.white}></Icon>
-                    </TouchableOpacity>
-                  </View>
-                  
-                  <View>
-                    <Text style={styles.pricetext}> Prix: {selectedPrice} TND</Text>
-                    {/* <CartScreen totalPrice={totalPrice} /> */}
-                  </View>
+                 <View style={styles.containerSize}>
+                   {sizes.map((size) => (
+                     <TouchableOpacity
+                       key={size.price}
+                       style={[
+                         styles.sizeButton2,
+                         selectedSize === size && styles.selectedSizeButton2,
+                       ]}
+                       onPress={() => handleSizePress(size)}
+                     >
+                       <Text style={styles.sizeButtonText2}>{size.name}</Text>
+                       <Text style={styles.sizeButtonText2}>
+                         {size.price} TND{" "}
+                       </Text>
+                     </TouchableOpacity>
+                   ))}
+                 </View>
+                 <View>
+                   {selectedSize && (
+                     <Text style={styles.selectedSizeText2}>
+                       Size: {selectedSize.name}
+                     </Text>
+                   )}
+                 </View>
 
-                  <TouchableOpacity onPress={handleCloseModal}>
-                    <Text style={styles.btnclose}> Valider </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
+                 <View style={styles.containerIng}>
+                   <View style={styles.ingredientsContainer}>
+                     {ingredients.map((ingredient) => (
+                       <TouchableOpacity
+                         key={ingredient.name}
+                         onPress={() => handleIngredientToggle(ingredient)}
+                         style={[
+                           styles.ingredientButton,
+                           selectedIngredients.includes(ingredient) &&
+                             styles.selectedIngredientButton,
+                         ]}
+                       >
+                         <Text style={styles.ingredientText}>
+                           {ingredient.name}
+                         </Text>
+                       </TouchableOpacity>
+                     ))}
+                   </View>
+                   <Text style={styles.selectedIngredientsText}>
+                     Sans:{" "}
+                     {ingredients
+                       .filter(
+                         (ingredient) =>
+                           !selectedIngredients.includes(ingredient)
+                       )
+                       .map((ingredient) => ingredient.name)
+                       .join(", ")}
+                   </Text>
+                 </View>
+
+                 <View style={styles.containerSupp}>
+                   <View style={styles.SupplementContainer}>
+                     {supplement.map((supplement) => (
+                       <TouchableOpacity
+                         key={supplement.name}
+                         onPress={() => handleSupplementToggle(supplement)}
+                         style={[
+                           styles.supplementButton,
+                           selectedSupplement.includes(supplement) &&
+                             styles.selectedSupplementButton,
+                         ]}
+                       >
+                         <Text style={styles.SupplementText}>
+                           {supplement.name}
+                         </Text>
+                         <Text style={styles.SupplementText}>
+                           {supplement.price} TND
+                         </Text>
+                       </TouchableOpacity>
+                     ))}
+                   </View>
+
+                   <Text style={styles.selectedSupplementText}>
+                     Suppléments:{" "}
+                     {supplement
+                       .filter((supplement) =>
+                         selectedSupplement.includes(supplement)
+                       )
+                       .map((supplement) => supplement.name)
+                       .join(", ")}
+                   </Text>
+                 </View>
+
+                 <View>
+                   <View>
+                     <Text
+                       style={{
+                         fontWeight: "bold",
+                         fontSize: 14,
+                         marginLeft: 29,
+                         marginTop: 10,
+                       }}
+                     >
+                       {quantity}
+                     </Text>
+                   </View>
+                   <TouchableOpacity
+                     style={styles.removeicon}
+                     onPress={handleRemove}
+                   >
+                     <Icon name="remove" size={25} color={COLORS.white}></Icon>
+                   </TouchableOpacity>
+                   <TouchableOpacity style={styles.addicon} onPress={handleAdd}>
+                     <Icon name="add" size={25} color={COLORS.white}></Icon>
+                   </TouchableOpacity>
+                 </View>
+
+                 <View>
+                   <Text style={styles.pricetext}>
+                     {" "}
+                     Prix: {selectedPrice} TND
+                   </Text>
+                   {/* <CartScreen totalPrice={totalPrice} /> */}
+                 </View>
+
+                 <TouchableOpacity onPress={handleCloseModal}>
+                   <Text style={styles.btnclose}> Valider </Text>
+                 </TouchableOpacity>
+               </View>
+             </View>
+           </Modal>
+         </TouchableOpacity>
+       </View>
+     </View>
+   );
+ };
 
   //http://192.168.1.13/admin/api/categories/products/%7Bid_category%7D
   const Categories = () => {

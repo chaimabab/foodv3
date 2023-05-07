@@ -23,8 +23,7 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand,props}) 
   //calculateTotPriceCommand(food.totPrice);
 
 /****************************Ajout de produit par image****************************/ 
-  const CartCardProd = ({item}) => {
-
+  const CartCardProd = ({ item }) => {
     // const [price, setPrice] = useState(item.price);
     // const [quantity,setQuantity]= useState(1);
     // const handleAdd = () => {
@@ -35,7 +34,7 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand,props}) 
     //     setQuantity(quantity - 1);
     //   }
     // };
-    // const totalPrice = quantity * price; 
+    // const totalPrice = quantity * price;
 
     const HandleRemoveProdFromTicket = () => {
       // if (ticket && ticket.length > 0 && food) {
@@ -45,7 +44,6 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand,props}) 
       // }
     };
 
-    
     return (
       <View style={styles.cartCardProd}>
         <View
@@ -56,22 +54,27 @@ const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand,props}) 
             paddingVertical: 20,
           }}
         >
-        <View>
-        <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}> {item.name} </Text>
+          <View>
+            <Text
+              style={{ fontWeight: "bold", fontSize: 16, marginLeft: -180 }}
+            >
+              {" "}
+              {item.name}{" "}
+            </Text>
 
-        <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
-          Size : {item && item.size ? item.size.name : ""}
-        </Text>
+            <Text style={{ color: COLORS.grey, marginLeft: -180 }}>
+              Size : {item && item.size ? item.size.name : ""}
+            </Text>
 
-        <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>
-            {item.price} TND{" "}
-          </Text>
-        {/* <Text style={{marginLeft:-80}}> Prix: {totalPrice}</Text>          */}
+            <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 7 }}>
+              {item.price} TND{" "}
+            </Text>
+            {/* <Text style={{marginLeft:-80}}> Prix: {totalPrice}</Text>          */}
+          </View>
         </View>
-      </View>
         <View style={{}}>
           {/* <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text> */}
-          <View style={{marginLeft:20, alignItems: "center"}}>
+          <View style={{ marginLeft: 20, alignItems: "center" }}>
             <TouchableOpacity onPress={HandleRemoveProdFromTicket}>
               <Icon
                 name="close"
