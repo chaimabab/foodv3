@@ -1,4 +1,5 @@
 const COLORS = {
+
   white: '#FFF',
   dark: '#000',
   primary: "#ffa500",
@@ -6,8 +7,11 @@ const COLORS = {
   secondary: '#fedac5', //clair
   light: '#E5E5E5',
   grey: '#908e8c',
+
+ // #DF0F0F
   rouge: '#DF0F0F',
   //#DF0F0F
+
 };
 
 export default COLORS;

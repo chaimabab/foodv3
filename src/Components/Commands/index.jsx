@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View,Image, SafeAreaView } from "react-native";
+import { Text, View,Image, SafeAreaView,Modal,TextInput } from "react-native";
 import {styles} from './styles'
 import { MaterialIcons } from "@expo/vector-icons";
 import { Button } from '@rneui/themed';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CartScreen from "./CartScreen";
 import ticket from "../../consts/ticket";
+import ticketProd from "../../consts/ticketProd";
+import TicketPopup from './TicketPopup';
 import Categories from '../Categories';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Commands = ({update}) => {
-
-  // const [priceTot, setPriceTot] = useState(0);
-  // useEffect(() => {
-  //   ticket.map((t) => {
-  //     setPriceTot(priceTot + t.price);
-  //   });
-  // }, []);
+const Commands = ({update,item}) => {
 
   const [currentDate, setCurrentDate] = useState(new Date());
   useEffect(() => {
@@ -40,24 +35,26 @@ const Commands = ({update}) => {
     setTotalprice(totalprice + price);
   };
 
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
   const [selectedService, setSelectedService] = useState(null);
-  // const handlePressService = (service) => {
-  //   if (selectedService === service) {
-  //     setSelectedService(null);
-  //   } else {
-  //     setSelectedService(service);
-  //   }
-  // };
   const [serviceText, setServiceText] = useState('');
+
   const handlePressService = (service) => {
 
     if (selectedService === service) {
       setSelectedService(null);
       setServiceText('');
+      setDeliveryAddress(''); 
     } else {
       setSelectedService(service);
       switch (service) {
         case 'serv1':
+          toggleModal(); 
           setServiceText('Commande en livraison');
           break;
         case 'serv2':
@@ -81,6 +78,26 @@ const Commands = ({update}) => {
     }
   };
 
+  let totalPrice = 0;
+  ticket.forEach((item) => {
+    totalPrice += item.price;
+  });
+  
+  ticketProd.forEach((item) => {
+    totalPrice += item.size.price
+  });
+
+  // let totalTax = 0;
+  // ticket.forEach((item) => {
+  //   totalTax += item.tax;
+  // });
+
+  // ticketProd.forEach((item) => {
+  //   totalTax += item.tax
+  // });
+
+
+
   return (
     <View style={styles.Commands}>
       <View style={styles.CommandsHeader}>
@@ -91,12 +108,31 @@ const Commands = ({update}) => {
 
       <View style={styles.services}>
       <TouchableOpacity
-          style={[styles.Med2, selectedService === "serv1" ? styles.selectedService : null]}
-          onPress={() => handlePressService("serv1")}
-        >
-        <Image style={{ width: 50, height: 50 }} source={require('../../assets/services/livraison.png')} />
-          <Text style={styles.text1}>Livraison</Text>
+      style={[styles.Med2, selectedService === "serv1" ? styles.selectedService : null]}
+      onPress={() => handlePressService("serv1")}
+    >
+      <Image style={{ width: 50, height: 50 }} source={require('../../assets/services/livraison.png')} />
+      <Text style={styles.text1}>Livraison</Text>
       </TouchableOpacity>
+
+      <Modal visible={isModalVisible} onRequestClose={toggleModal} animationType="slide" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}> 
+          <Text style={styles.label}>Adresse de livraison: </Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={text => setDeliveryAddress(text)}
+            value={deliveryAddress}
+          />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={toggleModal}>
+            <Text style={styles.fermerLiv}>Valider</Text>
+          </TouchableOpacity>
+          </View>
+        </View>
+        </View>
+        
+      </Modal>
 
       <TouchableOpacity
           style={[styles.Med2, selectedService === "serv2" ? styles.selectedService : null]}
@@ -116,11 +152,15 @@ const Commands = ({update}) => {
       </View>
       <View style={styles.commande}>
         {serviceText !== '' && (
-          <Text style={styles.inputtext}>
-            {serviceText}
-          </Text>
+        <>
+          <View style={styles.livraison}>
+            <Text style={styles.inputtext}>{serviceText}</Text>
+            <Text style={styles.inputaddres}>{deliveryAddress}</Text>
+          </View>
+      </>
         )}
       </View>
+
 
 
       {/* <View style={styles.commande}> 
@@ -175,16 +215,14 @@ const Commands = ({update}) => {
 
       <View style={styles.Calculations}>
         <View style={styles.Calculation}>
-          <Text style={styles.inputtext}>Sous Total</Text>
-          {/* <Text>0</Text> */}
-          <Text>{totalprice} TND</Text>
+          <Text style={styles.inputtext}>Prix total</Text>
+          <Text>{totalPrice} DT</Text>
         </View>
         <View style={styles.Calculation}>
-          <Text style={styles.inputtext}>Tax</Text>
-          <Text>0</Text>
+          <Text style={styles.inputtext}>Donné</Text>
         </View>
         <View style={styles.Calculation}>
-          <Text style={styles.inputtext}>Total</Text>
+          <Text style={styles.inputtext}>Rendu</Text>
           <Text>0.00</Text>
         </View>
       </View>
@@ -260,15 +298,20 @@ const Commands = ({update}) => {
           </Text>
         </TouchableOpacity>
       </View> */}
+    
+     <View style={styles.ButtonsFooter}>
+        <Button size="sm" color="error" title="Annuler"  /> 
+        {/* <Button size="sm" color="warning" title="En attente" /> */}
+        <Button size="sm" color="success" title="Valider" /> 
+      </View> 
 
-      <View style={styles.ButtonsFooter}>
-        <Button size="sm" color="error" title="Annuler" />
-        <Button size="sm" color="warning" title="En attente" />
-        <Button size="sm" color="success" title="Valider" />
-      </View>
-    </View>
+
+  </View>
+  
+
   );
 };
+
 
 export default Commands;
  

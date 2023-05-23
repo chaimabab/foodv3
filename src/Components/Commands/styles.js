@@ -86,6 +86,10 @@ const styles = StyleSheet.create({
     
     inputtext :{
         fontWeight:"bold",
+    },
+
+    inputaddres:{
+    
 
     },
 
@@ -181,12 +185,12 @@ const styles = StyleSheet.create({
 
     header: {
         flexDirection:'row',
-        marginHorizontal: 20,
+        marginHorizontal: 20,   
         marginTop:1,
         },
 
     cartCard: {
-        height: 100,
+        height: 160,
         elevation: 15,
         borderRadius: 10,
         backgroundColor: COLORS.white,
@@ -195,10 +199,52 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'flex-start',
+   
+    },
+
+    ticketItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+      },
+      label: {
+        fontWeight: 'bold',
+        width: 100,
+        marginRight: 10,
+      },
+      value: {
+        flex: 1,
+        color: COLORS.grey,
+      },
+      valueText: {
+        marginRight: 5,
+      },
+      modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.3)',
+      },
+      modalContent: {
+        width: '40%',
+        height: '30%',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 0,
     },
 
     cartCardProd: {
-        height: 100,
+        height: 120,
         elevation: 15,
         borderRadius: 10,
         backgroundColor: COLORS.white,
@@ -246,8 +292,8 @@ const styles = StyleSheet.create({
 //     },
 
     closeicon :{
-        width: 25,
-        height: 25,
+        width: 20,
+        height: 20,
         backgroundColor: COLORS.rouge,
         borderRadius: 30,
         paddingHorizontal: -2,
@@ -291,10 +337,46 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         backgroundColor: '#fff',
         paddingHorizontal: 10,
-        marginTop:-58,
+        marginTop:-45,
         marginLeft:200
-    } 
+    } ,
 
+    livraison:{
+        marginTop:-30,
+        flexDirection:'column'
+    },
+
+    fermerLiv:{
+        backgroundColor:"green",
+        padding: 10,
+        fontWeight: 'bold',
+        color:'white',
+        borderRadius: 5,
+    },
+
+    label: {
+        marginBottom: 20,
+        fontWeight: 'bold',
+        fontSize:16
+      },
+      input: {
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: COLORS.primary,
+        backgroundColor:COLORS.secondary,
+        borderRadius: 5,
+        padding: 5,
+        width: '85%',
+        height:'11%'
+      },
+      buttonContainer: {
+        // flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginTop:50,
+        borderRadius: 5,
+        overflow: 'hidden',
+      },
 });
 
 export { styles }

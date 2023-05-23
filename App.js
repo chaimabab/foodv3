@@ -22,6 +22,4 @@ const App = () => {
     );
 };
 
-
-
 export default AppWrapper;

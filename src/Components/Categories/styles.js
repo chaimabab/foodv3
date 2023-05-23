@@ -79,12 +79,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: "100%",
         paddingBottom: 100,
-        // backgroundColor: "red",
+        flex: 1, 
     },
     souscatList: {
         width: "50%",
         height: "100%",
-        // backgroundColor: "#000",
     },
     cat: {
         display: "flex",
@@ -143,15 +142,23 @@ const styles = StyleSheet.create({
 
     },
     
-    btnclose :{
+    btnvalider :{
+        padding: 10,
+        backgroundColor:"green",
+        fontWeight: 'bold',
+        color:'white',
+        marginTop:20,
+        marginLeft:300,
+    },
+
+    btnannuler :{
         padding: 10,
         backgroundColor:COLORS.rouge,
         fontWeight: 'bold',
         color:'white',
-        marginTop:20,
-        borderRadius: 5,
+        marginTop:-35,
+        marginRight:300,
     },
-
     btnclose2 :{
         padding: 10,
         backgroundColor:COLORS.primary,
@@ -331,9 +338,23 @@ const styles = StyleSheet.create({
     },
 
     pricetext :{
-        marginTop: 25,
+        marginTop: 10,
         fontWeight: "bold",
          fontSize: 14,
+    },
+
+    remisetext :{
+        // fontWeight: "bold",
+         fontSize: 14,
+         marginLeft:10
+    },
+    tvatext:{
+        // fontWeight: "bold",
+         fontSize: 14,
+         marginLeft:24,
+    },
+    percent :{
+        marginTop:13
     },
 
     rectContainer: {
@@ -365,8 +386,32 @@ const styles = StyleSheet.create({
         marginTop: -20,
         marginStart:40,
     },
+    // formules:{
+    //     display: "flex",
+    //     flexDirection: "row",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    // }
 
-      
+    formules: {
+        marginTop: 10, 
+        //alignSelf: "flex-end",
+        // marginRight:-50
+        marginLeft:25,
+    
+      },
+      sectionCatTitle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom: -10,
+        marginLeft:100
+      },
+      sectionFormTitle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom: 6,
+        marginLeft:40
+      },
 
 });
 
