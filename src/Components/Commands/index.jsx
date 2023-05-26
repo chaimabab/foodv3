@@ -10,8 +10,24 @@ import ticketProd from "../../consts/ticketProd";
 import TicketPopup from './TicketPopup';
 import Categories from '../Categories';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { Calculator } from 'react-native-calculator';
+
 
 const Commands = ({update,item}) => {
+
+  const [givenAmount, setGivenAmount] = useState('');
+
+  const handleGivenAmountChange = (amount) => {
+    setGivenAmount(amount);
+  };
+  
+
+  const calculateChange = () => {
+    const renderedAmount = parseFloat(givenAmount) - totalPrice;
+    // Vous pouvez effectuer d'autres opérations ici si nécessaire
+    return renderedAmount.toFixed(2);
+  };
+
 
   const [currentDate, setCurrentDate] = useState(new Date());
   useEffect(() => {
@@ -213,7 +229,7 @@ const Commands = ({update,item}) => {
         />
       </SafeAreaView>
 
-      <View style={styles.Calculations}>
+      {/* <View style={styles.Calculations}>
         <View style={styles.Calculation}>
           <Text style={styles.inputtext}>Prix total</Text>
           <Text>{totalPrice} DT</Text>
@@ -225,7 +241,30 @@ const Commands = ({update,item}) => {
           <Text style={styles.inputtext}>Rendu</Text>
           <Text>0.00</Text>
         </View>
+      </View> */}
+    <View style={{ flex: 1 }}>
+      <View style={styles.Calculations2}>
+        <View style={styles.Calculation2}>
+          <Text style={styles.inputtext2}>Prix total</Text>
+          <Text>{totalPrice} DT</Text>
+        </View>
+        <View style={styles.Calculation2}>
+          <Text style={styles.inputtext2}>Donné</Text>
+          <Text>{givenAmount} DT</Text>
+        </View>
+        <View style={styles.Calculation2}>
+          <Text style={styles.inputtext2}>Rendu</Text>
+          <Text>{calculateChange()} DT</Text>
+        </View>
       </View>
+      {/* <Calculator
+        onInputValueChange={setGivenAmount}
+        hideDisplay
+        decimalSeparator=","
+        numberStyle={styles.numberStyle2}
+        style={styles.calculatorStyle2}
+      /> */}
+    </View>
 
 
       <View style={styles.Payement}>
@@ -311,6 +350,7 @@ const Commands = ({update,item}) => {
 
   );
 };
+
 
 
 export default Commands;

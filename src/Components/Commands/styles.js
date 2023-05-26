@@ -377,6 +377,121 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         overflow: 'hidden',
       },
+
+      ticketItemName: {
+        fontWeight: "bold",
+        fontSize: 16,
+        marginBottom: 5,
+      },
+      ticketItemInfo: {
+        color: COLORS.grey,
+        marginBottom: 2,
+      },
+      footerContainer: {
+        paddingHorizontal: 40,
+        marginTop: 20,
+        marginLeft: 260,
+      },
+      footerContent: {
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        marginTop: 15,
+      },
+      ticketModalContainer: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: COLORS.white,
+      },
+      ticketModalTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 10,
+      },
+      ticketItemContainer: {
+        marginBottom: 20,
+      },
+      modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.3)',
+      },
+      modalContent: {
+        width: '40%',
+        height: '70%',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 0,
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    Calculations2: {
+      alignItems: 'center',
+    },
+    Calculation2: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    inputtext2: {
+      marginRight: 10,
+    },
+    input2: {
+      width: 100,
+      height: 30,
+      borderColor: 'gray',
+      borderWidth: 1,
+      padding: 5,
+    },
+    numberStyle2: {
+      fontSize: 24,
+    },
+    calculatorStyle2: {
+      flex: 1,
+      backgroundColor: '#f2f2f2',
+    },
+
+    calculatorContainer: {
+      backgroundColor: '#f2f2f2',
+      padding: 10,
+      borderRadius: 8,
+    },
+    row2: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 10,
+    },
+    button: {
+      backgroundColor: '#ccc',
+      padding: 10,
+      borderRadius: 4,
+    },
+    buttonText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#000',
+    },
+    resultContainer: {
+      marginTop: 20,
+    },
+    resultText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginBottom: 5,
+    }
+    
 });
 
 export { styles }
