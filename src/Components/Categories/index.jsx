@@ -108,7 +108,7 @@ import CartScreen from "../Commands/CartScreen";
       </TouchableOpacity>
       <Modal visible={modalVisibleTick}  animationType="slide" transparent={true}>
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent2}>
+          <View style={styles.modalContent}>
           <TouchableOpacity onPress={() => setModalVisibleTick(false)}>
             <Text style={styles.btnclose2}>Close</Text>
           </TouchableOpacity>
@@ -655,7 +655,7 @@ import CartScreen from "../Commands/CartScreen";
         category: "Pizza",
         name: "Meat Pizza",
         ingredients: "Mixed Pizza",
-        //price: "12.00"
+        price: "12.00",
         image: require("../../assets/meatPizza.png"),
       },
       {
@@ -663,7 +663,7 @@ import CartScreen from "../Commands/CartScreen";
         id: "2",
         name: "Cheese Pizza",
         ingredients: "Cheese Pizza",
-        //price: "16.00",
+        price: "16.00",
         image: require("../../assets/cheesePizza.png"),
       },
       {

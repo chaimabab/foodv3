@@ -7,28 +7,35 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import CartScreen from "./CartScreen";
 import ticket from "../../consts/ticket";
 import ticketProd from "../../consts/ticketProd";
-import TicketPopup from './TicketPopup';
 import Categories from '../Categories';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { Calculator } from 'react-native-calculator';
+import Calculator from './Calculator';
+import TicketModal from '../Modals/Ticket';
 
 
 const Commands = ({update,item}) => {
 
-  const [givenAmount, setGivenAmount] = useState('');
 
-  const handleGivenAmountChange = (amount) => {
-    setGivenAmount(amount);
-  };
-  
+  const [donneValue, setDonneValue] = useState('');
+  const [showCalculator, setShowCalculator] = useState(false);
 
-  const calculateChange = () => {
-    const renderedAmount = parseFloat(givenAmount) - totalPrice;
-    // Vous pouvez effectuer d'autres opérations ici si nécessaire
-    return renderedAmount.toFixed(2);
+  const openCalculator = () => {
+    setShowCalculator(true);
   };
 
+  const closeCalculator = () => {
+    setShowCalculator(false);
+  };
 
+  const handleCalculatorResult = (result) => {
+    setDonneValue(result.toString());
+    closeCalculator();
+  };
+
+  // const handleCalculatorResult = (result) => {
+  //   setDonneValue(result);
+  // };
   const [currentDate, setCurrentDate] = useState(new Date());
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,17 +58,39 @@ const Commands = ({update,item}) => {
     setTotalprice(totalprice + price);
   };
 
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
+
   const [selectedService, setSelectedService] = useState(null);
-  const [serviceText, setServiceText] = useState('');
+  const[serviceText,setServiceText]=useState('')
 
+  // const handlePressService = (service) => {
+  //   if (selectedService === service) {
+  //     setSelectedService(null);
+  //     setServiceText('');
+  //     setDeliveryAddress(''); 
+  //   } else {
+  //     setSelectedService(service);
+  //     switch (service) {
+  //       case 'serv1':
+  //         toggleModal(); 
+  //         setServiceText('Commande en livraison');
+  //         break;
+  //       case 'serv2':
+  //         setServiceText('Commande à emporter');
+  //         break;
+  //       case 'serv3':
+  //         setServiceText('Commande sur place');
+  //         break;
+  //       default:
+  //         setServiceText('');
+  //     }
+  //   }
+  // };
   const handlePressService = (service) => {
-
     if (selectedService === service) {
       setSelectedService(null);
       setServiceText('');
@@ -69,14 +98,14 @@ const Commands = ({update,item}) => {
     } else {
       setSelectedService(service);
       switch (service) {
-        case 'serv1':
+        case 'en livraison':
           toggleModal(); 
           setServiceText('Commande en livraison');
           break;
-        case 'serv2':
+        case 'à emporter':
           setServiceText('Commande à emporter');
           break;
-        case 'serv3':
+        case 'sur place':
           setServiceText('Commande sur place');
           break;
         default:
@@ -84,6 +113,8 @@ const Commands = ({update,item}) => {
       }
     }
   };
+  
+
 
   const [selectedOption, setSelectedOption] = useState(null);
   const handlePressOption = (option) => {
@@ -111,7 +142,7 @@ const Commands = ({update,item}) => {
   // ticketProd.forEach((item) => {
   //   totalTax += item.tax
   // });
-
+  const renduValue = (donneValue - totalPrice).toFixed(2)
 
 
   return (
@@ -124,8 +155,8 @@ const Commands = ({update,item}) => {
 
       <View style={styles.services}>
       <TouchableOpacity
-      style={[styles.Med2, selectedService === "serv1" ? styles.selectedService : null]}
-      onPress={() => handlePressService("serv1")}
+      style={[styles.Med2, selectedService === "en livraison" ? styles.selectedService : null]}
+      onPress={() => handlePressService("en livraison")}
     >
       <Image style={{ width: 50, height: 50 }} source={require('../../assets/services/livraison.png')} />
       <Text style={styles.text1}>Livraison</Text>
@@ -151,41 +182,31 @@ const Commands = ({update,item}) => {
       </Modal>
 
       <TouchableOpacity
-          style={[styles.Med2, selectedService === "serv2" ? styles.selectedService : null]}
-          onPress={() => handlePressService("serv2")}
+          style={[styles.Med2, selectedService === "à emporter" ? styles.selectedService : null]}
+          onPress={() => handlePressService("à emporter")}
         >
         <Image style={{ width: 50, height: 50 }} source={require('../../assets/services/emporter.png')} />
           <Text style={styles.text2}>Emporter</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-          style={[styles.Med2, selectedService === "serv3" ? styles.selectedService : null]}
-          onPress={() => handlePressService("serv3")}
+          style={[styles.Med2, selectedService === "sur place" ? styles.selectedService : null]}
+          onPress={() => handlePressService("sur place")}
         >
         <Image style={{ width: 50, height: 50 }} source={require('../../assets/services/plat.png')} />
           <Text style={styles.text3}>Sur place</Text>
       </TouchableOpacity>
+
       </View>
-      <View style={styles.commande}>
-        {serviceText !== '' && (
-        <>
-          <View style={styles.livraison}>
-            <Text style={styles.inputtext}>{serviceText}</Text>
-            <Text style={styles.inputaddres}>{deliveryAddress}</Text>
-          </View>
-      </>
-        )}
-      </View>
-
-
-
-      {/* <View style={styles.commande}> 
+      <View style={styles.commande}> 
         {selectedService && (
           <Text style={styles.inputtext}>
-             Commande {selectedService === "serv1" ? "En Livraion" : "A Emporter"}
+             Commande {selectedService === "en livraison" ? "En Livraion" : "A Emporter"}
           </Text>
         )}
-      </View> */}
+      </View>
+
+
 
       {/* <View style={styles.services}>
       <TouchableOpacity
@@ -226,6 +247,12 @@ const Commands = ({update,item}) => {
         <CartScreen
           update={update}
           calculateTotPriceCommand={calculateTotPriceCommand}
+          selectedService={selectedService}
+          handlePressService={handlePressService}
+          selectedOption={selectedOption}
+          donneValue={donneValue}
+          totalPrice={totalPrice}
+          renduValue={renduValue}
         />
       </SafeAreaView>
 
@@ -236,58 +263,64 @@ const Commands = ({update,item}) => {
         </View>
         <View style={styles.Calculation}>
           <Text style={styles.inputtext}>Donné</Text>
+          <TextInput
+          style={styles.input2}
+          value={donneValue}
+          onChangeText={text => setDonneValue(text)}
+        />
         </View>
         <View style={styles.Calculation}>
           <Text style={styles.inputtext}>Rendu</Text>
           <Text>0.00</Text>
         </View>
       </View> */}
-    <View style={{ flex: 1 }}>
-      <View style={styles.Calculations2}>
-        <View style={styles.Calculation2}>
-          <Text style={styles.inputtext2}>Prix total</Text>
+
+      <View style={styles.Calculations}>
+        <View style={styles.Calculation}>
+          <Text style={styles.inputtext}>Prix total</Text>
           <Text>{totalPrice} DT</Text>
         </View>
-        <View style={styles.Calculation2}>
-          <Text style={styles.inputtext2}>Donné</Text>
-          <Text>{givenAmount} DT</Text>
-        </View>
-        <View style={styles.Calculation2}>
-          <Text style={styles.inputtext2}>Rendu</Text>
-          <Text>{calculateChange()} DT</Text>
+        <TouchableOpacity style={styles.Calculation3} onPress={openCalculator}>
+          <Text style={styles.inputtext}>Donné</Text>
+          <TextInput
+            style={styles.input2}
+            value={donneValue}
+            onChangeText={(text) => {donneValue} }
+            editable={false} 
+          />
+
+        </TouchableOpacity>
+        <View style={styles.Calculation}>
+          <Text style={styles.inputtext}>Rendu</Text>
+          <Text>{renduValue} DT</Text>
         </View>
       </View>
-      {/* <Calculator
-        onInputValueChange={setGivenAmount}
-        hideDisplay
-        decimalSeparator=","
-        numberStyle={styles.numberStyle2}
-        style={styles.calculatorStyle2}
-      /> */}
-    </View>
 
+      <Modal visible={showCalculator} animationType="slide" transparent={true}>
+        <Calculator onClose={closeCalculator} onResult={handleCalculatorResult} />
+      </Modal>
 
       <View style={styles.Payement}>
         <Text style={styles.inputtext}>Mode de paiement</Text>
         {selectedOption && (
           <Text style={styles.inputtext}>
-             {selectedOption === "cash" ? "Espèce" : "Carte Bancaire"}
+             {selectedOption === "Espéce" ? "Espèce" : "Carte Bancaire"}
           </Text>
         )}
       </View>
 
       <View style={styles.PayMethods}>
         <TouchableOpacity
-          style={[styles.Med, selectedOption === "cash" ? styles.selectedOption : null]}
-          onPress={() => handlePressOption("cash")}
+          style={[styles.Med, selectedOption === "Espéce" ? styles.selectedOption : null]}
+          onPress={() => handlePressOption("Espéce")}
         >
           <MaterialIcons name="attach-money" size={40} color="#DF0F0F" />
           <Text style={styles.paytext}>Espèce</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.Med, selectedOption === "card" ? styles.selectedOption : null]}
-          onPress={() => handlePressOption("card")}
+          style={[styles.Med, selectedOption === "Carte Bancaire" ? styles.selectedOption : null]}
+          onPress={() => handlePressOption("Carte Bancaire")}
         >
           <MaterialIcons name="credit-card" size={40} color="#DF0F0F" />
           <Text style={{ ...styles.paytext, textAlign: "center" }}>
@@ -295,6 +328,7 @@ const Commands = ({update,item}) => {
           </Text>
         </TouchableOpacity>
       </View>
+
 
 
 

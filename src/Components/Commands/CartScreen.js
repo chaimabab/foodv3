@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Button,
   Modal,
+  Image
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -17,10 +18,12 @@ import { styles } from "./styles";
 import Categories from "../Categories";
 import ticketProd from "../../consts/ticketProd";
 import axios from 'axios'; 
+import Commands from "../Commands";
 
 
 
-const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand,props,item}) => {
+const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand,props,item,selectedService,
+  handlePressService,selectedOption,donneValue,renduValue}) => {
   useEffect(() => {
     console.log(ticket);
   }, [update]);
@@ -37,6 +40,7 @@ const handleCloseModal = () => {
   setShowModal(false);
 };
 
+const [ticketNumber, setTicketNumber] = useState(1);
 
 
   // const [selectedItems, setSelectedItems] = useState([]);
@@ -141,6 +145,7 @@ const handleCloseModal = () => {
     // };
     
     const [price, setPrice] = useState(item.price);
+    const [ticketNumber, setTicketNumber] = useState(1);
 
     const HandleRemoveProdFromTicket = () => {
       ticket.pop(food);
@@ -403,13 +408,20 @@ const handleCloseModal = () => {
         ListFooterComponentStyle={styles.footerContainer}
         ListFooterComponent={() => (
           <View style={styles.footerContent}>
-            <TouchableOpacity
-            
-              onPress={openModal}
-              disabled={ticket.length === 0}
-            >
-              <Text >Voir le ticket</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if (ticket.length !== 0) {
+                openModal();
+                setTicketNumber(ticketNumber + 1);
+              }
+            }}
+            disabled={ticket.length === 0}
+            style={styles.ticketButton}
+          >
+            <Text style={styles.ticketButtonText}>{`Voir le ticket`}</Text>
+          </TouchableOpacity>
+
+
           </View>
         )}
 
@@ -433,7 +445,8 @@ const handleCloseModal = () => {
         // )}
         
       />
-      <TicketModal items={ticket} showModal={showModal} handleCloseModal={handleCloseModal} />
+      <TicketModal items={ticket} showModal={showModal} handleCloseModal={handleCloseModal} 
+      selectedService={selectedService} selectedOption={selectedOption}  totalPrice={totalPrice} renduValue={renduValue} donneValue={donneValue}/>
 
       <FlatList
       showsVerticalScrollIndicator={false}
@@ -463,7 +476,9 @@ const handleCloseModal = () => {
   );
 };
 
-const TicketModal = ({ items, showModal, handleCloseModal}) => {
+const TicketModal = ({items, showModal, handleCloseModal,donneValue,
+  selectedService,handlePressService, selectedOption,renduValue}) => {
+
   let totalPrice = 0;
   ticket.forEach((item) => {
     totalPrice += item.price;
@@ -472,23 +487,69 @@ const TicketModal = ({ items, showModal, handleCloseModal}) => {
   ticket.forEach((item) => {
     totalTax += item.tax;
   });
+  const [ticketNumber, setTicketNumber] = useState(1);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000); 
+    return () => clearInterval(interval);
+  }, []);
+  function formatDate(date) {
+    return [
+      date.toLocaleDateString("en-US"),
+      date.toLocaleTimeString("en-US"),
+    ].join(" ");
+  }
+
+  const [update, setUpdate] = useState(false);
+
   return (
     <Modal visible={showModal} transparent={true} animationType="slide">
       <View style={styles.modalContainer}>
-      <View style={styles.modalContent}>
-        <Text style={styles.ticketModalTitle}>Ticket Final</Text>
+      <View style={styles.modalContentTicket}>
+      <View style={styles.restaurantInfoContainer}>
+        <Image source={require('../../assets/catergories/restau.png')} style={styles.logo} />
+        <Text style={styles.restaurantName}>Nom du restaurant</Text>
+        <View >
+        <Text style={styles.date}>{formatDate(currentDate)}</Text>
+        </View>
+        <Text style={styles.restaurantAddress}>Adresse du restaurant</Text>
+        <Text style={styles.restaurantNumber}>Numéro du restaurant</Text>
+      </View>
+      <View style={styles.rowContent}>
+        <Text style={styles.ticketNumber}>Ticket N° {ticketNumber}</Text>
+        <Text style={styles.ticketCaissier}>Caissier</Text>
+      </View>
+      <Text >*********************************************************************************************</Text>
+        {/* <Text style={styles.ticketModalTitle}>Ticket Final</Text> */}
         <FlatList
           data={items}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.ticketItemContainer}>
-              <Text style={styles.ticketItemName}>Nom: {item.name}</Text>
+              <View style={styles.rowContainer}>
+              <Text style={styles.ticketItemName}>{item.name} </Text>
               <Text style={styles.ticketItemInfo}>
-                Taille: {item.size.name}
+                S {item.size.name}
               </Text>
               <Text style={styles.ticketItemInfo}>
-                Quantité: {item.quantity}
+                x{item.quantity} 
               </Text>
+            <Text style={styles.ticketItemInfo}>
+               TVA: {item && item.tax ? item.tax : "0"} %
+            </Text>
+            <Text style={styles.ticketItemInfo}>
+               Remise: {item && item.remise ? item.remise : "0"} %
+            </Text>
+            <Text style={styles.ticketItemInfo}>
+              Prix Initial: {item && item.priceHT ? item.priceHT : ""} DT
+            </Text>
+            <Text style={styles.ticketItemInfo}>
+              Prix  : {item && item.price ? item.price : ""} DT
+            </Text>
+            </View>
+              <View style={styles.row2Container}>
               {item.ingredients && item.ingredients.length > 0 && (
               <Text style={styles.ticketItemInfo}>
                 Sans: {item.ingredients.map((ingredient) => ingredient.name).join(", ")}
@@ -499,24 +560,29 @@ const TicketModal = ({ items, showModal, handleCloseModal}) => {
                 Supp: {item.supplement.map((supp) => supp.name).join(", ")}
               </Text>
             )}
-            <Text style={styles.ticketItemInfo}>
-              TVA: {item && item.tax ? item.tax : "0"} %
-            </Text>
-            <Text style={styles.ticketItemInfo}>
-              Remise: {item && item.remise ? item.remise : "0"} %
-            </Text>
-            <Text style={styles.ticketItemInfo}>
-              Prix Initial: {item && item.priceHT ? item.priceHT : ""} DT
-            </Text>
-            <Text style={styles.ticketItemInfo}>
-              Prix : {item && item.price ? item.price : ""} DT
-            </Text>
-              {/* Afficher les autres détails */}
+             </View>
             </View>
           )}
         />
-        <Text> Prix Total: {totalPrice} DT</Text>
-        <Button title="Fermer" onPress={handleCloseModal} />
+            <View style={styles.servv}>
+            <View style={styles.leftColumn}>
+              <Text style={styles.leftText}>Mode de paiement: {selectedOption}</Text>
+              <Text style={styles.leftText}>Mode de consommation:<Text style={styles.selectedService}>{selectedService}</Text> </Text>
+            </View>
+            </View>
+            <View style={styles.rightColumn}>
+              <Text>Total net:</Text>
+              <Text>Total tax:</Text>
+              <Text>A payer: {totalPrice}DT</Text>
+              <Text>Donné: {donneValue}DT</Text>
+              <Text>Rendu: {renduValue}DT</Text>
+            </View>
+            <View style={styles.FinTicket}>
+              <Text >*********************************************************************************************</Text>
+              </View>
+              <Text style={styles.restaurantName}>Merci de votre visite. A bientôt!</Text>
+        {/* <Text> Prix Total: {totalPrice} DT</Text> */}
+        <Button title="Fermer" color='red' onPress={handleCloseModal} />
       </View>
       </View>
     </Modal>

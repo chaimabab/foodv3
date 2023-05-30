@@ -126,6 +126,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: "auto",
         backgroundColor: '#fefefe',
     },
+    Calculation3: {
+      display: "flex",
+      width: "97%",
+      justifyContent: "space-between",
+      alignItems: "center",
+      flexDirection: "row",
+      paddingHorizontal: "auto",
+      backgroundColor: '#fefefe',
+      marginLeft:210,
+  },
     Payement: {
         display: "flex",
         width: "100%",
@@ -382,8 +392,22 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16,
         marginBottom: 5,
+        marginRight:15,
       },
+
       ticketItemInfo: {
+        color: COLORS.grey,
+        marginBottom: 2,
+        marginRight:20,
+      },
+      itemInfoContainer: {
+        marginTop: 10,
+      },
+      itemInfoTitle: {
+        fontWeight: "bold",
+      },
+      itemInfo: {
+        marginLeft: 10,
         color: COLORS.grey,
         marginBottom: 2,
       },
@@ -401,37 +425,29 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         backgroundColor: COLORS.white,
+
       },
       ticketModalTitle: {
         fontSize: 18,
         fontWeight: "bold",
         marginBottom: 10,
+
       },
       ticketItemContainer: {
-        marginBottom: 20,
-      },
+        marginBottom:20,
+        // marginBottom: 50,
+        // flexDirection: 'row',
+        // alignItems: 'center',
+        },
+        
+
       modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.3)',
       },
-      modalContent: {
-        width: '40%',
-        height: '70%',
-        backgroundColor: 'white',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 0,
-    },
+
     container: {
       flex: 1,
       justifyContent: 'center',
@@ -490,8 +506,168 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
       marginBottom: 5,
-    }
+    },
+    input2: {
+      borderWidth: 1,
+      borderColor: 'gray',
+      padding: 5,
+      width: 100, // Adjust the width according to your needs
+    },
+    modalContentTicket: {
+      width: '45%',
+      height: '80%',
+      backgroundColor: 'white',
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+          width: 0,
+          height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 0,
+      
+  },
+  restaurantInfoContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    marginRight: 10,
+    marginBottom: 5,
+
+  },
+  restaurantName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  date :{
+    marginLeft:400,
+    marginTop:-80,
+    fontSize:12
+  },
+  restaurantAddress: {
+    fontSize: 16,
+    marginBottom: 5,
+
+  },
+  restaurantNumber: {
+    fontSize: 16,
+    marginBottom: 5,
+
+  },
+  ticketNumber: {
+    fontSize: 18,
+    // fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'left',
+    marginRight:300,
+
+  },
+  ticketCaissier: {
+    fontSize: 18,
+    // fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'right',
+
+  },
+  rowContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     
+  },
+  
+  
+
+  ticketButton: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  ticketButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  modalContent2: {
+      width: '100%',
+      height: '70%',
+      backgroundColor: 'white',
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+          width: 0,
+          height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 0,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    // justifyContent: 'space-between', 
+    // alignItems: 'center',
+    // marginTop:5
+    // marginBottom: -20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft:10,
+  },
+  row2Container: {
+    flexDirection: 'row',
+    // justifyContent: 'space-between', 
+    // alignItems: 'center',
+    // marginTop:5
+    // marginBottom: -20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft:10,
+    // marginLeft:105,
+  },
+
+
+  // leftColumn: {
+  //   marginRight:430
+  // },
+  // rightColumn: {
+  //   flex: 1,
+  //   alignItems: 'flex-end',
+  // },
+  servv: {
+    flexDirection: 'row',
+  },
+  leftColumn: {
+    marginRight: 430,
+  },
+  rightColumn: {
+    alignItems: 'flex-end',
+    marginLeft: 300,
+    marginTop: -30,
+    marginBottom:15
+  },
+  leftText: {
+    textAlign: 'left',
+    // display: 'inline-block',
+  },
+  selectedService: {
+    display: 'inline-block',
+  },
+  FinTicket: {
+
+  marginBottom:5
+    },
+  
 });
 
 export { styles }
