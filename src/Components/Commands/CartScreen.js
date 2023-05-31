@@ -22,30 +22,41 @@ import Commands from "../Commands";
 
 
 
-const CartScreen = ({ food, update, setUpdate, calculateTotPriceCommand,props,item,selectedService,
-  handlePressService,selectedOption,donneValue,renduValue}) => {
+const CartScreen = ({
+  food,
+  update,
+  setUpdate,
+  calculateTotPriceCommand,
+  props,
+  item,
+  selectedService,
+  handlePressService,
+  selectedOption,
+  donneValue,
+  renduValue,
+  showModal,
+  setShowModal,
+  ticketNumber,
+}) => {
   useEffect(() => {
     console.log(ticket);
   }, [update]);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
     setShowModal(true);
   };
-// const closeModal = () => {
-//   setShowModal(false);
-// };
+  // const closeModal = () => {
+  //   setShowModal(false);
+  // };
 
-const handleCloseModal = () => {
-  setShowModal(false);
-};
-
-const [ticketNumber, setTicketNumber] = useState(1);
-
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   // const [selectedItems, setSelectedItems] = useState([]);
   // const [showTicketModal, setShowTicketModal] = useState(false);
-  
+
   // const handleSelectItem = (item) => {
   //   setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
   // };
@@ -53,20 +64,17 @@ const [ticketNumber, setTicketNumber] = useState(1);
   // const openTicketModal = () => {
   //   setShowTicketModal(true);
   // };
-  
+
   // const closeTicketModal = () => {
   //   setSelectedItems([]);
   //   setShowTicketModal(false);
   // };
 
-  
-/****************************Ajout de produit par image****************************/ 
-  const CartCardProd = ({item}) => {
-
+  /****************************Ajout de produit par image****************************/
+  const CartCardProd = ({ item }) => {
     const HandleRemoveProdFromTicket = () => {
       ticketProd.pop(food);
       setUpdate(!update);
-
     };
 
     return (
@@ -79,28 +87,31 @@ const [ticketNumber, setTicketNumber] = useState(1);
             paddingVertical: 20,
           }}
         >
-        <View>
-        <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -190 }}>{item.name}</Text>
+          <View>
+            <Text
+              style={{ fontWeight: "bold", fontSize: 16, marginLeft: -190 }}
+            >
+              {item.name}
+            </Text>
 
-        <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
-          Size: {item && item.size ? item.size.name : ""}
-        </Text>
+            <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+              Size: {item && item.size ? item.size.name : ""}
+            </Text>
 
-        <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
-            TVA: {item && item.tax ? item.tax : "0"} %
-        </Text>
-        <Text style={{ color: COLORS.grey, marginLeft: -190}}>
-            Remise: {item && item.remise ? item.remise: "0"} %
-        </Text>
+            <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+              TVA: {item && item.tax ? item.tax : "0"} %
+            </Text>
+            <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+              Remise: {item && item.remise ? item.remise : "0"} %
+            </Text>
 
-        <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
-          Prix HT: {item && item.size ? item.size.price : ""} DT
-        </Text>
-
-      </View>
-      </View>
+            <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+              Prix HT: {item && item.size ? item.size.price : ""} DT
+            </Text>
+          </View>
+        </View>
         <View style={{}}>
-          <View style={{marginLeft:20, alignItems: "center"}}>
+          <View style={{ marginLeft: 20, alignItems: "center" }}>
             <TouchableOpacity onPress={HandleRemoveProdFromTicket}>
               <Icon
                 name="close"
@@ -115,9 +126,8 @@ const [ticketNumber, setTicketNumber] = useState(1);
     );
   };
 
-/****************************Ajout de produit par popup****************************/ 
-  const CartCard = ({item,handleSelectItem}) => {
-
+  /****************************Ajout de produit par popup****************************/
+  const CartCard = ({ item, handleSelectItem }) => {
     // const sendProductsToLaravel = async () => {
     //   try {
     //     // Préparez les données à envoyer
@@ -143,16 +153,16 @@ const [ticketNumber, setTicketNumber] = useState(1);
     //     console.error(error);
     //   }
     // };
-    
+
     const [price, setPrice] = useState(item.price);
-    const [ticketNumber, setTicketNumber] = useState(1);
+    // const [ticketNumber, setTicketNumber] = useState(1);
 
     const HandleRemoveProdFromTicket = () => {
       ticket.pop(food);
       // calculateTotPriceCommand(-food.totPrice);
       setUpdate(!update);
     };
-    const [quantity,setQuantity]= useState(1);
+    const [quantity, setQuantity] = useState(1);
     const PrixTotal = quantity * price;
 
     const itemWithDetails = {
@@ -163,43 +173,43 @@ const [ticketNumber, setTicketNumber] = useState(1);
 
     return (
       <View style={styles.cartCard}>
-
         <View
           style={{
             height: 170,
             marginLeft: 190,
             paddingVertical: 20,
-            marginTop:-20,
+            marginTop: -20,
           }}
         >
-        <View>
-            <Text style={{ fontWeight: "bold", fontSize: 16, marginLeft: -190 }}>
-              {item.name}            
+          <View>
+            <Text
+              style={{ fontWeight: "bold", fontSize: 16, marginLeft: -190 }}
+            >
+              {item.name}
             </Text>
-        </View> 
+          </View>
 
-         <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
-          Size: {item && item.size ? item.size.name : ""}
-        </Text>
-
-        <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
-            Qte: {item && item.quantity ? item.quantity : ""} 
-        </Text>
-
-        {itemWithDetails.ingredients.length > 0 && (
-          <Text style={{color: COLORS.grey, marginLeft: -190}}>
-            Sans: {itemWithDetails.ingredients.join(", ")}
+          <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+            Size: {item && item.size ? item.size.name : ""}
           </Text>
-        )}
 
-        {itemWithDetails.supplements.length > 0 && (
-          <Text style={{color: COLORS.grey, marginLeft: -190}}>
-            Supp: {itemWithDetails.supplements.join(", ")}
+          <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+            Qte: {item && item.quantity ? item.quantity : ""}
           </Text>
-        )}
 
+          {itemWithDetails.ingredients.length > 0 && (
+            <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+              Sans: {itemWithDetails.ingredients.join(", ")}
+            </Text>
+          )}
 
-        {/* {item.ingredients && item.ingredients.length > 0 && (
+          {itemWithDetails.supplements.length > 0 && (
+            <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+              Supp: {itemWithDetails.supplements.join(", ")}
+            </Text>
+          )}
+
+          {/* {item.ingredients && item.ingredients.length > 0 && (
         <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
           Sans:{" "}
           {item.ingredients.map((i, index) => {
@@ -216,8 +226,7 @@ const [ticketNumber, setTicketNumber] = useState(1);
         </Text>
       )}  */}
 
-
-           {/* <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+          {/* <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
            Sans: {item && item.ingredients && item.ingredients.length > 0
               ? item.ingredients.map((i, index) => {
                   return (
@@ -230,8 +239,7 @@ const [ticketNumber, setTicketNumber] = useState(1);
               : ""}
           </Text>  */}
 
-
-        {/* {item.supplement && item.supplement.length > 0 && (
+          {/* {item.supplement && item.supplement.length > 0 && (
               <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
                 Supp:{" "}
                 {item.supplement.map((sp, index) => {
@@ -248,7 +256,6 @@ const [ticketNumber, setTicketNumber] = useState(1);
               </Text>
             )} */}
 
-
           {/* <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
           Supp: {item && item.supplement && item.supplement.length > 0
               ? item.supplement.map((sp, index) => {
@@ -262,12 +269,11 @@ const [ticketNumber, setTicketNumber] = useState(1);
               : ""}
           </Text> */}
 
-
           <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
             TVA: {item && item.tax ? item.tax : "0"} %
           </Text>
-          <Text style={{ color: COLORS.grey, marginLeft: -190}}>
-            Remise: {item && item.remise ? item.remise: "0"} %
+          <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
+            Remise: {item && item.remise ? item.remise : "0"} %
           </Text>
 
           <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
@@ -284,11 +290,10 @@ const [ticketNumber, setTicketNumber] = useState(1);
           >
             <Text style={styles.detailsButtonText}>Voir les détails</Text>
           </TouchableOpacity> */}
-
         </View>
 
-        <View >
-          <View style={{marginLeft:20, alignItems: "center"}}>
+        <View>
+          <View style={{ marginLeft: 20, alignItems: "center" }}>
             <TouchableOpacity onPress={HandleRemoveProdFromTicket}>
               <Icon
                 name="close"
@@ -304,9 +309,7 @@ const [ticketNumber, setTicketNumber] = useState(1);
         {/* <TouchableOpacity onPress={openModal}>
           <Text>Afficher les détails</Text>
         </TouchableOpacity> */}
-
       </View>
-  
     );
   };
 
@@ -315,7 +318,7 @@ const [ticketNumber, setTicketNumber] = useState(1);
     totalPrice += item.price;
   });
   ticketProd.forEach((item) => {
-    totalPrice += item.size.price
+    totalPrice += item.size.price;
   });
 
   let totalTax = 0;
@@ -324,9 +327,8 @@ const [ticketNumber, setTicketNumber] = useState(1);
   });
 
   ticketProd.forEach((item) => {
-    totalTax += item.tax
+    totalTax += item.tax;
   });
-
 
   // const TicketModal = ({ items, closeModal }) => {
   //   return (
@@ -347,8 +349,6 @@ const [ticketNumber, setTicketNumber] = useState(1);
   //     </Modal>
   //   );
   // };
-
-  
 
   const renderCartCard = ({ item }) => {
     return <CartCard item={item} />;
@@ -376,7 +376,6 @@ const [ticketNumber, setTicketNumber] = useState(1);
   //       // totalPrice,
   //       // totalTax,
   //     };
-  
 
   //     const response = await axios.post(
   //       "http://192.168.1.13/food/api/order/place",
@@ -391,9 +390,7 @@ const [ticketNumber, setTicketNumber] = useState(1);
   //   }
   // };
 
-
   return (
-    
     <SafeAreaView>
       <View style={styles.header}>
         <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 130 }}>
@@ -406,24 +403,22 @@ const [ticketNumber, setTicketNumber] = useState(1);
         data={ticket ? ticket : ""}
         renderItem={renderCartCard}
         ListFooterComponentStyle={styles.footerContainer}
-        ListFooterComponent={() => (
-          <View style={styles.footerContent}>
-          <TouchableOpacity
-            onPress={() => {
-              if (ticket.length !== 0) {
-                openModal();
-                setTicketNumber(ticketNumber + 1);
-              }
-            }}
-            disabled={ticket.length === 0}
-            style={styles.ticketButton}
-          >
-            <Text style={styles.ticketButtonText}>{`Voir le ticket`}</Text>
-          </TouchableOpacity>
-
-
-          </View>
-        )}
+        // ListFooterComponent={() => (
+        //   <View style={styles.footerContent}>
+        //     <TouchableOpacity
+        //       onPress={() => {
+        //         if (ticket.length !== 0) {
+        //           openModal();
+        //           setTicketNumber(ticketNumber + 1);
+        //         }
+        //       }}
+        //       disabled={ticket.length === 0}
+        //       style={styles.ticketButton}
+        //     >
+        //       <Text style={styles.ticketButtonText}>{`Voir le ticket`}</Text>
+        //     </TouchableOpacity>
+        //   </View>
+        // )}
 
         // renderItem={({ item }) => <CartCard item={item} />}
         // ListFooterComponentStyle={{
@@ -443,42 +438,56 @@ const [ticketNumber, setTicketNumber] = useState(1);
         //     </View>
         //   </View>
         // )}
-        
       />
-      <TicketModal items={ticket} showModal={showModal} handleCloseModal={handleCloseModal} 
-      selectedService={selectedService} selectedOption={selectedOption}  totalPrice={totalPrice} renduValue={renduValue} donneValue={donneValue}/>
+      <TicketModal
+        items={ticket}
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        selectedService={selectedService}
+        selectedOption={selectedOption}
+        totalPrice={totalPrice}
+        renduValue={renduValue}
+        donneValue={donneValue}
+        ticketNumber={ticketNumber}
+      />
 
       <FlatList
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 60 }}
-      data={ticketProd ? ticketProd : ""}
-      renderItem={({ item }) => <CartCardProd item={item} />}
-      ListFooterComponentStyle={{
-        paddingHorizontal: 40,
-        marginTop: 20,
-        marginLeft: 260,
-      }}
-      ListFooterComponent={() => (
-        <View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginVertical: 15,
-            }}
-          >
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 60 }}
+        data={ticketProd ? ticketProd : ""}
+        renderItem={({ item }) => <CartCardProd item={item} />}
+        ListFooterComponentStyle={{
+          paddingHorizontal: 40,
+          marginTop: 20,
+          marginLeft: 260,
+        }}
+        ListFooterComponent={() => (
+          <View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginVertical: 15,
+              }}
+            ></View>
           </View>
-
-        </View>
-      )}
-    />
+        )}
+      />
     </SafeAreaView>
   );
 };
 
-const TicketModal = ({items, showModal, handleCloseModal,donneValue,
-  selectedService,handlePressService, selectedOption,renduValue}) => {
-
+const TicketModal = ({
+  items,
+  showModal,
+  handleCloseModal,
+  donneValue,
+  selectedService,
+  handlePressService,
+  selectedOption,
+  renduValue,
+  ticketNumber,
+}) => {
   let totalPrice = 0;
   ticket.forEach((item) => {
     totalPrice += item.price;
@@ -487,12 +496,12 @@ const TicketModal = ({items, showModal, handleCloseModal,donneValue,
   ticket.forEach((item) => {
     totalTax += item.tax;
   });
-  const [ticketNumber, setTicketNumber] = useState(1);
+  // const [ticketNumber, setTicketNumber] = useState(1);
   const [currentDate, setCurrentDate] = useState(new Date());
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDate(new Date());
-    }, 1000); 
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
   function formatDate(date) {
@@ -507,83 +516,99 @@ const TicketModal = ({items, showModal, handleCloseModal,donneValue,
   return (
     <Modal visible={showModal} transparent={true} animationType="slide">
       <View style={styles.modalContainer}>
-      <View style={styles.modalContentTicket}>
-      <View style={styles.restaurantInfoContainer}>
-        <Image source={require('../../assets/catergories/restau.png')} style={styles.logo} />
-        <Text style={styles.restaurantName}>Nom du restaurant</Text>
-        <View >
-        <Text style={styles.date}>{formatDate(currentDate)}</Text>
-        </View>
-        <Text style={styles.restaurantAddress}>Adresse du restaurant</Text>
-        <Text style={styles.restaurantNumber}>Numéro du restaurant</Text>
-      </View>
-      <View style={styles.rowContent}>
-        <Text style={styles.ticketNumber}>Ticket N° {ticketNumber}</Text>
-        <Text style={styles.ticketCaissier}>Caissier</Text>
-      </View>
-      <Text >*********************************************************************************************</Text>
-        {/* <Text style={styles.ticketModalTitle}>Ticket Final</Text> */}
-        <FlatList
-          data={items}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.ticketItemContainer}>
-              <View style={styles.rowContainer}>
-              <Text style={styles.ticketItemName}>{item.name} </Text>
-              <Text style={styles.ticketItemInfo}>
-                S {item.size.name}
-              </Text>
-              <Text style={styles.ticketItemInfo}>
-                x{item.quantity} 
-              </Text>
-            <Text style={styles.ticketItemInfo}>
-               TVA: {item && item.tax ? item.tax : "0"} %
-            </Text>
-            <Text style={styles.ticketItemInfo}>
-               Remise: {item && item.remise ? item.remise : "0"} %
-            </Text>
-            <Text style={styles.ticketItemInfo}>
-              Prix Initial: {item && item.priceHT ? item.priceHT : ""} DT
-            </Text>
-            <Text style={styles.ticketItemInfo}>
-              Prix  : {item && item.price ? item.price : ""} DT
-            </Text>
+        <View style={styles.modalContentTicket}>
+          <View style={styles.restaurantInfoContainer}>
+            <Image
+              source={require("../../assets/catergories/restau.png")}
+              style={styles.logo}
+            />
+            <Text style={styles.restaurantName}>Nom du restaurant</Text>
+            <View>
+              <Text style={styles.date}>{formatDate(currentDate)}</Text>
             </View>
-              <View style={styles.row2Container}>
-              {item.ingredients && item.ingredients.length > 0 && (
-              <Text style={styles.ticketItemInfo}>
-                Sans: {item.ingredients.map((ingredient) => ingredient.name).join(", ")}
-              </Text>
-            )}
-            {item.supplement && item.supplement.length > 0 && (
-              <Text style={styles.ticketItemInfo}>
-                Supp: {item.supplement.map((supp) => supp.name).join(", ")}
-              </Text>
-            )}
-             </View>
-            </View>
-          )}
-        />
-            <View style={styles.servv}>
-            <View style={styles.leftColumn}>
-              <Text style={styles.leftText}>Mode de paiement: {selectedOption}</Text>
-              <Text style={styles.leftText}>Mode de consommation:<Text style={styles.selectedService}>{selectedService}</Text> </Text>
-            </View>
-            </View>
-            <View style={styles.rightColumn}>
-              <Text>Total net:</Text>
-              <Text>Total tax:</Text>
-              <Text>A payer: {totalPrice}DT</Text>
-              <Text>Donné: {donneValue}DT</Text>
-              <Text>Rendu: {renduValue}DT</Text>
-            </View>
-            <View style={styles.FinTicket}>
-              <Text >*********************************************************************************************</Text>
+            <Text style={styles.restaurantAddress}>Adresse du restaurant</Text>
+            <Text style={styles.restaurantNumber}>Numéro du restaurant</Text>
+          </View>
+          <View style={styles.rowContent}>
+            <Text style={styles.ticketNumber}>Ticket N° {ticketNumber}</Text>
+            <Text style={styles.ticketCaissier}>Caissier</Text>
+          </View>
+          <Text>
+            *********************************************************************************************
+          </Text>
+          {/* <Text style={styles.ticketModalTitle}>Ticket Final</Text> */}
+          <FlatList
+            data={items}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.ticketItemContainer}>
+                <View style={styles.rowContainer}>
+                  <Text style={styles.ticketItemName}>{item.name} </Text>
+                  <Text style={styles.ticketItemInfo}>S {item.size.name}</Text>
+                  <Text style={styles.ticketItemInfo}>x{item.quantity}</Text>
+                  <Text style={styles.ticketItemInfo}>
+                    TVA: {item && item.tax ? item.tax : "0"} %
+                  </Text>
+                  <Text style={styles.ticketItemInfo}>
+                    Remise: {item && item.remise ? item.remise : "0"} %
+                  </Text>
+                  <Text style={styles.ticketItemInfo}>
+                    Prix Initial: {item && item.priceHT ? item.priceHT : ""} DT
+                  </Text>
+                  <Text style={styles.ticketItemInfo}>
+                    Prix : {item && item.price ? item.price : ""} DT
+                  </Text>
+                </View>
+                <View style={styles.row2Container}>
+                  {item.ingredients && item.ingredients.length > 0 && (
+                    <Text style={styles.ticketItemInfo}>
+                      Sans:{" "}
+                      {item.ingredients
+                        .map((ingredient) => ingredient.name)
+                        .join(", ")}
+                    </Text>
+                  )}
+                  {item.supplement && item.supplement.length > 0 && (
+                    <Text style={styles.ticketItemInfo}>
+                      Supp:{" "}
+                      {item.supplement.map((supp) => supp.name).join(", ")}
+                    </Text>
+                  )}
+                </View>
               </View>
-              <Text style={styles.restaurantName}>Merci de votre visite. A bientôt!</Text>
-        {/* <Text> Prix Total: {totalPrice} DT</Text> */}
-        <Button title="Fermer" color='red' onPress={handleCloseModal} />
-      </View>
+            )}
+          />
+          <View style={styles.servv}>
+            <View style={styles.leftColumn}>
+              <Text style={styles.leftText}>
+                Mode de paiement: {selectedOption}
+              </Text>
+              <Text style={styles.leftText}>
+                Mode de consommation:
+                <Text style={styles.selectedService}>
+                  {selectedService}
+                </Text>{" "}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.rightColumn}>
+            <Text>Total net:</Text>
+            <Text>Total tax:</Text>
+            <Text>A payer: {totalPrice}DT</Text>
+            <Text>Donné: {donneValue}DT</Text>
+            <Text>Rendu: {renduValue}DT</Text>
+          </View>
+          <View style={styles.FinTicket}>
+            <Text>
+              *********************************************************************************************
+            </Text>
+          </View>
+          <Text style={styles.restaurantName}>
+            Merci de votre visite. A bientôt!
+          </Text>
+          {/* <Text> Prix Total: {totalPrice} DT</Text> */}
+          <Button title="Fermer" color="red" onPress={handleCloseModal} />
+        </View>
       </View>
     </Modal>
   );
