@@ -19,193 +19,244 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import CartScreen from "../Commands/CartScreen";
 
 
- const ListCategories = ({cats, setCategory,item}) => {
+ const ListCategories = ({ cats, setCategory, item }) => {
    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-   const HandleChange=(category,index)=>{
-    setCategory(category.id)
-    setSelectedCategoryIndex(index) 
-   }
+   const HandleChange = (category, index) => {
+     setCategory(category.id);
+     setSelectedCategoryIndex(index);
+   };
 
    return (
-     <ScrollView 
-     horizontal
-     showsVerticalScrollIndicator={false}
-     contentContainerStyle={styles.categoriesListContainer}>
-       {cats.map((category,index) => (
-         <TouchableOpacity key = {index} activeOpacity={0.8} onPress={() => HandleChange(category,index)}>
-           <View style={{
-             backgroundColor:selectedCategoryIndex == index
-             ? COLORS.primary 
-             : COLORS.secondary,
-             ...style.categoryBtn
-           }}>
-             <View style={styles.categoryBtnImgCon}>
-               <Image source={{uri: `http://192.168.1.13/food/storage/app/public/category/${category.image}`}}
-               style ={styles.ImgCat} 
-                />
-             </View>
-             <Text style= {{
-                 fontSize :17,
-                 fontWeight:'bold',
-                 marginLeft: 10,
-                 color : 
+     <ScrollView
+       horizontal
+       showsVerticalScrollIndicator={false}
+       contentContainerStyle={styles.categoriesListContainer}
+     >
+       {cats.map((category, index) => (
+         <TouchableOpacity
+           key={index}
+           activeOpacity={0.8}
+           onPress={() => HandleChange(category, index)}
+         >
+           <View
+             style={{
+               backgroundColor:
                  selectedCategoryIndex == index
-                 ? COLORS.white
-                 : COLORS.primary,
-             }}>
-                {category.name}
+                   ? COLORS.primary
+                   : COLORS.secondary,
+               ...style.categoryBtn,
+             }}
+           >
+             <View style={styles.categoryBtnImgCon}>
+               <Image
+                 source={{
+                   uri: `http://192.168.1.13/food/storage/app/public/category/${category.image}`,
+                 }}
+                 style={styles.ImgCat}
+               />
+             </View>
+             <Text
+               style={{
+                 fontSize: 17,
+                 fontWeight: "bold",
+                 marginLeft: 10,
+                 color:
+                   selectedCategoryIndex == index
+                     ? COLORS.white
+                     : COLORS.primary,
+               }}
+             >
+               {category.name}
              </Text>
            </View>
          </TouchableOpacity>
        ))}
      </ScrollView>
-   )
+   );
  };
 
+ const ListCategoriesVertical = ({ setStateModalIndex }) => {
+   const [ticketNumber, setTicketNumber] = React.useState();
+   const [date, setDate] = React.useState();
+   const [price, setPrice] = React.useState();
+   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+   const handleModal = (index) => {
+     setSelectedCategoryIndex(index);
+     setStateModalIndex(index);
+     //console.log(index)
+   };
+   const [modalVisibleTick, setModalVisibleTick] = useState(false);
+   const [modalVisibleRev, setModalVisibleRev] = useState(false);
+   const [modalVisibleClz, setModalVisibleClz] = useState(false);
 
+   useEffect(async () => {
+     const test = JSON.parse(
+       await AsyncStorage.getItem("ticketInfoForSideBar")
+     );
+     setDate(test.date);
+     setTicketNumber(test.ticketNumber);
+     setPrice(test.price);
+   }, []);
 
- const ListCategoriesVertical = ({setStateModalIndex}) => {
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-  const handleModal = (index) => {
-    setSelectedCategoryIndex(index)
-    setStateModalIndex(index)
-    //console.log(index)
-  }
-  const [modalVisibleTick, setModalVisibleTick] = useState(false);
-  const [modalVisibleRev, setModalVisibleRev] = useState(false);
-  const [modalVisibleClz, setModalVisibleClz] = useState(false);
+   return (
+     <View style={styles.categoriesListContainerVertical}>
+       <TouchableOpacity
+         key={2}
+         activeOpacity={0.8}
+         onPress={() => setModalVisibleTick(true)}
+       >
+         <View
+           style={{
+             backgroundColor:
+               selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+             ...style.categoryBtn,
+             marginTop: 3 !== categories.length - 3 ? 50 : 0,
+           }}
+         >
+           <View style={styles.categoryBtnImgCon}>
+             <Image
+               source={require("../../assets/catergories/ticket.png")}
+               style={styles.ImgCat}
+             />
+           </View>
+           <Text
+             style={{
+               fontSize: 17,
+               fontWeight: "bold",
+               marginLeft: 10,
+               color:
+                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+             }}
+           >
+             Ticket
+           </Text>
+         </View>
+       </TouchableOpacity>
+       <Modal
+         visible={modalVisibleTick}
+         animationType="slide"
+         transparent={true}
+       >
+         <View style={styles.modalContainer}>
+           <View style={styles.modalContent}>
+             <Text>Ticket Number :{ticketNumber}</Text>
+             <Text>Ticket Date : {date}</Text>
+             <Text>Ticket Price : {price}</Text>
 
-  return (
-    <View  style={styles.categoriesListContainerVertical}>
-      <TouchableOpacity
-        key={2}
-        activeOpacity={0.8}
-        onPress={() => setModalVisibleTick(true)}>
-        <View
-          style={{
-            backgroundColor:
-              selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
-            ...style.categoryBtn,
-            marginTop: 3 !== categories.length - 3 ? 50 : 0,
-          }}>
-          <View style={styles.categoryBtnImgCon}>
-            <Image
-              source={require('../../assets/catergories/ticket.png')}
-              style={styles.ImgCat}
-            />
-          </View>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 'bold',
-              marginLeft: 10,
-              color:
-                selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
-            }}>
-            Ticket
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <Modal visible={modalVisibleTick}  animationType="slide" transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-          <TouchableOpacity onPress={() => setModalVisibleTick(false)}>
-            <Text style={styles.btnclose2}>Close</Text>
-          </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+             <TouchableOpacity onPress={() => setModalVisibleTick(false)}>
+               <Text style={styles.btnclose2}>Close</Text>
+             </TouchableOpacity>
+           </View>
+         </View>
+       </Modal>
 
-      <TouchableOpacity
-        key={3}
-        activeOpacity={0.8}
-        onPress={() => setModalVisibleRev(true)}>
-        <View
-          style={{
-            backgroundColor:
-              selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
-            ...style.categoryBtn,
-            marginTop: 3 !== categories.length - 3 ? 50 : 0,
-          }}>
-          <View style={styles.categoryBtnImgCon}>
-            <Image
-              source={require('../../assets/catergories/revenu.png')}
-              style={styles.ImgCat}
-            />
-          </View>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 'bold',
-              marginLeft: 10,
-              color:
-                selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
-            }}>
-            Revenus
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <Modal visible={modalVisibleRev}  animationType="slide" transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent2}>
-          <View >
-            <Image source={require('../../assets/catergories/revenu.png')} style={styles.ImgRev}/>
-            <Text style={styles.NomRev}> Statistiques des commandes </Text>
-          </View>
-          <View style={styles.rectContainer}>
-            <View style={styles.rect}></View>
-            <View style={styles.rect}></View>
-            <View style={styles.rect}></View>
-          </View>
-          {/* <TextInput placeholder="Enter your text here" style={styles.textInput} /> */}
-          <TouchableOpacity onPress={() => setModalVisibleRev(false)}>
-              <Text style={styles.btnclose2}>Fermer</Text>
-          </TouchableOpacity>       
-          </View>
-        </View>
-      </Modal>
+       <TouchableOpacity
+         key={3}
+         activeOpacity={0.8}
+         onPress={() => setModalVisibleRev(true)}
+       >
+         <View
+           style={{
+             backgroundColor:
+               selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+             ...style.categoryBtn,
+             marginTop: 3 !== categories.length - 3 ? 50 : 0,
+           }}
+         >
+           <View style={styles.categoryBtnImgCon}>
+             <Image
+               source={require("../../assets/catergories/revenu.png")}
+               style={styles.ImgCat}
+             />
+           </View>
+           <Text
+             style={{
+               fontSize: 17,
+               fontWeight: "bold",
+               marginLeft: 10,
+               color:
+                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+             }}
+           >
+             Revenus
+           </Text>
+         </View>
+       </TouchableOpacity>
+       <Modal
+         visible={modalVisibleRev}
+         animationType="slide"
+         transparent={true}
+       >
+         <View style={styles.modalContainer}>
+           <View style={styles.modalContent2}>
+             <View>
+               <Image
+                 source={require("../../assets/catergories/revenu.png")}
+                 style={styles.ImgRev}
+               />
+               <Text style={styles.NomRev}> Statistiques des commandes </Text>
+             </View>
+             <View style={styles.rectContainer}>
+               <View style={styles.rect}></View>
+               <View style={styles.rect}></View>
+               <View style={styles.rect}></View>
+             </View>
+             {/* <TextInput placeholder="Enter your text here" style={styles.textInput} /> */}
+             <TouchableOpacity onPress={() => setModalVisibleRev(false)}>
+               <Text style={styles.btnclose2}>Fermer</Text>
+             </TouchableOpacity>
+           </View>
+         </View>
+       </Modal>
 
-      <TouchableOpacity
-        key={4}
-        activeOpacity={0.8}
-        onPress={() => setModalVisibleClz(true)}>
-        <View
-          style={{
-            backgroundColor:
-              selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
-            ...style.categoryBtn,
-            marginTop: 3 !== categories.length - 3 ? 50 : 0,
-          }}>
-          <View style={styles.categoryBtnImgCon}>
-            <Image
-              source={require('../../assets/catergories/cloture.png')}
-              style={styles.ImgCat}
-            />
-          </View>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 'bold',
-              marginLeft: 10,
-              color:
-                selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
-            }}>
-            ClotureZ
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <Modal visible={modalVisibleClz} animationType="slide" transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent2}>
-            <TouchableOpacity onPress={() => setModalVisibleClz(false)}>
-              <Text style={styles.btnclose2}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    </View>
-  )
-};
+       <TouchableOpacity
+         key={4}
+         activeOpacity={0.8}
+         onPress={() => setModalVisibleClz(true)}
+       >
+         <View
+           style={{
+             backgroundColor:
+               selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+             ...style.categoryBtn,
+             marginTop: 3 !== categories.length - 3 ? 50 : 0,
+           }}
+         >
+           <View style={styles.categoryBtnImgCon}>
+             <Image
+               source={require("../../assets/catergories/cloture.png")}
+               style={styles.ImgCat}
+             />
+           </View>
+           <Text
+             style={{
+               fontSize: 17,
+               fontWeight: "bold",
+               marginLeft: 10,
+               color:
+                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+             }}
+           >
+             ClotureZ
+           </Text>
+         </View>
+       </TouchableOpacity>
+       <Modal
+         visible={modalVisibleClz}
+         animationType="slide"
+         transparent={true}
+       >
+         <View style={styles.modalContainer}>
+           <View style={styles.modalContent2}>
+             <TouchableOpacity onPress={() => setModalVisibleClz(false)}>
+               <Text style={styles.btnclose2}>Close</Text>
+             </TouchableOpacity>
+           </View>
+         </View>
+       </Modal>
+     </View>
+   );
+ };
 
   const Card = ({ food, update, setUpdate,item}) => {
     const [price,setPrice]=useState(0)

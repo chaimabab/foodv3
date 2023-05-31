@@ -19,8 +19,7 @@ import Categories from "../Categories";
 import ticketProd from "../../consts/ticketProd";
 import axios from 'axios'; 
 import Commands from "../Commands";
-
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CartScreen = ({
   food,
@@ -510,6 +509,17 @@ const TicketModal = ({
       date.toLocaleTimeString("en-US"),
     ].join(" ");
   }
+  //arja3 lenna
+  useEffect(async () => {
+    await AsyncStorage.setItem(
+      "ticketInfoForSideBar",
+      JSON.stringify({
+        ticketNumber: ticketNumber + 1,
+        price: totalPrice,
+        date: formatDate(currentDate),
+      })
+    );
+  }, []);
 
   const [update, setUpdate] = useState(false);
 
