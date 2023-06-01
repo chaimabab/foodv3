@@ -145,7 +145,7 @@ const CartScreen = ({
     //     console.log(products); // Ajout de console.log pour vérifier les valeurs de products
 
     //     // Envoyez les données à Laravel
-    //     const response = await axios.post("http://192.168.1.13/food/api/order/place", { products });
+    //     const response = await axios.post("http://192.168.1.12/food/api/order/place", { products });
     //     // Traitez la réponse de Laravel si nécessaire
     //     console.log(response.data);
     //   } catch (error) {
@@ -377,7 +377,7 @@ const CartScreen = ({
   //     };
 
   //     const response = await axios.post(
-  //       "http://192.168.1.13/food/api/order/place",
+  //       "http://192.168.1.12/food/api/order/place",
   //       orderData
   //     );
 
@@ -515,7 +515,7 @@ const TicketModal = ({
       "ticketInfoForSideBar",
       JSON.stringify({
         ticketNumber: ticketNumber + 1,
-        price: totalPrice,
+        totalPrice: totalPrice,
         date: formatDate(currentDate),
       })
     );
