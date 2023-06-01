@@ -36,6 +36,8 @@ const CartScreen = ({
   showModal,
   setShowModal,
   ticketNumber,
+  // totalPrice,
+  priceHT,
 }) => {
   useEffect(() => {
     console.log(ticket);
@@ -51,6 +53,7 @@ const CartScreen = ({
 
   const handleCloseModal = () => {
     setShowModal(false);
+
   };
 
   // const [selectedItems, setSelectedItems] = useState([]);
@@ -145,7 +148,7 @@ const CartScreen = ({
     //     console.log(products); // Ajout de console.log pour vérifier les valeurs de products
 
     //     // Envoyez les données à Laravel
-    //     const response = await axios.post("http://192.168.1.12/food/api/order/place", { products });
+    //     const response = await axios.post("http://192.168.1.7/food/api/order/place", { products });
     //     // Traitez la réponse de Laravel si nécessaire
     //     console.log(response.data);
     //   } catch (error) {
@@ -377,7 +380,7 @@ const CartScreen = ({
   //     };
 
   //     const response = await axios.post(
-  //       "http://192.168.1.12/food/api/order/place",
+  //       "http://192.168.1.7/food/api/order/place",
   //       orderData
   //     );
 
@@ -445,6 +448,7 @@ const CartScreen = ({
         selectedService={selectedService}
         selectedOption={selectedOption}
         totalPrice={totalPrice}
+        priceHT={priceHT}
         renduValue={renduValue}
         donneValue={donneValue}
         ticketNumber={ticketNumber}
@@ -486,8 +490,10 @@ const TicketModal = ({
   selectedOption,
   renduValue,
   ticketNumber,
+  item,
+  priceHT
 }) => {
-  let totalPrice = 0;
+  let totalPrice=0
   ticket.forEach((item) => {
     totalPrice += item.price;
   });
@@ -496,6 +502,8 @@ const TicketModal = ({
     totalTax += item.tax;
   });
   // const [ticketNumber, setTicketNumber] = useState(1);
+  const [date, setDate] = React.useState();
+
   const [currentDate, setCurrentDate] = useState(new Date());
   useEffect(() => {
     const interval = setInterval(() => {
@@ -510,18 +518,60 @@ const TicketModal = ({
     ].join(" ");
   }
   //arja3 lenna
-  useEffect(async () => {
-    await AsyncStorage.setItem(
-      "ticketInfoForSideBar",
-      JSON.stringify({
-        ticketNumber: ticketNumber + 1,
-        totalPrice: totalPrice,
-        date: formatDate(currentDate),
-      })
-    );
+  // useEffect(async () => {
+  //   await AsyncStorage.setItem(
+  //     "ticketInfoForSideBar",
+  //     JSON.stringify({
+  //       ticketNumber: ticketNumber + 1,
+  //       totalPrice: totalPrice,
+  //       date: formatDate(currentDate),
+  //     })
+  //   );
+  // }, []);
+  
+  useEffect(() => {
+    const saveData = async () => {
+      await AsyncStorage.setItem(
+        "ticketInfoForSideBar",
+        JSON.stringify({
+          ticketNumber: ticketNumber + 1,
+          totalPrice: totalPrice,
+          date: formatDate(currentDate),
+        })
+      );
+    };
+    
+    saveData();
   }, []);
 
-  const [update, setUpdate] = useState(false);
+  //juste nahit appel l fonction ken maa bouton fermer mtaa lmodal 
+  const saveDataToDatabase = async () => {
+    try {
+      const payload = {
+        date: date,
+        ticketNumber: ticketNumber,
+        totalPrice: totalPrice,
+        // items: items.map((item) => ({
+        //   name: item.name,
+        //   quantity: item.quantity ? item.quantity : 0,
+        //   size: item.size,
+        //   tax: item.tax,
+        //   remise: item.remise,
+        //   prixHT: item.priceHT ? item.priceHT : 0, // Assurez-vous que priceHT a une valeur
+        //   price: item.price,
+        // })),
+      };
+  
+      const response = await axios.post('http://192.168.1.7/food/api/order/place', payload);
+  
+      console.log(response.data.message);
+      // Traitez la réponse du serveur comme vous le souhaitez
+    } catch (error) {
+      console.error(error);
+      // Traitez les erreurs de requête
+    }
+  };
+  
 
   return (
     <Modal visible={showModal} transparent={true} animationType="slide">
@@ -602,7 +652,7 @@ const TicketModal = ({
             </View>
           </View>
           <View style={styles.rightColumn}>
-            <Text>Total net:</Text>
+            <Text>Total net:{priceHT}</Text>
             <Text>Total tax:</Text>
             <Text>A payer: {totalPrice}DT</Text>
             <Text>Donné: {donneValue}DT</Text>
@@ -616,8 +666,7 @@ const TicketModal = ({
           <Text style={styles.restaurantName}>
             Merci de votre visite. A bientôt!
           </Text>
-          {/* <Text> Prix Total: {totalPrice} DT</Text> */}
-          <Button title="Fermer" color="red" onPress={handleCloseModal} />
+          <Button title="Fermer" color="red" onPress={() => handleCloseModal()} />
         </View>
       </View>
     </Modal>

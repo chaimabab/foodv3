@@ -50,7 +50,7 @@ import CartScreen from "../Commands/CartScreen";
              <View style={styles.categoryBtnImgCon}>
                <Image
                  source={{
-                   uri: `http://192.168.1.12/food/storage/app/public/category/${category.image}`,
+                   uri: `http://192.168.1.7/food/storage/app/public/category/${category.image}`,
                  }}
                  style={styles.ImgCat}
                />
@@ -79,6 +79,8 @@ import CartScreen from "../Commands/CartScreen";
    const [ticketNumber, setTicketNumber] = React.useState();
    const [date, setDate] = React.useState();
    const [totalPrice, setTotalPrice] =  React.useState();
+   const [items, setItems] = useState([]);
+
 
    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
    const handleModal = (index) => {
@@ -90,15 +92,30 @@ import CartScreen from "../Commands/CartScreen";
    const [modalVisibleRev, setModalVisibleRev] = useState(false);
    const [modalVisibleClz, setModalVisibleClz] = useState(false);
 
-   useEffect(async () => {
-     const test = JSON.parse(
-       await AsyncStorage.getItem("ticketInfoForSideBar")
-     );
-     console.log("marker price",test);
-     setDate(test.date);
-     setTicketNumber(test.ticketNumber);
-     setTotalPrice(test.totalPrice);
-   }, []);
+  //  useEffect(async () => {
+  //    const test = JSON.parse(
+  //      await AsyncStorage.getItem("ticketInfoForSideBar")
+  //    );
+  //    console.log("marker price",test);
+  //    setDate(test.date);
+  //    setTicketNumber(test.ticketNumber);
+  //    setTotalPrice(test.totalPrice);
+  //  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const test = JSON.parse(await AsyncStorage.getItem("ticketInfoForSideBar"));
+      console.log("marker price", test);
+      setDate(test.date);
+      setTicketNumber(test.ticketNumber);
+      setTotalPrice(test.totalPrice);
+      // setItems(test.items);    
+    };
+    
+    fetchData();
+  }, []);
+
+
 
    return (
      <View style={styles.categoriesListContainerVertical}>
@@ -141,11 +158,15 @@ import CartScreen from "../Commands/CartScreen";
        >
          <View style={styles.modalContainer}>
            <View style={styles.modalContent}>
+
              <Text>Ticket Number :{ticketNumber}</Text>
              <Text>Ticket Date : {date}</Text>
              <Text>Ticket Price : {totalPrice}</Text>
 
-             <TouchableOpacity onPress={() => setModalVisibleTick(false)}>
+             <TouchableOpacity onPress={() => { 
+              setModalVisibleTick(false); 
+              // saveDataToDatabase();
+              }}>
                <Text style={styles.btnclose2}>Close</Text>
              </TouchableOpacity>
            </View>
@@ -385,7 +406,7 @@ import CartScreen from "../Commands/CartScreen";
 
     useEffect(() => {
       axios
-        .get(`http://192.168.1.12/food/api/products/variants/${food.id}`)
+        .get(`http://192.168.1.7/food/api/products/variants/${food.id}`)
         .then((response) => {
           setSizes(response.data);
           setSelectedSize(response.data[0]);
@@ -405,7 +426,7 @@ import CartScreen from "../Commands/CartScreen";
 
     useEffect(() => {
       axios
-        .get(`http://192.168.1.12/food/api/products/ingredients/${food.id}`)
+        .get(`http://192.168.1.7/food/api/products/ingredients/${food.id}`)
         .then((response) => {
           setIngredients(response.data);
           setSelectedIngredients(response.data);
@@ -434,7 +455,7 @@ import CartScreen from "../Commands/CartScreen";
     const [selectedSupplement, setSelectedSupplement] = useState([]);
     useEffect(() => {
       axios
-        .get(`http://192.168.1.12/food/api/products/addons/${food.id}`)
+        .get(`http://192.168.1.7/food/api/products/addons/${food.id}`)
         .then((response) => {
           setSupplement(response.data);
         })
@@ -477,7 +498,7 @@ import CartScreen from "../Commands/CartScreen";
     
     const [tax, setTax] = useState();
     useEffect(() => {
-      fetch(`http://192.168.1.12/food/api/products/tax/${food.id}`)
+      fetch(`http://192.168.1.7/food/api/products/tax/${food.id}`)
       .then(response => response.json())
       .then(data => setTax(data[0]?.value))
       .catch(error => console.error(error));
@@ -486,7 +507,7 @@ import CartScreen from "../Commands/CartScreen";
 
     const [remise, setRemise] = useState(null);
     useEffect(() => {
-      fetch(`http://192.168.1.12/food/api/products/discount/${food.id}`)
+      fetch(`http://192.168.1.7/food/api/products/discount/${food.id}`)
         .then(response => response.json())
         .then(data => setRemise(data[0]?.value))
         .catch(error => console.error(error));
@@ -498,8 +519,8 @@ import CartScreen from "../Commands/CartScreen";
         <TouchableOpacity onPress={HandleAddProd2Ticket}>
           <Image
             source={{
-              // uri: `http://192.168.1.12/food/public/images/${food.name}.png`,
-              uri: `http://192.168.1.12/food/storage/app/public/product/${food.image}`,
+              // uri: `http://192.168.1.7/food/public/images/${food.name}.png`,
+              uri: `http://192.168.1.7/food/storage/app/public/product/${food.image}`,
 
             }}
             style={{ height: 120, width: 120, marginLeft: 15}}
@@ -547,8 +568,8 @@ import CartScreen from "../Commands/CartScreen";
                 <View style={styles.modalContent}>
                   <Image
                     source={{
-                      uri: `http://192.168.1.12/food/storage/app/public/product/${food.image}`,
-                      //  `http://192.168.1.12/food/public/images/${food.name}.png`,
+                      uri: `http://192.168.1.7/food/storage/app/public/product/${food.image}`,
+                      //  `http://192.168.1.7/food/public/images/${food.name}.png`,
                     }}
                     style={{ height: 120, width: 120, marginLeft: 15 }}
                   />
@@ -695,7 +716,7 @@ import CartScreen from "../Commands/CartScreen";
     );
   };
 
-  //http://192.168.1.12/food/api/categories/products/%7Bid_category%7D
+  //http://192.168.1.7/food/api/categories/products/%7Bid_category%7D
   const Categories = () => {
     const [modalState, setModalState] = React.useState(0);
     const [category, setCategory] = React.useState();
@@ -743,7 +764,7 @@ import CartScreen from "../Commands/CartScreen";
 
     const handleData = () => {
       axios
-        .get("http://192.168.1.12/food/api/categories")
+        .get("http://192.168.1.7/food/api/categories")
         .then((response) => {
           setCats(response.data);
           setCategory(response.data[0].id);
@@ -761,7 +782,7 @@ import CartScreen from "../Commands/CartScreen";
 
     const handleformule = () => {
       axios
-        .get("http://192.168.1.12/food/api/formules")
+        .get("http://192.168.1.7/food/api/formules")
         .then((response) => {
           setForm(response.data);
           setFormule(response.data[0].id);
@@ -778,7 +799,7 @@ import CartScreen from "../Commands/CartScreen";
 
     const handleProdsByCat = (id) => {
       axios
-        .get(`http://192.168.1.12/food/api/categories/products/${id}`)
+        .get(`http://192.168.1.7/food/api/categories/products/${id}`)
         .then((response) => {
           setCategoryProds(response.data);
           console.log(response.data);
@@ -937,7 +958,7 @@ import CartScreen from "../Commands/CartScreen";
                     ...style.formuleBtn,
               }}>
                 <View style={styles.categoryBtnImgCon}>
-                 <Image source={{uri: `http://192.168.1.12/food/storage/app/public/formules/${formule.image}`}}
+                 <Image source={{uri: `http://192.168.1.7/food/storage/app/public/formules/${formule.image}`}}
                  style ={styles.ImgCat} 
                   />
                </View>

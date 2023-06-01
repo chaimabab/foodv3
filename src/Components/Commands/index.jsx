@@ -7,6 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import CartScreen from "./CartScreen";
 import ticket from "../../consts/ticket";
 import ticketProd from "../../consts/ticketProd";
+import COLORS from '../../consts/colors';
 import Categories from '../Categories';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { Calculator } from 'react-native-calculator';
@@ -19,6 +20,7 @@ const Commands = ({update,item}) => {
   const [ticketNumber, setTicketNumber] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [donneValue, setDonneValue] = useState("");
+  const[priceHT,setPriceHT]=useState("")
   const [showCalculator, setShowCalculator] = useState(false);
 
   const openCalculator = () => {
@@ -142,6 +144,7 @@ const Commands = ({update,item}) => {
   // });
   const renduValue = (donneValue - totalPrice).toFixed(2);
 
+
   return (
     <View style={styles.Commands}>
       <View style={styles.CommandsHeader}>
@@ -151,19 +154,19 @@ const Commands = ({update,item}) => {
       <View style={styles.devider} />
 
       <View style={styles.services}>
-        <TouchableOpacity
-          style={[
-            styles.Med2,
-            selectedService === "en livraison" ? styles.selectedService : null,
-          ]}
-          onPress={() => handlePressService("en livraison")}
-        >
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={require("../../assets/services/livraison.png")}
-          />
-          <Text style={styles.text1}>Livraison</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          styles.Med2,
+          selectedService === 'en livraison' && { backgroundColor: COLORS.primary },
+        ]}
+        onPress={() => handlePressService('en livraison')}
+      >
+        <Image
+          style={{ width: 50, height: 50 }}
+          source={require('../../assets/services/livraison.png')}
+        />
+        <Text style={styles.text1}>Livraison</Text>
+      </TouchableOpacity>
 
         <Modal
           visible={isModalVisible}
@@ -188,42 +191,53 @@ const Commands = ({update,item}) => {
           </View>
         </Modal>
 
-        <TouchableOpacity
-          style={[
-            styles.Med2,
-            selectedService === "à emporter" ? styles.selectedService : null,
-          ]}
-          onPress={() => handlePressService("à emporter")}
-        >
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={require("../../assets/services/emporter.png")}
-          />
-          <Text style={styles.text2}>Emporter</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          styles.Med2,
+          selectedService === 'à emporter' && { backgroundColor: COLORS.primary },
+        ]}
+        onPress={() => handlePressService('à emporter')}
+      >
+        <Image
+          style={{ width: 50, height: 50 }}
+          source={require('../../assets/services/emporter.png')}
+        />
+        <Text style={styles.text2}>Emporter</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[
-            styles.Med2,
-            selectedService === "sur place" ? styles.selectedService : null,
-          ]}
-          onPress={() => handlePressService("sur place")}
-        >
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={require("../../assets/services/plat.png")}
-          />
-          <Text style={styles.text3}>Sur place</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.commande}>
-        {selectedService && (
-          <Text style={styles.inputtext}>
-            Commande{" "}
-            {selectedService === "en livraison" ? "En Livraion" : "A Emporter"}
+      <TouchableOpacity
+        style={[
+          styles.Med2,
+          selectedService === 'sur place' && { backgroundColor: COLORS.primary },
+        ]}
+        onPress={() => handlePressService('sur place')}
+      >
+        <Image
+          style={{ width: 50, height: 50 }}
+          source={require('../../assets/services/plat.png')}
+        />
+        <Text style={styles.text3}>Sur place</Text>
+      </TouchableOpacity>
+    </View>
+    <View style={styles.commande}>
+      {selectedService && (
+        <Text style={styles.inputtext}>
+          Commande{" "}
+          {selectedService === "en livraison"
+            ? "en livraison"
+            : selectedService === "à emporter"
+            ? "à emporter"
+            : "sur place"}
+        </Text>
+      )}
+      {selectedService === 'en livraison' && (
+        <View style={styles.addressContainer}>
+          <Text style={[styles.inputtext, styles.addressText]}>
+            Adresse: {deliveryAddress}
           </Text>
-        )}
-      </View>
+        </View>
+      )}
+    </View>
 
       {/* <View style={styles.services}>
       <TouchableOpacity
@@ -268,6 +282,7 @@ const Commands = ({update,item}) => {
           handlePressService={handlePressService}
           selectedOption={selectedOption}
           donneValue={donneValue}
+          priceHT={priceHT}
           totalPrice={totalPrice}
           renduValue={renduValue}
           showModal={showModal}

@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     },
 
     selectedOption: {
-        backgroundColor: "#fedac5",
+        backgroundColor: COLORS.primary,
       },
       
     selectedService: {
@@ -355,7 +355,16 @@ const styles = StyleSheet.create({
         marginTop:-30,
         flexDirection:'column'
     },
-
+    
+    addressContainer: {
+      width: "100%",
+      alignItems: "center",
+      marginTop: 10
+    },
+    addressText: {
+      textAlign: "center"
+    },
+    
     fermerLiv:{
         backgroundColor:"green",
         padding: 10,
