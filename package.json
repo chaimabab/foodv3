@@ -62,7 +62,11 @@
     "safe-buffer": "^5.2.1",
     "supports-color": "^8.1.1",
     "ua-parser-js": "^0.7.32",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "@sendgrid/mail": "^7.7.0",
+    "expo-mail-composer": "^12.1.1",
+    "nodemailer": "^6.9.2",
+    "react-native-toast-message": "^2.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
