@@ -4,7 +4,7 @@ import {FlatList} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from "../../consts/colors";
 import ticket from '../../consts/ticket';
-import {PrimaryButton} from '../../consts/Button';
+import {rougeButton} from '../../consts/Button';
 import {styles} from './styles'
 
 const CartScreen = ({navigation, update}) => {
@@ -61,7 +61,7 @@ const CartScreen = ({navigation, update}) => {
                <Text style={{fontSize: 18, fontWeight: 'bold'}}> TND 50</Text>
              </View>
              <View style={{marginHorizontal: 30}}>
-               <PrimaryButton title="CHECKOUT" />
+               <rougeButton title="CHECKOUT" />
              </View>
            </View>
          )}

@@ -2,10 +2,10 @@ import { createTheme } from '@rneui/themed';
 
 const theme = createTheme({
     lightColors: {
-        primary: '#432C7A',
+        rouge: '#432C7A',
     },
     darkColors: {
-        primary: '#000',
+        rouge: '#000',
     },
     mode: 'light',
 });

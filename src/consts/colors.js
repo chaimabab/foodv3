@@ -2,15 +2,18 @@ const COLORS = {
 
   white: '#FFF',
   dark: '#000',
-  primary: "#ffa500",
+  rouge: "#ffa500",
   //'#F9813A', //foncé
-  secondary: '#fedac5', //clair
+  rougeclair: '#fedac5', //clair
   light: '#E5E5E5',
   grey: '#908e8c',
 
  // #DF0F0F
-  rouge: '#DF0F0F',
+  rouge: '#EB1c24',
+  rougeclair:'#f6d8d9'
   //#DF0F0F
+  // "#EB1c24"
+  // "#ef9b9e"
 
 };
 

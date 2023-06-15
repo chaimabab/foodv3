@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         marginLeft: 10,
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.rouge,
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         height: 30,
         width: 30,
         borderRadius: 20,
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.rouge,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
 
     modalContent: {
         width: '40%',
-        height: '70%',
+        height: '73%',
         backgroundColor: 'white',
         borderRadius: 10,
         justifyContent: 'center',
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
 
     modalContent2: {
-        width: '85%',
+        width: '70%',
         height: '30%',
         backgroundColor: 'white',
         borderRadius: 10,
@@ -149,6 +149,16 @@ const styles = StyleSheet.create({
         color:'white',
         marginTop:20,
         marginLeft:300,
+        marginRight: 60,
+    },
+    btnvalidercontent :{
+      // // position: 'absolute',
+      // // bottom: 20,
+      // // left: 20,
+      // backgroundColor: 'red',
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 10,
     },
 
     btnannuler :{
@@ -158,16 +168,9 @@ const styles = StyleSheet.create({
         color:'white',
         marginTop:-35,
         marginRight:300,
+        marginLeft: 60,
     },
-    btnclose2 :{
-        padding: 10,
-        backgroundColor:COLORS.primary,
-        fontWeight: 'bold',
-        color:'white',
-        marginTop:20,
-        borderRadius: 5,
-        marginTop:80,
-    },
+
     rectangle: {
         width: 80,
         height: 80,
@@ -193,7 +196,7 @@ const styles = StyleSheet.create({
 	},
 
     sizeButton2: {
-		backgroundColor: '#fedac5',
+		backgroundColor: COLORS.rougeclair ,
 		padding: 10,
 		borderRadius: 5,
 		flex: 1,
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
 	},
 
     selectedSizeButton2: {
-		backgroundColor: '#ffa500',
+		backgroundColor: COLORS.rouge,
 	},
 
     selectedSizeText2: {
@@ -234,7 +237,7 @@ const styles = StyleSheet.create({
     },
 
     ingredientButton: {
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.rougeclair,
         borderRadius: 8,
         padding: 10,
         margin: 4,
@@ -244,7 +247,7 @@ const styles = StyleSheet.create({
     },
 
     selectedIngredientButton: {
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.rouge,
     },
 
     ingredientText: {
@@ -282,7 +285,7 @@ const styles = StyleSheet.create({
     },
 
     supplementButton: {
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.rougeclair,
         borderRadius: 8,
         padding: 10,
         margin: 4,
@@ -292,7 +295,7 @@ const styles = StyleSheet.create({
     },
 
     selectedSupplementButton: {
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.rouge,
     },
 
     SupplementText: {
@@ -316,7 +319,7 @@ const styles = StyleSheet.create({
     removeicon:{
         width: 30,
         height: 30,
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.rouge,
         borderRadius: 30,
         paddingHorizontal: 2,
         flexDirection: 'row',
@@ -327,7 +330,7 @@ const styles = StyleSheet.create({
     addicon:{
         width: 30,
         height: 30,
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.rouge,
         borderRadius: 30,
         paddingHorizontal: 2,
         flexDirection: 'row',
@@ -358,25 +361,185 @@ const styles = StyleSheet.create({
     },
 
     rectContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '95%',
-        marginTop: 20,
-      },
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '90%',
+      marginTop: 20,
+    },
+    rectContent: {
+      flex: 1,
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      padding: 10,
+    },
+    rect: {
+      flex: 1,
+      height: 100,
+      width: '30%',
+      marginHorizontal: 50,
+      backgroundColor: COLORS.rougeclair,
+      borderRadius: 10,
+    },
+    rectContainerCloture: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '80%', // Modifier la valeur en fonction de la largeur souhaitée
+      marginTop: 60,
+    },
+    rectCloture: {
+      // flex: , // Modifier la valeur en fonction de la taille souhaitée
+      height: 100,
+      marginHorizontal: 10, // Modifier la valeur en fonction de la marge souhaitée
+      backgroundColor: COLORS.rougeclair,
+      borderRadius: 10,
+      marginTop:-20,
+    },
+    
+    rectContentCloture: {
+      flex: 1,
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      padding: 10,
+    },
+
+    buttonsContainer2: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '80%',
+      marginTop: 20,
+    },
+    buttonsContainer: {
+      flexDirection: 'row',
+      justifyContent:'center',
+      width: '80%',
+      marginTop: -30,
+    },
+    btnCloturer: {
+      marginTop:80,
+      padding: 10,
+      backgroundColor: COLORS.rouge,
+      fontWeight: 'bold',
+      color: 'white',
+      borderRadius: 5,
+
+    },
+    btnclose2 :{
+      marginTop:80,
+      padding: 10,
+      backgroundColor:COLORS.rouge,
+      fontWeight: 'bold',
+      color:'white',
+      borderRadius: 5,
+      // marginLeft:20,
       
-      rect: {
-        width: '30%',
-        height: 100,
-        backgroundColor: COLORS.secondary,
-        borderRadius: 10,
+  },
+  buttonWrapper: {
+    marginTop: 80,
+    padding: 10,
+    backgroundColor: COLORS.rouge,
+    borderRadius: 7,
+    marginLeft:20,
+  },
+  buttonWrapperFermer: {
+    marginTop: 80,
+    padding: 10,
+    backgroundColor: "green",
+    borderRadius: 7,
+    marginLeft:20,
+  },
+  buttonWrapper2: {
+    marginTop: 60,
+    padding: 10,
+    backgroundColor: COLORS.rouge,
+    borderRadius: 7,
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    color: 'white',
+  },
+    btnConfirmation: {
+      padding: 10,
+      backgroundColor: COLORS.rouge,
+      fontWeight: 'bold',
+      color: 'white',
+      borderRadius: 5,
+      marginLeft: 10,
+    },
+    
+btnNonConfirmationWrapper: {
+  overflow: 'hidden',
+  marginLeft: 10,
+},
+btnConfirmationWrapper: {
+  overflow: 'hidden',
+  marginLeft: 10,
+
+},
+    btnNonConfirmation:{
+      padding: 10,
+      backgroundColor: "green",
+      fontWeight: 'bold',
+      color: 'white',
+      borderRadius: 5,
+      marginLeft: 10,
+    },
+    modalContentConfirmation: {
+      width: '40%',
+      height: '30%',
+      backgroundColor: 'white',
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
       },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 0,
+    },
+    alertImageContainer: {
+      alignItems: 'center',
+     marginTop: -30,
+      width: 80, 
+
+    },
+    alertImage: {
+      height: 60, // Ajustez cette valeur en fonction de vos besoins
+      width: 60, // Ajustez cette valeur en fonction de vos besoins
+      resizeMode: 'contain', // Utilisez 'contain' au lieu de 'cover'
+      marginVertical: 10, // Ajoutez cette ligne pour ajuster l'espacement vertical
+      marginHorizontal: 20, // Ajoutez cette ligne pour ajuster l'espacement horizontal
+    },
+    
+    confirmationText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginBottom: 20,
+      marginTop:15,
+    },
+    
+    rectTextTop: {
+      color: 'grey',
+      fontSize: 16,
+      marginTop:-55,
+      marginLeft:20,
+    },
+    rectTextBottom: {
+      color: 'grey',
+      fontSize: 20,
+      // fontWeight: 'bold',
+      marginLeft:370,
+    },
 
       ImgRev:{
         height: 35,
         width: 35,
         resizeMode: 'cover',
         marginRight:1070,
-        marginTop:20
+        marginLeft:190,
+        marginTop:-20
       },
 
       NomRev: {
@@ -384,7 +547,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold", 
         marginLeft: 20 ,
         marginTop: -20,
-        marginStart:40,
+        marginStart:230,
     },
     // formules:{
     //     display: "flex",
@@ -412,6 +575,83 @@ const styles = StyleSheet.create({
         marginBottom: 6,
         marginLeft:40
       },
+      modalText: {
+        fontSize: 16,
+        marginVertical: 10,
+      },
+      productCard: {
+        // backgroundColor: COLORS.rouge,
+        // borderRadius: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        marginBottom: 10,
+      },
+      productText: {
+        color: "black",
+        fontSize: 14,
+        fontWeight:"bold",
+      },
+      productContainer: {
+        marginTop: 10,
+        marginBottom: 20,
+        alignItems: 'center',
+      },
+      productTitleContainer: {
+        // backgroundColor: COLORS.rougeclair,
+        // borderRadius: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        // marginBottom: 10,
+      },
+      formuleContainer: {
+        marginTop: 10,
+        marginBottom: 20,
+        alignItems: 'center',
+      },
+      formuleTitleContainer: {
+        backgroundColor: COLORS.rougeclair,
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        // marginBottom: 10,
+      },
+      productTitle: {
+        color: "black",
+        fontSize: 14,
+        fontWeight: 'bold',
+      },
+      modalContentFromule: {
+        //flex: 1,
+        width: '40%',
+        height: '50%',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      cancelButton: {
+        position: 'absolute',
+        bottom: 20,
+        left: 20,
+        backgroundColor: 'red',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+      },
+      cancelButtonText: {
+        color: COLORS.white,
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      
 
 });
 

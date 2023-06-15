@@ -13,7 +13,7 @@ import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../../consts/colors";
 import ticket from "../../consts/ticket";
-// import {PrimaryButton} from '../../consts/button';
+// import {rougeButton} from '../../consts/button';
 import { styles } from "./styles";
 import Categories from "../Categories";
 import ticketProd from "../../consts/ticketProd";
@@ -37,7 +37,11 @@ const CartScreen = ({
   setShowModal,
   ticketNumber,
   // totalPrice,
+  selectedServiceText,
   priceHT,
+  paymentMethod,
+  deliveryAddress,
+
 }) => {
   useEffect(() => {
     console.log(ticket);
@@ -166,7 +170,6 @@ const CartScreen = ({
     };
     const [quantity, setQuantity] = useState(1);
     const PrixTotal = quantity * price;
-
     const itemWithDetails = {
       ...item,
       supplements: item.supplement.map((sp) => sp.name),
@@ -274,6 +277,7 @@ const CartScreen = ({
           <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
             TVA: {item && item.tax ? item.tax : "0"} %
           </Text>
+
           <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
             Remise: {item && item.remise ? item.remise : "0"} %
           </Text>
@@ -285,6 +289,8 @@ const CartScreen = ({
           <Text style={{ color: COLORS.grey, marginLeft: -190 }}>
             Prix Total: {item && item.price ? item.price : ""} DT
           </Text>
+
+
 
           {/* <TouchableOpacity
             style={styles.detailsButton}
@@ -327,6 +333,21 @@ const CartScreen = ({
   ticket.forEach((item) => {
     totalTax += item.tax;
   });
+  
+  let TotalNet = 0; 
+  ticket.forEach((item) => {
+    TotalNet += item.priceHT
+  })
+
+  let totalTaxMt=0; 
+  ticket.forEach((item)=> {
+    totalTaxMt += item.taxEnMontant
+  })
+
+  let totalRemiseMt=0; 
+  ticket.forEach((item)=> {
+    totalRemiseMt += item.RemiseEnMontant
+  })
 
   ticketProd.forEach((item) => {
     totalTax += item.tax;
@@ -351,6 +372,11 @@ const CartScreen = ({
   //     </Modal>
   //   );
   // };
+  <Commands
+  selectedServiceText={selectedServiceText}
+  paymentMethod={selectedOption === "Espéce" ? "Espèce" : "Carte Bancaire"}
+  deliveryAddress={deliveryAddress}
+/>
 
   const renderCartCard = ({ item }) => {
     return <CartCard item={item} />;
@@ -395,6 +421,7 @@ const CartScreen = ({
   return (
     <SafeAreaView>
       <View style={styles.header}>
+
         <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 130 }}>
           Ticket
         </Text>
@@ -452,8 +479,12 @@ const CartScreen = ({
         renduValue={renduValue}
         donneValue={donneValue}
         ticketNumber={ticketNumber}
-      />
+        selectedServiceText={selectedServiceText}
+        paymentMethod={selectedOption === "Espéce" ? "Espèce" : "Carte Bancaire"}
+        deliveryAddress={deliveryAddress}
 
+
+      />
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 60 }}
@@ -481,6 +512,7 @@ const CartScreen = ({
 };
 
 const TicketModal = ({
+  itemsProd,
   items,
   showModal,
   handleCloseModal,
@@ -491,7 +523,10 @@ const TicketModal = ({
   renduValue,
   ticketNumber,
   item,
-  priceHT
+  priceHT,
+  selectedServiceText,
+  paymentMethod,
+  deliveryAddress,
 }) => {
   let totalPrice=0
   ticket.forEach((item) => {
@@ -501,7 +536,21 @@ const TicketModal = ({
   ticket.forEach((item) => {
     totalTax += item.tax;
   });
-  // const [ticketNumber, setTicketNumber] = useState(1);
+  let totalTaxMt=0; 
+  ticket.forEach((item)=> {
+    totalTaxMt += item.taxEnMontant
+  })
+  let totalRemiseMt=0; 
+  ticket.forEach((item)=> {
+    totalRemiseMt += item.RemiseEnMontant
+  })
+
+
+  let TotalNet = 0; 
+  ticket.forEach((item) => {
+    TotalNet += item.priceHT
+  })
+  const [ticketCounter, setTicketCounter] = useState(100009);
   const [date, setDate] = React.useState();
 
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -534,7 +583,7 @@ const TicketModal = ({
       await AsyncStorage.setItem(
         "ticketInfoForSideBar",
         JSON.stringify({
-          ticketNumber: ticketNumber + 1,
+          ticketNumber: ticketCounter,
           totalPrice: totalPrice,
           date: formatDate(currentDate),
         })
@@ -545,33 +594,149 @@ const TicketModal = ({
   }, []);
 
   //juste nahit appel l fonction ken maa bouton fermer mtaa lmodal 
-  const saveDataToDatabase = async () => {
+  // const saveDataToDatabase = async () => {
+  //   try {
+  //     const payload = {
+  //       date: date,
+  //       ticketNumber: ticketNumber,
+  //       totalPrice: totalPrice,
+  //       items: items.map((item) => ({
+  //         name: item.name,
+  //         quantity: item.quantity ? item.quantity : 0,
+  //         size: item.size,
+  //         tax: item.tax,
+  //         remise: item.remise,
+  //         prixHT: item.priceHT ? item.priceHT : 0, // Assurez-vous que priceHT a une valeur
+  //         price: item.price,
+  //       })),
+  //     };
+  
+  //     const response = await axios.post('http://192.168.1.7/food/api/order/place', payload);
+  
+  //     console.log(response.data.message);
+  //     // Traitez la réponse du serveur comme vous le souhaitez
+  //   } catch (error) {
+  //     console.error(error);
+  //     // Traitez les erreurs de requête
+  //   }
+  // };
+
+  // const sendTicketDetails = async () => {
+  //   try {
+  //     const ticketItems = [];
+  
+  //     items.forEach((item) => {
+  //       const ticketItem = {
+  //         produit: item.name,
+  //         taille: item.size.name,
+  //         quantite: item.quantity,
+  //         tax: item.tax,
+  //         remise: item.remise,
+  //         priceHT: item.priceHT,
+  //         price: item.price,
+  //       };
+  
+  //       ticketItems.push(ticketItem);
+  //       console.log(ticketItems);
+  //     });
+  //     const ticketItemsString = JSON.stringify(ticketItems);
+  //     const ticketData = {
+        // ticketNumber: ticketNumber + 1,
+        // totalPrice: totalPrice,
+        // date: formatDate(currentDate),
+  //       ticketItems: ticketItems, 
+  //     };
+  
+  //     const response = await axios.post('http://192.168.1.7/food/api/order/detailticket', ticketData);
+  
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // const sendTicketDetails = async () => {
+  //   try {
+  //     const ticketItems = [];
+  //     items.forEach((item) => {
+  //       const ticketItem = {
+  //         produit: item.name,
+  //         taille: item.size.name,
+  //         quantite: item.quantity,
+  //         tax: item.tax,
+  //         remise: item.remise,
+  //         priceHT: item.priceHT,
+  //         price: item.price,
+  //       };
+
+  //       ticketItems.push(ticketItem);
+  //       console.log(ticketItems);
+  //     });
+  
+  //     const ticketItemsString = JSON.stringify(ticketItems);
+  //     console.log(ticketItemsString);
+  
+  //     const ticketData = {
+  //       ticketItems: ticketItemsString,
+  //       ticketNumber: ticketNumber + 1,
+  //       totalPrice: totalPrice,
+  //       date: formatDate(currentDate),
+  //     };
+  
+  //     const response = await axios.post('http://192.168.1.7/food/api/order/detail', ticketData);
+  
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const sendTicketDetails = async () => {
     try {
-      const payload = {
-        date: date,
-        ticketNumber: ticketNumber,
+      const ticketItems = []; 
+      items.forEach((item) => {
+        const ticketItem = {
+          produit: item.name,
+          taille: item.size.name,
+          quantite: item.quantity,
+          tax: item.tax,
+          remise: item.remise,
+          priceHT: item.priceHT,
+          price: item.price,
+          supplement:item.supplement,
+        };
+        ticketItems.push(ticketItem); 
+        console.log(ticketItems);
+      });
+
+      // const addressString = deliveryAddress.toString();
+      const ticketItemsString = JSON.stringify(ticketItems);
+      console.log(ticketItemsString);
+      console.log(ticketNumber)
+
+      const ticketData = {
+        ticketItems: ticketItems,
+        ticketNumber: ticketCounter,
         totalPrice: totalPrice,
-        // items: items.map((item) => ({
-        //   name: item.name,
-        //   quantity: item.quantity ? item.quantity : 0,
-        //   size: item.size,
-        //   tax: item.tax,
-        //   remise: item.remise,
-        //   prixHT: item.priceHT ? item.priceHT : 0, // Assurez-vous que priceHT a une valeur
-        //   price: item.price,
-        // })),
+        date: formatDate(currentDate),
+        paymentMethod: paymentMethod,
+        selectedService:selectedService,
+        deliveryAddress: deliveryAddress,
+        totalTaxMt: totalTaxMt,
+        // totalRemiseMt:totalRemiseMt,
+        TotalNet:TotalNet,
       };
-  
-      const response = await axios.post('http://192.168.1.7/food/api/order/place', payload);
-  
-      console.log(response.data.message);
-      // Traitez la réponse du serveur comme vous le souhaitez
+
+      const response = await axios.post('http://192.168.1.7/food/api/order/detail', ticketData);
+      console.log(response.data);
     } catch (error) {
       console.error(error);
-      // Traitez les erreurs de requête
     }
+    setTicketCounter((prevCounter) => prevCounter + 1);
+
   };
   
+  const formattedTicketNumber = String(ticketCounter).padStart(6, '0');
 
   return (
     <Modal visible={showModal} transparent={true} animationType="slide">
@@ -582,16 +747,17 @@ const TicketModal = ({
               source={require("../../assets/catergories/restau.png")}
               style={styles.logo}
             />
-            <Text style={styles.restaurantName}>Nom du restaurant</Text>
+            <Text style={styles.restaurantName}>5 étoiles</Text>
             <View>
               <Text style={styles.date}>{formatDate(currentDate)}</Text>
             </View>
-            <Text style={styles.restaurantAddress}>Adresse du restaurant</Text>
-            <Text style={styles.restaurantNumber}>Numéro du restaurant</Text>
+            <Text style={styles.restaurantAddress}>Houmet Essouk Djerba</Text>
+            <Text style={styles.restaurantNumber}>+216 25256060</Text>
           </View>
           <View style={styles.rowContent}>
-            <Text style={styles.ticketNumber}>Ticket N° {ticketNumber}</Text>
-            <Text style={styles.ticketCaissier}>Caissier</Text>
+          {/* {formattedTicketNumber} */}
+            <Text style={styles.ticketNumber}>Ticket N° 100006 </Text>
+            <Text style={styles.ticketCaissier}>BEN ABDALLAH Chaima</Text>
           </View>
           <Text>
             *********************************************************************************************
@@ -604,7 +770,7 @@ const TicketModal = ({
               <View style={styles.ticketItemContainer}>
                 <View style={styles.rowContainer}>
                   <Text style={styles.ticketItemName}>{item.name} </Text>
-                  <Text style={styles.ticketItemInfo}>S {item.size.name}</Text>
+                  <Text style={styles.ticketItemInfo}>{item.size.name}</Text>
                   <Text style={styles.ticketItemInfo}>x{item.quantity}</Text>
                   <Text style={styles.ticketItemInfo}>
                     TVA: {item && item.tax ? item.tax : "0"} %
@@ -616,7 +782,7 @@ const TicketModal = ({
                     Prix Initial: {item && item.priceHT ? item.priceHT : ""} DT
                   </Text>
                   <Text style={styles.ticketItemInfo}>
-                    Prix : {item && item.price ? item.price : ""} DT
+                    Prix: {item && item.price ? item.price : ""} DT
                   </Text>
                 </View>
                 <View style={styles.row2Container}>
@@ -641,22 +807,27 @@ const TicketModal = ({
           <View style={styles.servv}>
             <View style={styles.leftColumn}>
               <Text style={styles.leftText}>
-                Mode de paiement: {selectedOption}
+                Mode de paiement:<Text style={styles.modeText}> {paymentMethod}</Text>
               </Text>
               <Text style={styles.leftText}>
                 Mode de consommation:
+                {/* <Text style={styles.modeText}> {selectedServiceText}</Text> */}
                 <Text style={styles.selectedService}>
                   {selectedService}
                 </Text>{" "}
               </Text>
+              {selectedService === "livraison" && (
+              <Text style={styles.addressText}>Adresse: {deliveryAddress}</Text>
+              )}            
             </View>
           </View>
           <View style={styles.rightColumn}>
-            <Text>Total net:{priceHT}</Text>
-            <Text>Total tax:</Text>
-            <Text>A payer: {totalPrice}DT</Text>
-            <Text>Donné: {donneValue}DT</Text>
-            <Text>Rendu: {renduValue}DT</Text>
+            <Text>Total net: {TotalNet.toFixed(3)} DT</Text>
+            <Text>Total remise: {totalRemiseMt.toFixed(3)} DT</Text>
+            <Text>Total tax: {totalTaxMt.toFixed(3)} DT</Text>
+            <Text>A payer: {totalPrice.toFixed(3)} DT</Text>
+            <Text>Donné: {donneValue} DT</Text>
+            <Text>Rendu: {renduValue} DT</Text>
           </View>
           <View style={styles.FinTicket}>
             <Text>
@@ -664,9 +835,12 @@ const TicketModal = ({
             </Text>
           </View>
           <Text style={styles.restaurantName}>
-            Merci de votre visite. A bientôt!
+            Merci pour votre visite. A bientôt!
           </Text>
-          <Button title="Fermer" color="red" onPress={() => handleCloseModal()} />
+          <Button title="Fermer" color="red" onPress={() => {
+              sendTicketDetails();
+              handleCloseModal();
+            }} />
         </View>
       </View>
     </Modal>

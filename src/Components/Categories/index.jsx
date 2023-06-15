@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Modal, Text, View, Image, StyleSheet,TouchableOpacity, TextInput} from "react-native";
+import { Modal, Text, View, Image, StyleSheet,TouchableOpacity, TextInput, ActivityIndicator} from "react-native";
 import {styles} from './styles'
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -19,60 +19,65 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import CartScreen from "../Commands/CartScreen";
 
 
+
+
  const ListCategories = ({ cats, setCategory, item }) => {
    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-   const HandleChange = (category, index) => {
-     setCategory(category.id);
-     setSelectedCategoryIndex(index);
-   };
-
+   const [loading, setLoading] = React.useState(false);
+   const HandleChange = async (category, index) => {
+    setLoading(true); // Activer l'indicateur d'activité
+    setCategory(category.id);
+    setSelectedCategoryIndex(index);
+    setLoading(false); // Désactiver l'indicateur d'activité
+  };
    return (
-     <ScrollView
-       horizontal
-       showsVerticalScrollIndicator={false}
-       contentContainerStyle={styles.categoriesListContainer}
-     >
-       {cats.map((category, index) => (
-         <TouchableOpacity
-           key={index}
-           activeOpacity={0.8}
-           onPress={() => HandleChange(category, index)}
-         >
-           <View
-             style={{
-               backgroundColor:
-                 selectedCategoryIndex == index
-                   ? COLORS.primary
-                   : COLORS.secondary,
-               ...style.categoryBtn,
-             }}
-           >
-             <View style={styles.categoryBtnImgCon}>
-               <Image
-                 source={{
-                   uri: `http://192.168.1.7/food/storage/app/public/category/${category.image}`,
-                 }}
-                 style={styles.ImgCat}
-               />
-             </View>
-             <Text
-               style={{
-                 fontSize: 17,
-                 fontWeight: "bold",
-                 marginLeft: 10,
-                 color:
-                   selectedCategoryIndex == index
-                     ? COLORS.white
-                     : COLORS.primary,
-               }}
-             >
-               {category.name}
-             </Text>
-           </View>
-         </TouchableOpacity>
-       ))}
-     </ScrollView>
-   );
+    <ScrollView
+      horizontal
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.categoriesListContainer}
+    >
+      {cats.map((category, index) => (
+        <TouchableOpacity
+          key={index}
+          activeOpacity={0.8}
+          onPress={() => HandleChange(category, index)}
+        >
+          <View
+            style={{
+              backgroundColor:
+                selectedCategoryIndex == index
+                  ? COLORS.rouge
+                  : COLORS.rougeclair,
+              ...style.categoryBtn,
+            }}
+          >
+            <View style={styles.categoryBtnImgCon}>
+              <Image
+                source={{
+                  uri: `http://192.168.1.7/food/storage/app/public/category/${category.image}`,
+                }}
+                style={styles.ImgCat}
+              />
+            </View>
+            <Text
+              style={{
+                fontSize: 17,
+                fontWeight: "bold",
+                marginLeft: 10,
+                color:
+                  selectedCategoryIndex == index
+                    ? COLORS.white
+                    : COLORS.rouge,
+              }}
+            >
+              {category.name}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+      {loading && <ActivityIndicator size="small" color="#0000ff" />} 
+    </ScrollView>
+  );
  };
 
  const ListCategoriesVertical = ({ setStateModalIndex }) => {
@@ -116,10 +121,11 @@ import CartScreen from "../Commands/CartScreen";
   }, []);
 
 
+  const [modalVisibleConfirmation, setModalVisibleConfirmation] = useState(false);
 
    return (
      <View style={styles.categoriesListContainerVertical}>
-       <TouchableOpacity
+       {/* <TouchableOpacity
          key={2}
          activeOpacity={0.8}
          onPress={() => setModalVisibleTick(true)}
@@ -127,7 +133,7 @@ import CartScreen from "../Commands/CartScreen";
          <View
            style={{
              backgroundColor:
-               selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+               selectedCategoryIndex == 3 ? COLORS.rouge : COLORS.rougeclair,
              ...style.categoryBtn,
              marginTop: 3 !== categories.length - 3 ? 50 : 0,
            }}
@@ -144,13 +150,13 @@ import CartScreen from "../Commands/CartScreen";
                fontWeight: "bold",
                marginLeft: 10,
                color:
-                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.rouge,
              }}
            >
              Ticket
            </Text>
          </View>
-       </TouchableOpacity>
+       </TouchableOpacity> */}
        <Modal
          visible={modalVisibleTick}
          animationType="slide"
@@ -181,7 +187,7 @@ import CartScreen from "../Commands/CartScreen";
          <View
            style={{
              backgroundColor:
-               selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+               selectedCategoryIndex == 3 ? COLORS.rouge : COLORS.rougeclair,
              ...style.categoryBtn,
              marginTop: 3 !== categories.length - 3 ? 50 : 0,
            }}
@@ -198,7 +204,7 @@ import CartScreen from "../Commands/CartScreen";
                fontWeight: "bold",
                marginLeft: 10,
                color:
-                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.rouge,
              }}
            >
              Revenus
@@ -220,13 +226,26 @@ import CartScreen from "../Commands/CartScreen";
                <Text style={styles.NomRev}> Statistiques des commandes </Text>
              </View>
              <View style={styles.rectContainer}>
-               <View style={styles.rect}></View>
-               <View style={styles.rect}></View>
-               <View style={styles.rect}></View>
+               <View style={styles.rect}>
+                <View style={styles.rectContent}>
+                  <Icon name="shopping-cart" size={20} color="grey" />
+                  <Text style={styles.rectTextTop}>Toutes les commandes</Text>
+                  <Text style={styles.rectTextBottom}>{ticketNumber}</Text>
+                </View>
+               </View>
+               <View style={styles.rect}>
+               <View style={styles.rectContent}>
+                  <Icon name="attach-money" size={20} color="grey" />
+                  <Text style={styles.rectTextTop}>Revenus</Text>
+                  <Text style={styles.rectTextBottom}>DT</Text>
+                </View>
+               </View>
              </View>
              {/* <TextInput placeholder="Enter your text here" style={styles.textInput} /> */}
              <TouchableOpacity onPress={() => setModalVisibleRev(false)}>
-               <Text style={styles.btnclose2}>Fermer</Text>
+             <View style={styles.buttonWrapper2}>
+                <Text style={styles.buttonText}>Fermer</Text>
+              </View>
              </TouchableOpacity>
            </View>
          </View>
@@ -240,7 +259,7 @@ import CartScreen from "../Commands/CartScreen";
          <View
            style={{
              backgroundColor:
-               selectedCategoryIndex == 3 ? COLORS.primary : COLORS.secondary,
+               selectedCategoryIndex == 3 ? COLORS.rouge : COLORS.rougeclair,
              ...style.categoryBtn,
              marginTop: 3 !== categories.length - 3 ? 50 : 0,
            }}
@@ -257,7 +276,7 @@ import CartScreen from "../Commands/CartScreen";
                fontWeight: "bold",
                marginLeft: 10,
                color:
-                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.primary,
+                 selectedCategoryIndex == 3 ? COLORS.white : COLORS.rouge,
              }}
            >
              ClotureZ
@@ -269,11 +288,77 @@ import CartScreen from "../Commands/CartScreen";
          animationType="slide"
          transparent={true}
        >
+        
          <View style={styles.modalContainer}>
            <View style={styles.modalContent2}>
-             <TouchableOpacity onPress={() => setModalVisibleClz(false)}>
-               <Text style={styles.btnclose2}>Close</Text>
-             </TouchableOpacity>
+           <View>
+               <Image
+                 source={require("../../assets/catergories/cloture.png")}
+                 style={styles.ImgRev}
+               />
+               <Text style={styles.NomRev}> Clôturer la caisse </Text>
+             </View>
+             <View style={styles.rectContainerCloture}>
+               {/* <View style={styles.rect}>
+                <View style={styles.rectContent}>
+                  <Icon name="shopping-cart" size={20} color="grey" />
+                  <Text style={styles.rectTextTop}>Toutes les commandes</Text>
+                  <Text style={styles.rectTextBottom}>{ticketNumber}</Text>
+                </View>
+               </View> */}
+               <View style={styles.rectCloture}>
+               <View style={styles.rectContentCloture}>
+                  <Icon name="attach-money" size={20} color="grey" />
+                  <Text style={styles.rectTextTop}>Clôture Z</Text>
+                  <Text style={styles.rectTextBottom}>DT</Text>
+                </View>
+               </View>
+             </View>
+             <View style={styles.buttonsContainer}>
+             <TouchableOpacity onPress={() => setModalVisibleConfirmation(true)}>
+             <View style={styles.buttonWrapper}>
+                <Text style={styles.buttonText}>Clôturer</Text>
+              </View>
+            </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => setModalVisibleClz(false)}>
+              <View style={styles.buttonWrapperFermer}>
+                <Text style={styles.buttonText}>Fermer</Text>
+              </View>              
+              </TouchableOpacity>
+            </View>
+            <Modal
+              visible={modalVisibleConfirmation}
+              animationType="slide"
+              transparent={true}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContentConfirmation}>
+                <View style={styles.alertImageContainer}>
+                 <Image
+                  source={require("../../assets/catergories/alerte.png")}
+                  style={styles.alertImage}
+                 />
+                </View>
+                  <Text style={styles.confirmationText}>
+                    Voulez-vous vraiment clôturer la caisse ?
+                  </Text>
+                  <View style={styles.buttonsContainer2}>
+                  <TouchableOpacity onPress={() => setModalVisibleConfirmation(false)}>
+                    <View style={styles.btnNonConfirmationWrapper}>
+                      <Text style={styles.btnNonConfirmation}>Oui</Text>
+                    </View>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => setModalVisibleConfirmation(false)}>
+                  <View style={styles.btnConfirmationWrapper}>
+                  <Text style={styles.btnConfirmation}>Non</Text>
+                  </View>
+                  </TouchableOpacity>
+                </View>
+                </View>
+              </View>
+            </Modal>
            </View>
          </View>
        </Modal>
@@ -281,7 +366,7 @@ import CartScreen from "../Commands/CartScreen";
    );
  };
 
-  const Card = ({ food, update, setUpdate,item}) => {
+  const Card = ({ food, update, setUpdate}) => {
     const [price,setPrice]=useState(0)
     const [priceSize, setPriceSize] = useState(0);
     const [priceSupplement, setPriceSupplement] = useState(0);
@@ -296,11 +381,11 @@ import CartScreen from "../Commands/CartScreen";
     const [priceHT, setPriceHT] = useState(0);
 
 
+
     const HandleAddProd2Ticket = () => {
       const totalPriceProduct = calculateTotalPriceProduct();
       setTotalPrice(prevTotalPrice => prevTotalPrice + totalPriceProduct);
 
- 
       ticketProd.push({
         ...food,
         size: selectedSize,
@@ -324,6 +409,8 @@ import CartScreen from "../Commands/CartScreen";
         price: selectedPrice,
         tax: tax,
         remise: remise,
+        taxEnMontant:taxEnMontant,
+        RemiseEnMontant: RemiseEnMontant,
       });
 
       setUpdate(!update);
@@ -346,6 +433,8 @@ import CartScreen from "../Commands/CartScreen";
     //   const totalPrice = quantity * price;
     //   setSelectedPrice(totalPrice);
     // };
+    const [taxEnMontant, setTaxEnMontant] = useState([]);
+    const [RemiseEnMontant, setRemiseEnMontant] = useState([]);
 
     const calculateTotalPriceProduct = () => {
       const totalPrice = quantity * price;
@@ -357,14 +446,20 @@ import CartScreen from "../Commands/CartScreen";
       const taxValue = tax ?? 0;
 
       const taxAmount = ((totalPrice * taxValue) / 100).toFixed(3);
+      const taxEnMontantValue = (price / 100)*taxValue;
+      setTaxEnMontant(taxEnMontantValue);
+
+      const RemiseEnMontantValue = (price / 100)*remiseValue;
+      setRemiseEnMontant(RemiseEnMontantValue);
+
       const finalPrice = (parseFloat(totalPriceWithDiscount) + parseFloat(taxAmount)).toFixed(3); 
 
       setSelectedPrice(parseFloat(finalPrice));
     };
-    
-    
 
 
+    
+  
     // const calculateTotalPriceProduct = () => {
     //   const totalPrice = quantity * price;
     //   setPriceHT(totalPrice);
@@ -600,7 +695,7 @@ import CartScreen from "../Commands/CartScreen";
                   <View>
                     {selectedSize && (
                       <Text style={styles.selectedSizeText2}>
-                        Size: {selectedSize.name}
+                        Variante: {selectedSize.name}
                       </Text>
                     )}
                   </View>
@@ -692,7 +787,10 @@ import CartScreen from "../Commands/CartScreen";
 
                   <View style={styles.percent}>
                     <Text style={styles.remisetext} >Remise: {remise || 0}% </Text>                
-                    <Text style={styles.tvatext} >TVA: {tax || 0}% </Text>                
+                    <Text style={styles.tvatext} >TVA: {tax || 0}% </Text>
+                    {/* <Text style={styles.tvatext}>MontantTax: {taxEnMontant}</Text>
+                    <Text style={styles.tvatext}>MontantRemise: {RemiseEnMontant}</Text> */}
+
                   </View> 
 
                   {/* <View style={styles.percent}>
@@ -700,7 +798,7 @@ import CartScreen from "../Commands/CartScreen";
                     <Text style={styles.tvatext}>TVA: {tax}% ({calculateTVA(priceSize + priceSupplement + price).toFixed(2)}DT)</Text>
                   </View> */}
   
-                  <TouchableOpacity onPress={handleValidateModal}>
+                  <TouchableOpacity style={styles.btnvalidercontent}onPress={handleValidateModal}>
                     <Text style={styles.btnvalider}> Valider </Text>
                   </TouchableOpacity>
 
@@ -718,6 +816,7 @@ import CartScreen from "../Commands/CartScreen";
 
   //http://192.168.1.7/food/api/categories/products/%7Bid_category%7D
   const Categories = () => {
+    const [numColumns, setNumColumns] = React.useState(5); 
     const [modalState, setModalState] = React.useState(0);
     const [category, setCategory] = React.useState();
     const [formule, setFormule] = React.useState();
@@ -874,11 +973,12 @@ import CartScreen from "../Commands/CartScreen";
               width: "80%",
               height: "auto",
               alignSelf: "center",
-              marginLeft:-165,
+              marginLeft:-137,
             }}
             style={styles.souscatList}
             showsVerticalScrollIndicator={false}
-            numColumns={4}
+            key={numColumns} 
+            numColumns={numColumns}
             data={categoryProds && category ? categoryProds : categoryProds}
             renderItem={({ item }) => (
               <Card food={item} update={update} setUpdate={setUpdate} />
@@ -929,36 +1029,115 @@ import CartScreen from "../Commands/CartScreen";
       </View>
     );
   };
-  const ListFormules = ({ formules, setFormule }) => {
-    const [selectedFormuleIndex, setSelectedFormuleIndex] = React.useState(0);
+  const ListFormules = ({formules,setFormule }) => {
+    const [selectedFormuleIndex, setSelectedFormuleIndex] = useState(0);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [formuleDetails, setFormuleDetails] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [remise, setRemise] = useState(0);
+    const [tax,setTax] = useState(0);
 
-    const HandleChange = (formule, index) => {
+    const fetchFormuleDetails = async (formuleId) => {
+      try {
+        const [productResponse, formuleResponse] = await Promise.all([
+          axios.get(`http://192.168.1.7/food/api/formules/products/${formuleId}`),
+          axios.get(`http://192.168.1.7/food/api/formules/${formuleId}`),
+        ]);
+    
+        const productData = productResponse.data;
+        const formuleData = formuleResponse.data;
+        
+        const discountResponse = await axios.get(`http://192.168.1.7/food/api/formules/discount/${formuleId}`);
+        const discountData = discountResponse.data;
+        const remiseValue = discountData.length > 0 ? discountData[0].value : 0;
+        setRemise(remiseValue);
+
+        const TaxResponse = await axios.get(`http://192.168.1.7/food/api/formules/tax/${formuleId}`);
+        const TaxData = TaxResponse.data;
+        const TaxValue = TaxData.length > 0 ? TaxData[0].value : 0;
+        setTax(TaxValue);
+    
+        return { products: productData, formule: formuleData };
+      } catch (error) {
+        console.error('Une erreur s\'est produite lors de la récupération des détails de la formule :', error);
+        return null;
+      }
+    };
+    
+    
+    const HandleChange = async (formule, index) => {
       setFormule(formule.id);
       setSelectedFormuleIndex(index);
+      setLoading(true);
+    
+      const details = await fetchFormuleDetails(formule.id);
+      setFormuleDetails(details);
+      setLoading(false);
+    
+      handleOpenModal();
+    };
+    
+    const handleOpenModal = () => {
+      setModalVisible(true);
     };
   
+    const handleCloseModal = () => {
+      setModalVisible(false);
+    };
+
+    const [quantity,setQuantity]= useState(1);
+    const handleAdd = () => {
+      setQuantity(quantity + 1);
+    };
+    const handleRemove = () => {
+      if (quantity > 1) {
+        setQuantity(quantity - 1);
+      }
+    };
+    const [RemiseMT, setPrixApresRemise] = useState(0);
+    const [TaxMT, setPrixApresTax] = useState(0);
+    
+    useEffect(() => {
+      const prixInitial = formuleDetails && formuleDetails.formule[0].price;
+      const RemiseMT = (prixInitial * remise / 100);
+      setPrixApresRemise(RemiseMT);
+    }, [remise, formuleDetails]);
+    
+    useEffect(() => {
+      const prixInitial = formuleDetails && formuleDetails.formule[0].price;
+      const TaxMT =  (prixInitial * tax / 100);
+      setPrixApresTax(TaxMT);
+    }, [tax, formuleDetails]);
+    
+    const prixInitial = formuleDetails && formuleDetails.formule[0].price;
+    const prixTotal = (prixInitial- RemiseMT + TaxMT)*quantity ;
+    
+    
     return (
       <ScrollView
         horizontal
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.formulesListContainer}
       >
-        {formules.map((formule, index) => (
+        {formules.map((formules, index) => (
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
-            onPress={() => HandleChange(formule, index)}
+            onPress={() => {
+              HandleChange(formules, index);
+              handleOpenModal();
+            }}
           >
             <View
               style={{
                 backgroundColor:
                   selectedFormuleIndex === index
-                    ? COLORS.primary
-                    : COLORS.secondary,
+                    ? COLORS.rouge
+                    : COLORS.rougeclair,
                     ...style.formuleBtn,
               }}>
                 <View style={styles.categoryBtnImgCon}>
-                 <Image source={{uri: `http://192.168.1.7/food/storage/app/public/formules/${formule.image}`}}
+                 <Image source={{uri: `http://192.168.1.7/food/storage/app/public/formule/${formules.image}`}}
                  style ={styles.ImgCat} 
                   />
                </View>
@@ -970,17 +1149,85 @@ import CartScreen from "../Commands/CartScreen";
                   color:
                     selectedFormuleIndex === index
                       ? COLORS.white
-                      : COLORS.primary,
+                      : COLORS.rouge,
                 }}
               >
-                {formule.name}
+                {formules.name}
               </Text>
             </View>
           </TouchableOpacity>
         ))}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={handleCloseModal}
+        >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContentFromule}>
+          {loading ? (
+          <ActivityIndicator size="large" color={COLORS.rouge} />
+        ) : (
+          <>
+        {formuleDetails && formuleDetails.formule && formuleDetails.formule.length > 0 && (
+                // <View style={styles.categoryBtnImgCon}>
+                <Image source={{uri: `http://192.168.1.7/food/storage/app/public/formule/${formuleDetails.formule[0].image}`}}
+                style={{ height: 100, width: 100, marginLeft: 15 }}
+                 />
+              // </View>
+        )} 
+         <View style={styles.formuleContainer}>
+          <View style={styles.formuleTitleContainer}>
+            <Text style={styles.productTitle}>{formuleDetails && formuleDetails.formule[0].name}</Text>
+          </View>
+        </View>
+        {formuleDetails && formuleDetails.products && formuleDetails.products.length > 0 && (
+          <View style={styles.productContainer}>
+          <View style={styles.productTitleContainer}>
+            <Text style={styles.productTitle}>Menu formule</Text>
+          </View>
+          {formuleDetails.products.map((product, index) => (
+            <View key={index} style={styles.productCard}>
+              <Text style={styles.productText}>
+                 {product.product}  taille: {product.variant}, quantité: {product.quantity} 
+              </Text>
+            </View>))}
+        </View>
+        )} 
+      <Text style={style.modalText}>PrixHT : {formuleDetails && formuleDetails.formule[0].price * quantity} DT </Text>
+      <Text style={style.modalText}>Remise : {remise !== null ? remise : 0} % </Text>
+      <Text style={style.modalText}>TVA : {tax !== null ? tax : 0} % </Text>   
+      <Text style={style.modalText}>Prix Total : {prixTotal} DT </Text>
+        <View>
+        <View>
+          <Text style={{ fontWeight: "bold", fontSize: 14,marginLeft:29, marginTop:10}}>{quantity}</Text> 
+        </View>
+        <TouchableOpacity style={styles.removeicon} onPress={handleRemove}>
+          <Icon name="remove" size={25} color={COLORS.white}></Icon>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.addicon} onPress={handleAdd} >
+          <Icon name="add" size={25} color={COLORS.white}></Icon>
+        </TouchableOpacity>
+      </View>
+        <TouchableOpacity style={style.closeButton} onPress={handleCloseModal}>
+          <Text style={style.closeButtonText}>Valider</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={handleCloseModal}
+          >
+            <Text style={styles.cancelButtonText}>Annuler</Text>
+          </TouchableOpacity>
+      </>
+    )}
+    </View>
+  </View>
+</Modal>
+
       </ScrollView>
     );
-  };
+  
+};
 
 const style = StyleSheet.create({
 categoryBtn: {
@@ -1007,9 +1254,37 @@ card: {
   marginHorizontal:15,
   marginVertical: 15, 
   borderRadius: 15,
-  backgroundColor: COLORS.secondary,
+  backgroundColor: COLORS.rougeclair,
   //marginLeft:10,
 
+},
+modalContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+},
+modalText: {
+  fontSize: 14,
+  fontWeight: 'bold',
+  color: 'black',
+  // marginTop:80,
+
+},
+closeButton: {
+  backgroundColor: "green",
+  paddingVertical: 10,
+  paddingHorizontal: 20,
+  marginTop: 'auto', // Déplace le bouton vers le bas
+  marginBottom: 20, // Ajoute une marge en bas
+  borderRadius: 10,
+  alignSelf: 'flex-end',
+  marginRight: 20,
+},
+closeButtonText: {
+  color: COLORS.white,
+  fontSize: 16,
+  fontWeight: 'bold',
 },
 });
 export default Categories;

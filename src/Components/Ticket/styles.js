@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     actionBtn: {
         width: 80,
         height: 30,
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.rouge,
         borderRadius: 30,
         paddingHorizontal: 5,
         flexDirection: 'row',

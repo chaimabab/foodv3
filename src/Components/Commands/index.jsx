@@ -15,6 +15,7 @@ import Calculator from './Calculator';
 import TicketModal from '../Modals/Ticket';
 
 
+
 const Commands = ({update,item}) => {
 
   const [ticketNumber, setTicketNumber] = useState(1);
@@ -100,21 +101,23 @@ const Commands = ({update,item}) => {
     } else {
       setSelectedService(service);
       switch (service) {
-        case "en livraison":
+        case "livraison":
           toggleModal();
-          setServiceText("Commande en livraison");
+          setServiceText("type de commande: livraison");
           break;
         case "à emporter":
-          setServiceText("Commande à emporter");
+          setServiceText("type de commande: à emporter");
           break;
         case "sur place":
-          setServiceText("Commande sur place");
+          setServiceText("type de commande: sur place");
           break;
         default:
           setServiceText("");
       }
     }
   };
+  
+  
 
   const [selectedOption, setSelectedOption] = useState(null);
   const handlePressOption = (option) => {
@@ -142,10 +145,13 @@ const Commands = ({update,item}) => {
   // ticketProd.forEach((item) => {
   //   totalTax += item.tax
   // });
-  const renduValue = (donneValue - totalPrice).toFixed(2);
+  const renduValue = (donneValue - totalPrice).toFixed(3);
+  const [selectedServiceText, setSelectedServiceText] = useState("");
 
 
+  
   return (
+
     <View style={styles.Commands}>
       <View style={styles.CommandsHeader}>
         <Text style={styles.textBold}>Commande</Text>
@@ -157,9 +163,9 @@ const Commands = ({update,item}) => {
       <TouchableOpacity
         style={[
           styles.Med2,
-          selectedService === 'en livraison' && { backgroundColor: COLORS.primary },
+          selectedService === 'livraison' && { backgroundColor: COLORS.rougeclair },
         ]}
-        onPress={() => handlePressService('en livraison')}
+        onPress={() => handlePressService('livraison')}
       >
         <Image
           style={{ width: 50, height: 50 }}
@@ -194,7 +200,7 @@ const Commands = ({update,item}) => {
       <TouchableOpacity
         style={[
           styles.Med2,
-          selectedService === 'à emporter' && { backgroundColor: COLORS.primary },
+          selectedService === 'à emporter' && { backgroundColor: COLORS.rougeclair },
         ]}
         onPress={() => handlePressService('à emporter')}
       >
@@ -208,13 +214,13 @@ const Commands = ({update,item}) => {
       <TouchableOpacity
         style={[
           styles.Med2,
-          selectedService === 'sur place' && { backgroundColor: COLORS.primary },
+          selectedService === 'sur place' && { backgroundColor: COLORS.rougeclair },
         ]}
         onPress={() => handlePressService('sur place')}
       >
         <Image
           style={{ width: 50, height: 50 }}
-          source={require('../../assets/services/plat.png')}
+          source={require('../../assets/services/surplace.png')}
         />
         <Text style={styles.text3}>Sur place</Text>
       </TouchableOpacity>
@@ -223,14 +229,14 @@ const Commands = ({update,item}) => {
       {selectedService && (
         <Text style={styles.inputtext}>
           Commande{" "}
-          {selectedService === "en livraison"
-            ? "en livraison"
+          {selectedService === "livraison"
+            ? "livraison"
             : selectedService === "à emporter"
             ? "à emporter"
             : "sur place"}
         </Text>
       )}
-      {selectedService === 'en livraison' && (
+      {selectedService === 'livraison' && (
         <View style={styles.addressContainer}>
           <Text style={[styles.inputtext, styles.addressText]}>
             Adresse: {deliveryAddress}
@@ -288,6 +294,9 @@ const Commands = ({update,item}) => {
           showModal={showModal}
           setShowModal={setShowModal}
           ticketNumber={ticketNumber}
+          selectedServiceText={selectedServiceText}
+          paymentMethod={selectedOption === "Espéce" ? "Espèce" : "Carte Bancaire"}
+          deliveryAddress={deliveryAddress}
         />
       </SafeAreaView>
 
@@ -313,7 +322,7 @@ const Commands = ({update,item}) => {
       <View style={styles.Calculations}>
         <View style={styles.Calculation}>
           <Text style={styles.inputtext}>Prix total</Text>
-          <Text>{totalPrice} DT</Text>
+          <Text>{totalPrice.toFixed(3)} DT</Text>
         </View>
         <TouchableOpacity style={styles.Calculation3} onPress={openCalculator}>
           <Text style={styles.inputtext}>Donné</Text>
@@ -412,26 +421,33 @@ const Commands = ({update,item}) => {
         </TouchableOpacity>
       </View> */}
 
-      <View style={styles.ButtonsFooter}>
-        <Button size="sm" color="error" title="Annuler" />
-        {/* <Button size="sm" color="warning" title="En attente" /> */}
-        <Button
-          onPress={() => {
-            if (ticket.length !== 0) {
-              setShowModal(true);
-              setTicketNumber(ticketNumber + 1);
-            }
-          }}
-          size="sm"
-          color="success"
-          title="Valider"
-        />
-      </View>
+            <View style={styles.ButtonsFooter}>
+              <TouchableOpacity 
+                style={[styles.buttonCommande, { backgroundColor: 'red' }]} // Appliquer le style ici
+                onPress={() => {
+                  // Action pour le bouton Annuler
+                }}
+              >
+                <Text style={styles.buttonText2}>Annuler</Text>
+              </TouchableOpacity>
+
+
+              <TouchableOpacity 
+                style={[styles.buttonCommande, { backgroundColor: 'green' }]} // Appliquer le style ici
+                onPress={() => {
+                  if (ticket.length !== 0) {
+                    setShowModal(true);
+                    setTicketNumber(ticketNumber + 1);
+                  }
+                }}
+              >
+                <Text style={styles.buttonText2}>Valider</Text>
+              </TouchableOpacity>
+              </View>
+
     </View>
   );
 };
-
-
 
 export default Commands;
  

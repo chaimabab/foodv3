@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
 //   actionBtn: {
 //       width: 80,
 //       height: 30,
-//       backgroundColor: COLORS.primary,
+//       backgroundColor: COLORS.rouge,
 //       borderRadius: 30,
 //       paddingHorizontal: 5,
 //       flexDirection: 'row',
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
 //     removeicon:{
 //         width: 30,
 //         height: 30,
-//         backgroundColor: COLORS.primary,
+//         backgroundColor: COLORS.rouge,
 //         borderRadius: 30,
 //         paddingHorizontal: 2,
 //         flexDirection: 'row',
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
 //     addicon:{
 //         width: 30,
 //         height: 30,
-//         backgroundColor: COLORS.primary,
+//         backgroundColor: COLORS.rouge,
 //         borderRadius: 30,
 //         paddingHorizontal: 2,
 //         flexDirection: 'row',
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     },
 
     selectedOption: {
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.rougeclair,
       },
       
     selectedService: {
@@ -381,8 +381,8 @@ const styles = StyleSheet.create({
       input: {
         marginBottom: 10,
         borderWidth: 1,
-        borderColor: COLORS.primary,
-        backgroundColor:COLORS.secondary,
+        borderColor: COLORS.rouge,
+        backgroundColor:COLORS.rougeclair,
         borderRadius: 5,
         padding: 5,
         width: '85%',
@@ -497,6 +497,18 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginBottom: 10,
+    },
+    buttonCommande: {
+      borderRadius: 10,
+      padding: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      width:150
+    },
+    buttonText2: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
     },
     button: {
       backgroundColor: '#ccc',
@@ -653,18 +665,27 @@ const styles = StyleSheet.create({
   //   flex: 1,
   //   alignItems: 'flex-end',
   // },
+  modeText: {
+    display: 'inline-block',
+    marginBottom:10,
+  },
+  
   servv: {
     flexDirection: 'row',
   },
   leftColumn: {
-    marginRight: 430,
+    marginRight: 365,
+    marginBottom:-4
   },
+
   rightColumn: {
-    alignItems: 'flex-end',
+    // alignItems: 'flex-end',
     marginLeft: 300,
     marginTop: -30,
     marginBottom:15
   },
+
+  
   leftText: {
     textAlign: 'left',
     // display: 'inline-block',

@@ -8,14 +8,14 @@ const COLORS = {
   // red: "red",
   white: '#FFF',
   dark: '#000',
-  primary: "#ffa500",
+  rouge: "#ffa500",
   //'#F9813A', //foncé
-  secondary: '#fedac5', //clair
-  primary: '#F9813A',
-  secondary: '#fedac5',
+  // rougeclair: '#fedac5', //clair
+  rouge: '#F9813A',
+  rougeclair: '#fedac5',
   light: '#E5E5E5',
   grey: '#908e8c',
-  rouge: '#DF0F0F',
+  // rouge: '#DF0F0F',
   //#DF0F0F
   red: "red",
   black: "#000",

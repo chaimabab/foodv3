@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View,SafeAreaView } from "react-native";
+import { Text, View,SafeAreaView,Image } from "react-native";
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles';
@@ -26,17 +26,20 @@ const Header = () => {
 
   return (
     <View style={styles.header}>
-
-      <View style={styles.input}>
-        <Text style={styles.text}>Logo</Text>
+      <View style={styles.logo}>
+      <Image source={require('../../assets/catergories/logo.png')}
+            style={{ width: '100%', height: '100%' }}
+            />     
+       </View>
+      <View style={styles.bienvenueText}>
+          <Text style={styles.textBold}>Bienvenue Chaima</Text>
       </View>
-
-      <View>
+      {/* <View>
           <Text style={styles.text}>AppName</Text>
-      </View>
+      </View> */}
 
-      <View>
-          <Text style={styles.text}>numtel</Text>
+      <View style={styles.num}>
+          <Text style={styles.text}>+216 25256060</Text>
       </View>
 
       {/* <View>
@@ -63,13 +66,13 @@ const Header = () => {
 
 
       <View style={styles.buttons}>
-        <TouchableOpacity style={styles.btn}>
+        {/* <TouchableOpacity style={styles.btn}>
         <Icon
                 name="rotate-right"
                 size={15}
                 color="white"
               />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity style={styles.btn}>
         <Icon
                 name="arrow-right"
@@ -78,12 +81,9 @@ const Header = () => {
               />
       </TouchableOpacity>
     </View>
-      <View>
-          <Text style={styles.textBold}>Salut, Caissier</Text>
-        </View>
+
       </View>
   );
 };
-
 
 export default Header;

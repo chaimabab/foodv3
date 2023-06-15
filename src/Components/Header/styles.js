@@ -23,11 +23,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
     },
+    bienvenueText:{
+        marginLeft:-300,
+        marginTop:-20,
 
+    },
 
     input: {
         justifyContent: "space-between"
     },
+
+
+
+    logo: {
+        width: 60,
+        height: 60,
+        marginLeft:-130,
+        marginTop:-20
+      },
 
 
     text: {
@@ -49,6 +62,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
         padding: 10,
         borderRadius: 8,
+        marginLeft:45
     },
 
 });
